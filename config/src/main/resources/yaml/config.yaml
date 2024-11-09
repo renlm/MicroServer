@@ -9,4 +9,4 @@ spring:
           defaultLabel: master
           search-paths: config/{profile}
           username: ${GIT_USERNAME:renlm}
-          password: ${GIT_USERNAME:123654}
+          password: ${GIT_PASSWORD:123654}
