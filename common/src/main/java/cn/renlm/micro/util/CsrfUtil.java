@@ -13,7 +13,7 @@ import org.springframework.security.crypto.codec.Utf8;
  * @author RenLiMing(任黎明)
  *
  */
-public class CsrfTokenUtil {
+public class CsrfUtil {
 
 	/**
 	 * 生成令牌（服务端）

@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.util.DigestUtils;
 
 import cn.renlm.micro.properties.EurekaClientAuthProperties;
-import cn.renlm.micro.util.CsrfTokenUtil;
+import cn.renlm.micro.util.CsrfUtil;
 
 /**
  * 注册中心认证
@@ -38,11 +38,11 @@ public class EurekaClientAuthConfig {
 				eurekaClientHttpRequestFactorySupplier, () -> {
 					RestTemplateBuilder builder = new RestTemplateBuilder(restTemplate -> {
 						restTemplate.getInterceptors().addFirst(((request, body, execution) -> {
+							String serverToken = CsrfUtil.createServerToken();
+							String csrfToken = CsrfUtil.createCsrfToken(secureRandom, serverToken);
 							String timestamp = String.valueOf(System.currentTimeMillis());
-							String serverToken = CsrfTokenUtil.createServerToken();
-							String csrfToken = CsrfTokenUtil.createCsrfToken(secureRandom, serverToken);
 							String secretKey = env.getSecretKey();
-							String sign = DigestUtils.md5DigestAsHex((timestamp + csrfToken + secretKey).getBytes());
+							String sign = DigestUtils.md5DigestAsHex((csrfToken + timestamp + secretKey).getBytes());
 							request.getHeaders().add(X_SERVER_TOKEN, serverToken);
 							request.getHeaders().add(X_XSRF_TOKEN, csrfToken);
 							request.getHeaders().add(SIGN_HEADER_TIMESTAMP, timestamp);
