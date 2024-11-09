@@ -20,6 +20,7 @@
 		<spring-cloud.version>2023.0.3</spring-cloud.version>
 	</properties>
 	<modules>
+		<module>common</module>
 		<module>config</module>
 		<module>eureka</module>
 		<module>gateway</module>
