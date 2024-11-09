@@ -8,10 +8,11 @@ management:
     shutdown:
       enabled: true
     health:
+      enabled: true
       probes:
         enabled: true
   endpoints:
     web:
       exposure:
         basePath: /actuator
-        include: health,shutdown,metrics,info,prometheus,monitor
+        include: health,shutdown
