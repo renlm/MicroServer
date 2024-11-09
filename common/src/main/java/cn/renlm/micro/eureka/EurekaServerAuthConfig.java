@@ -8,6 +8,7 @@ import java.util.UUID;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -43,6 +44,7 @@ public class EurekaServerAuthConfig {
 	protected static final String SIGN_HEADER_SIGN = "EUREKA_SIGN";
 
 	@Bean
+	@Primary
 	public Jersey3DiscoveryClientOptionalArgs jersey3DiscoveryClientOptionalArgs() {
 		Jersey3DiscoveryClientOptionalArgs discoveryClientOptionalArgs = new Jersey3DiscoveryClientOptionalArgs();
 		discoveryClientOptionalArgs.setAdditionalFilters(Collections.singletonList(new ClientRequestFilter() {
