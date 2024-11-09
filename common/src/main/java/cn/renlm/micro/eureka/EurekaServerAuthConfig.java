@@ -1,4 +1,4 @@
-package cn.renlm.micro.filter;
+package cn.renlm.micro.eureka;
 
 import java.io.IOException;
 

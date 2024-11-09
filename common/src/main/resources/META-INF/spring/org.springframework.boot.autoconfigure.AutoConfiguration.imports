@@ -1,2 +1,3 @@
+cn.renlm.micro.eureka.EurekaServerAuthConfig
 cn.renlm.springcloud.loadbalancer.MyHintsLoadBalancerClientConfig
 cn.renlm.springcloud.loadbalancer.MyHintsLoadBalancerFeignConfig
