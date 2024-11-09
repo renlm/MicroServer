@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 public class EurekaClientAuthConfig {
 
 	@Bean
-	public WebClientDiscoveryClientOptionalArgs discoveryClientOptionalArgs() {
+	public WebClientDiscoveryClientOptionalArgs webClientDiscoveryClientOptionalArgs() {
 		WebClientDiscoveryClientOptionalArgs discoveryClientOptionalArgs = new WebClientDiscoveryClientOptionalArgs(
 				() -> {
 					String timestamp = String.valueOf(System.currentTimeMillis());

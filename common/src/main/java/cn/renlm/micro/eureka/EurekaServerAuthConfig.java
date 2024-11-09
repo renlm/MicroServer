@@ -6,14 +6,12 @@ import java.util.Collections;
 import java.util.UUID;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.cloud.netflix.eureka.server.EurekaServerConfigBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.util.DigestUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -37,8 +35,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Configuration(proxyBeanMethods = false)
-@ConditionalOnClass({ EurekaServerConfigBean.class, SecurityFilterChain.class,
-		Jersey3DiscoveryClientOptionalArgs.class })
+@ConditionalOnClass({ Jersey3DiscoveryClientOptionalArgs.class })
 public class EurekaServerAuthConfig {
 
 	protected static final String SIGN_HEADER_TIMESTAMP = "EUREKA_TIMESTAMP";
@@ -46,7 +43,7 @@ public class EurekaServerAuthConfig {
 	protected static final String SIGN_HEADER_SIGN = "EUREKA_SIGN";
 
 	@Bean
-	public Jersey3DiscoveryClientOptionalArgs discoveryClientOptionalArgs() {
+	public Jersey3DiscoveryClientOptionalArgs jersey3DiscoveryClientOptionalArgs() {
 		Jersey3DiscoveryClientOptionalArgs discoveryClientOptionalArgs = new Jersey3DiscoveryClientOptionalArgs();
 		discoveryClientOptionalArgs.setAdditionalFilters(Collections.singletonList(new ClientRequestFilter() {
 			@Override
