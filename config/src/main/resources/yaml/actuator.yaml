@@ -4,6 +4,7 @@ management:
   metrics:
     tags:
       application: ${spring.application.name}
+      region: default
   endpoint:
     shutdown:
       enabled: true
