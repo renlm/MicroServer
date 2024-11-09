@@ -24,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 public class MyHintsLoadBalancerFeignConfig {
 
 	@Bean
-	public RequestInterceptor hintsLoadBalancerHeaderRequestInterceptor(LoadBalancerProperties properties) {
+	RequestInterceptor hintsLoadBalancerHeaderRequestInterceptor(LoadBalancerProperties properties) {
 		return template -> {
 			ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder
 					.getRequestAttributes();

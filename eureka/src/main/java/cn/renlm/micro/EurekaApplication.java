@@ -11,7 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
-import cn.renlm.micro.filter.EurekaServerAuthFilter;
+import cn.renlm.micro.filter.EurekaServerAuthConfig.EurekaServerAuthFilter;
 
 /**
  * 注册中心

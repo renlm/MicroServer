@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.DefaultRequest;
 import org.springframework.cloud.client.loadbalancer.DefaultResponse;
@@ -45,7 +45,7 @@ import reactor.core.publisher.Mono;
  *
  */
 @Configuration(proxyBeanMethods = false)
-@ConditionalOnBean(ReactiveLoadBalancer.Factory.class)
+@ConditionalOnClass(ReactiveLoadBalancer.Factory.class)
 @LoadBalancerClients(defaultConfiguration = MyHintsLoadBalancerStrategy.class)
 public class MyHintsLoadBalancerClientConfig {
 
