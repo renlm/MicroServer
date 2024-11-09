@@ -1,0 +1,19 @@
+spring:
+  profiles:
+    active: ${PROFILES_ACTIVE:dev}
+  aop:
+    auto: false
+    proxyTargetClass: false
+  application:
+    name: config-server
+  cloud:
+    refresh:
+      enabled: false
+  config:
+    import:
+    - classpath:yaml/actuator.yaml
+    - classpath:yaml/encrypt.yaml
+    - classpath:yaml/logging.yaml
+    - classpath:yaml/security.yaml
+    - classpath:yaml/server.yaml
+    - classpath:config.yaml

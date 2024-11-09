@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: gateway-server
+  profiles:
+    active: ${PROFILES_ACTIVE:dev}
+  config:
+    import: configserver:${CONFIGSERVER:https://default:M1h62Gj3Uy54r@config.renlm.cn}
+  cloud:
+    refresh:
+      enabled: false
+    config:
+      name: eureka-client,gateway,logging,actuator,redis
+      profile: ${spring.profiles.active}
+      label: master
+      failFast: true
