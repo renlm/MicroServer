@@ -1,19 +1,24 @@
-FROM registry.cn-hangzhou.aliyuncs.com/rlm/graalvm-ce:21.0.2
+FROM openjdk:21-slim
 ADD . /build
 WORKDIR /build
-RUN --mount=type=cache,target=/root/.m2 cd eureka && mvn clean package
-
-FROM openjdk:21-slim
-COPY --from=0 "/build/eureka/target/eureka.jar" app.jar
-RUN \
+ARG PROFILES_ACTIVE
+ENV PROFILES_ACTIVE ${PROFILES_ACTIVE}
+RUN --mount=type=cache,target=/root/.m2 \
   # https://mirrors.tuna.tsinghua.edu.cn/help/debian/
   sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list.d/debian.sources \
   && apt update \
-  && apt install -y curl \
+  && apt install -y maven \
+  && mvn clean package -P ${PROFILES_ACTIVE}
+
+FROM openjdk:21-slim
+COPY --from=0 "/build/config/target/eureka.jar" app.jar
+RUN sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list.d/debian.sources \
+  && apt update \
+  && apt install -y tini curl \
   && ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
   && touch /app.jar
 EXPOSE 7001
 EXPOSE 9001
 ARG PROFILES_ACTIVE
 ENV PROFILES_ACTIVE ${PROFILES_ACTIVE}
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar","--spring.profiles.active=${PROFILES_ACTIVE}"]
+ENTRYPOINT ["/usr/bin/tini","--","java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
