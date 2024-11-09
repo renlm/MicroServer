@@ -13,14 +13,13 @@ RUN --mount=type=cache,target=/root/.m2 \
 
 FROM openjdk:21-slim
 COPY --from=0 "/build/config/target/config" app.jar
-RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories \
-  && apk update \
-  && apk upgrade \
-  && apk --no-cache add tzdata curl \
+RUN sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list.d/debian.sources \
+  && apt update \
+  && apt install -y tini curl \
   && ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
   && touch /app.jar
-EXPOSE 7080
-EXPOSE 7090
+EXPOSE 7001
+EXPOSE 9001
 ARG PROFILES_ACTIVE
 ENV PROFILES_ACTIVE ${PROFILES_ACTIVE}
 ENTRYPOINT ["/sbin/tini","--","java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
