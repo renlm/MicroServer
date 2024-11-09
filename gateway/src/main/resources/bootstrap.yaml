@@ -1,6 +1,6 @@
 spring:
   application:
-    name: eureka-server
+    name: gateway-server
   profiles:
     active: ${PROFILES_ACTIVE:dev}
   cloud:
@@ -8,7 +8,7 @@ spring:
       uri: ${CONFIGSERVER:http://localhost:7001}
       username: ${SECURITY_USER_NAME:default}
       password: ${SECURITY_USER_PASSWORD:123654}
-      name: eureka-server,logging,actuator,security,redis,rabbitmq
+      name: eureka-client,gateway,logging,actuator,redis,rabbitmq
       profile: ${spring.profiles.active}
       label: master
       failFast: true
