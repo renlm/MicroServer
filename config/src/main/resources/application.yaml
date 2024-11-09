@@ -1,14 +1,8 @@
 spring:
-  profiles:
-    active: ${PROFILES_ACTIVE:dev}
-  aop:
-    auto: false
-    proxyTargetClass: false
   application:
     name: config-server
-  cloud:
-    refresh:
-      enabled: false
+  profiles:
+    active: ${PROFILES_ACTIVE:dev}
   config:
     import:
     - classpath:yaml/actuator.yaml
@@ -16,5 +10,5 @@ spring:
     - classpath:yaml/logging.yaml
     - classpath:yaml/security.yaml
     - classpath:yaml/server.yaml
+    - classpath:yaml/config.yaml
     - classpath:rabbitmq.yaml
-    - classpath:config.yaml
