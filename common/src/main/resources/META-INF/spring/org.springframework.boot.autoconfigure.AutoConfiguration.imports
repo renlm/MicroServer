@@ -1,3 +1,2 @@
-cn.renlm.springcloud.seata.SeataXIDConfig
 cn.renlm.springcloud.loadbalancer.MyHintsLoadBalancerClientConfig
 cn.renlm.springcloud.loadbalancer.MyHintsLoadBalancerFeignConfig
