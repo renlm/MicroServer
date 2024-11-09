@@ -1,17 +1,32 @@
 package cn.renlm.micro.eureka;
 
 import java.io.IOException;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.UUID;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.cloud.netflix.eureka.server.EurekaServerConfigBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.util.DigestUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
+
+import com.netflix.appinfo.AbstractEurekaIdentity;
+import com.netflix.discovery.Jersey3DiscoveryClientOptionalArgs;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.ws.rs.client.ClientRequestContext;
+import jakarta.ws.rs.client.ClientRequestFilter;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -22,12 +37,33 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Configuration(proxyBeanMethods = false)
-@ConditionalOnClass(EurekaServerConfigBean.class)
+@ConditionalOnClass({ EurekaServerConfigBean.class, SecurityFilterChain.class })
 public class EurekaServerAuthConfig {
+
+	private static final String SIGN_HEADER_TIMESTAMP = "EUREKA_TIMESTAMP";
+	private static final String SIGN_HEADER_NONCE = "EUREKA_NONCE";
+	private static final String SIGN_HEADER_SIGN = "EUREKA_SIGN";
 
 	@Bean
 	EurekaServerAuthFilter eurekaServerAuthFilter() {
 		return new EurekaServerAuthFilter();
+	}
+
+	@Bean
+	public Jersey3DiscoveryClientOptionalArgs discoveryClientOptionalArgs() {
+		Jersey3DiscoveryClientOptionalArgs discoveryClientOptionalArgs = new Jersey3DiscoveryClientOptionalArgs();
+		discoveryClientOptionalArgs.setAdditionalFilters(Collections.singletonList(new ClientRequestFilter() {
+			@Override
+			public void filter(ClientRequestContext requestContext) throws IOException {
+				String timestamp = String.valueOf(System.currentTimeMillis());
+				String nonce = UUID.randomUUID().toString();
+				String sign = DigestUtils.md5DigestAsHex((timestamp + nonce).getBytes());
+				requestContext.getHeaders().add(SIGN_HEADER_TIMESTAMP, timestamp);
+				requestContext.getHeaders().add(SIGN_HEADER_NONCE, nonce);
+				requestContext.getHeaders().add(SIGN_HEADER_SIGN, sign);
+			}
+		}));
+		return discoveryClientOptionalArgs;
 	}
 
 	public class EurekaServerAuthFilter extends OncePerRequestFilter {
@@ -35,7 +71,21 @@ public class EurekaServerAuthConfig {
 		@Override
 		protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
 				FilterChain filterChain) throws ServletException, IOException {
-			log.debug("注册中心认证.");
+			String timestamp = request.getHeader(SIGN_HEADER_TIMESTAMP);
+			String nonce = request.getHeader(SIGN_HEADER_NONCE);
+			String sign = request.getHeader(SIGN_HEADER_SIGN);
+			String discoveryidentityId = request.getHeader(AbstractEurekaIdentity.AUTH_ID_HEADER_KEY);
+			if (StringUtils.hasText(discoveryidentityId)) {
+				String md5DigestAsHex = DigestUtils.md5DigestAsHex((timestamp + nonce).getBytes());
+				if (md5DigestAsHex.equals(sign)) {
+					Collection<? extends GrantedAuthority> authorities = Collections.emptySet();
+					Authentication token = new UsernamePasswordAuthenticationToken(SIGN_HEADER_SIGN, sign, authorities);
+					SecurityContextHolder.getContext().setAuthentication(token);
+				}
+			}
+			{
+				filterChain.doFilter(request, response);
+			}
 		}
 
 	}

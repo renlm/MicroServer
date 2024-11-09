@@ -35,7 +35,7 @@ public class EurekaApplication {
 		http.addFilterBefore(authFilter, BasicAuthenticationFilter.class);
 		http.formLogin(withDefaults());
 		http.httpBasic(withDefaults());
-		http.csrf(csrf -> csrf.disable());
+		http.csrf(withDefaults());
 		return http.build();
 	}
 
