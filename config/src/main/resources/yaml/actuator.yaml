@@ -17,4 +17,4 @@ management:
   endpoints:
     web.exposure:
       basePath: /actuator
-      include: shutdown,health,info,metrics,prometheus,monitor
+      include: shutdown,health,info,metrics,prometheus

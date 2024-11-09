@@ -27,7 +27,7 @@ public class ConfigApplication {
 
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		String[] anonymousRequests = { "/actuator/**" };
+		String[] anonymousRequests = { "/monitor", "/actuator/**" };
 		http.authorizeHttpRequests(r -> r.requestMatchers(anonymousRequests).permitAll().anyRequest().authenticated());
 		http.formLogin(withDefaults());
 		http.httpBasic(withDefaults());
