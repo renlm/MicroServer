@@ -1,4 +1,4 @@
-package cn.renlm.GrmServer;
+package cn.renlm.micro;
 
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;

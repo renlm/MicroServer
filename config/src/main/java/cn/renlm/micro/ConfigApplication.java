@@ -1,4 +1,4 @@
-package cn.renlm.GrmServer;
+package cn.renlm.micro;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
@@ -6,12 +6,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.config.server.EnableConfigServer;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ImportRuntimeHints;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
-
-import cn.renlm.GrmServer.aot.hint.MyRuntimeHints;
 
 /**
  * 配置中心
@@ -22,7 +19,6 @@ import cn.renlm.GrmServer.aot.hint.MyRuntimeHints;
 @EnableWebSecurity
 @EnableConfigServer
 @SpringBootApplication
-@ImportRuntimeHints({ MyRuntimeHints.class })
 public class ConfigApplication {
 
 	public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package cn.renlm.GrmServer;
+package cn.renlm.micro;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
