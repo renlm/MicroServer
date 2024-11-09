@@ -17,7 +17,6 @@ import org.springframework.util.DigestUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.netflix.appinfo.AbstractEurekaIdentity;
 import com.netflix.discovery.Jersey3DiscoveryClientOptionalArgs;
 
 import jakarta.servlet.FilterChain;
@@ -76,8 +75,7 @@ public class EurekaServerAuthConfig {
 			String timestamp = request.getHeader(SIGN_HEADER_TIMESTAMP);
 			String nonce = request.getHeader(SIGN_HEADER_NONCE);
 			String sign = request.getHeader(SIGN_HEADER_SIGN);
-			String discoveryidentityId = request.getHeader(AbstractEurekaIdentity.AUTH_ID_HEADER_KEY);
-			if (StringUtils.hasText(discoveryidentityId)) {
+			if (StringUtils.hasText(sign)) {
 				String md5DigestAsHex = DigestUtils.md5DigestAsHex((timestamp + nonce).getBytes());
 				if (md5DigestAsHex.equals(sign)) {
 					Collection<? extends GrantedAuthority> authorities = Collections.emptySet();

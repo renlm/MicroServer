@@ -32,16 +32,17 @@ public class EurekaClientAuthConfig {
 			EurekaClientHttpRequestFactorySupplier eurekaClientHttpRequestFactorySupplier) {
 		RestTemplateDiscoveryClientOptionalArgs discoveryClientOptionalArgs = new RestTemplateDiscoveryClientOptionalArgs(
 				eurekaClientHttpRequestFactorySupplier, () -> {
-					RestTemplateBuilder builder = new RestTemplateBuilder();
-					builder.additionalInterceptors(((request, body, execution) -> {
+					RestTemplateBuilder builder = new RestTemplateBuilder(restTemplate -> {
 						String timestamp = String.valueOf(System.currentTimeMillis());
 						String nonce = UUID.randomUUID().toString();
 						String sign = DigestUtils.md5DigestAsHex((timestamp + nonce).getBytes());
-						request.getHeaders().add(SIGN_HEADER_TIMESTAMP, timestamp);
-						request.getHeaders().add(SIGN_HEADER_NONCE, nonce);
-						request.getHeaders().add(SIGN_HEADER_SIGN, sign);
-						return execution.execute(request, body);
-					}));
+						restTemplate.getInterceptors().addFirst(((request, body, execution) -> {
+							request.getHeaders().add(SIGN_HEADER_TIMESTAMP, timestamp);
+							request.getHeaders().add(SIGN_HEADER_NONCE, nonce);
+							request.getHeaders().add(SIGN_HEADER_SIGN, sign);
+							return execution.execute(request, body);
+						}));
+					});
 					return builder;
 				});
 		{
