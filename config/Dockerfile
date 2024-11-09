@@ -5,8 +5,7 @@ ARG PROFILES_ACTIVE
 ENV PROFILES_ACTIVE ${PROFILES_ACTIVE}
 RUN --mount=type=cache,target=/root/.m2 \
   # https://mirrors.tuna.tsinghua.edu.cn/help/debian/
-  cp -a /etc/apt/sources.list.d/debian.sources /etc/apt/sources.list.d/debian.sources.bak \
-  && sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list.d/debian.sources \
+  sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list.d/debian.sources \
   && apt update \
   && apt install -y maven \
   && mvn clean package -P ${PROFILES_ACTIVE}
