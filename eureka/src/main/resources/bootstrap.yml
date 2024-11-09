@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: eureka-server
+  profiles:
+    active: ${PROFILES_ACTIVE:dev}
+  cloud:
+    config:
+      uri: http://localhost:7001
+      name: eureka-server,logging,actuator,security,redis,rabbitmq
+      profile: ${spring.profiles.active}
+      label: master
+      failFast: true
+      username: ${SECURITY_USER_NAME:default}
+      password: ${SECURITY_USER_PASSWORD:123654}
