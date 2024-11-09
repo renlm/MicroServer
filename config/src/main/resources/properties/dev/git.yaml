@@ -1,0 +1,43 @@
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          uri: git@gitee.com:renlm/ConfigRepo.git
+          forcePull: true
+          cloneOnStart: true
+          defaultLabel: master
+          search-paths: config/{profile}
+          ignoreLocalSshSettings: true
+          passphrase: ${GIT_PASSPHRASE:M123$l^654r}
+          privateKey: |-
+            -----BEGIN RSA PRIVATE KEY-----
+            Proc-Type: 4,ENCRYPTED
+            DEK-Info: AES-128-CBC,4EE4A807F1E4E4F45E1C387C159637C4
+            
+            uJlRTQSRJrsat2tUTzPU/UfmRKOuw8y4V89xKLrXzEHhaFczh5Lbxdalj6tTFdXg
+            MbOzOkTHr2dqmOWPdVA3q5H9yL8wBc5Ze8UH5O+z/VshTFN4DeT4i3kf9ugjhXqh
+            x1TaNcwJdpKnFwic07QByJjxUSeyDFekmnp7M1kcPPTZm5rQ4LmfUFcPfDPXUyli
+            ljw+ZmhmIPgsQQfO25V73sfSjQLfzSjhMh89XX4fwPejG+kGDF2Ykf6XcZzyqz6N
+            AZ634eINbPraCoLvdwLdrPzyiqG4MKz7kDjq5zPXL7iJuPvRT1zNmFSuPz+W9hZp
+            Q4XkvXBY/W9xcaIImwF9nDtV9OYClXmu5sd0recGgkO3ImybDKI9slnCc6F/a2GF
+            O1kjcKYEfpVpjBEp23yZKqO0YJAemAMhjKmqwscK/dJlwaCU/rAmkKYgT1IZ541s
+            H8yc89tX8mH9HUT9zuSzDn9mO5wUYqwR6+y0EmAgaXDe2+cOX7zQlxezZOUaLdgs
+            WKIQgWkLw2mjc/ecGLZbWGm6cp0oU+5OovvAjaJVgpak5M4L1cFZ85arUC9P2+R7
+            2/jSgF7Pge3T9QSyI2Coq9fXHWruWNHrwQ9VT6LI6Apk0QwovoDklslLSdsZOee8
+            DKqD+qn+x+BWjBpg0g4Cozkw3lRPAzvXfOd9H6JvBYMxmjIMxVKLm98uyd2/mNDY
+            G0eb8GL1qi/xUkWAnaFWbHpMbED+CS7SkAkEz126CG8fyOPSq9BwTPeZKnWkxiX9
+            pcpFY97yqkp3vDxbwBRs9TMkHhNBtBWhUIaAPC+g5c/p7ysZYj6rAgU37vU94+nH
+            kDHxop9Lm1U4NITLsCSjCXDqv9DY5G627jp7Rwlorr8wyUBjl8AdYk+QqsyncF+K
+            Ite+6gVImCBKlFPmpjgakMwM4w5WfrL6m+m5kGl0O4c8OxqHJH4qCIMZF1Q6HgUS
+            cfTAQPX/DI3rURGT84AD9/bC+pE1hNnPuNEtTy/TT4JDesZWbTcyyEBSoRmQMyPb
+            Yzq9AbXv7Jsc6VPUMQ/qEMmx4KbfhmME+S9rU1JRzANU7q21XWSAdC1LyEIc152Z
+            2Ed5VecBSjaM+sjJHh/+kyb0YRXiCRSX6HfNxflOp3Zf3uygQZg/xHtwuizPYugW
+            ZmG79dyUrzrwOXH2zbokSeZ53HehGDWrl6RdhOkYThHN+x4vuJ0oBQyv/75V09xO
+            jHPQNzb/Xply+7xddxZTThxRCuN8OyCZdLVkgf2VuEbvqzSUiZsQDjkWSVAERTEa
+            O+lQHUD0uka0F6mbX1n4XZ0YtCOsxgjdYyJ6mqEdN6ikLTjpBmk3kUwbIRnS95iQ
+            A7OlE6bHlwxt2UCr7msquUHWnZ8denWx8ATlJ5qfuR2O423w3/5X5V8rlHRvWV+j
+            TTUqCtCyWrhXIWeaaZGKN0LXO7FgOKJXPOa/N3wSs1vu5IqxnFq984yygT9Yjxr+
+            LHF+OgrjrtLvRdCdoAidpr0oYvoIt7K4MQ8/cQT33JKKygTtdoyOPf4KS0w1xbC0
+            CxCSMIaWRiRhhQtsh5lSwXN3cEApWGG/jRWog/N1nj/YpeAvDtSmBJVih4EdFc0r
+            -----END RSA PRIVATE KEY-----
