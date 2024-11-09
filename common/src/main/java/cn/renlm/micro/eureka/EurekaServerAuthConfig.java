@@ -12,13 +12,15 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 
 /**
- * 服务注册认证
+ * 注册中心认证
  * 
  * @author RenLiMing(任黎明)
  *
  */
+@Slf4j
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnClass(EurekaServerConfigBean.class)
 public class EurekaServerAuthConfig {
@@ -33,7 +35,7 @@ public class EurekaServerAuthConfig {
 		@Override
 		protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
 				FilterChain filterChain) throws ServletException, IOException {
-
+			log.debug("注册中心认证.");
 		}
 
 	}
