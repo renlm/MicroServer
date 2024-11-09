@@ -1,33 +1,33 @@
 package cn.renlm.micro.eureka;
 
+import static java.util.UUID.randomUUID;
+import static org.springframework.util.StringUtils.hasText;
+
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.UUID;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.DigestUtils;
-import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.netflix.discovery.Jersey3DiscoveryClientOptionalArgs;
 
+import cn.renlm.micro.properties.EurekaClientAuthProperties;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.ws.rs.client.ClientRequestContext;
 import jakarta.ws.rs.client.ClientRequestFilter;
-import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * 注册中心认证
@@ -35,27 +35,24 @@ import lombok.extern.slf4j.Slf4j;
  * @author RenLiMing(任黎明)
  *
  */
-@Slf4j
-@Configuration(proxyBeanMethods = false)
 @ConditionalOnClass({ Jersey3DiscoveryClientOptionalArgs.class })
+@EnableConfigurationProperties({ EurekaClientAuthProperties.class })
 public class EurekaServerAuthConfig {
 
-	protected static final String SECRET_KEY_NAME = "eureka.client.secretKey";
 	protected static final String SIGN_HEADER_TIMESTAMP = "EUREKA_TIMESTAMP";
 	protected static final String SIGN_HEADER_NONCE = "EUREKA_NONCE";
 	protected static final String SIGN_HEADER_SIGN = "EUREKA_SIGN";
 
 	@Bean
 	@Primary
-	public Jersey3DiscoveryClientOptionalArgs jersey3DiscoveryClientOptionalArgs(Environment env) {
-		String key = env.getProperty(SECRET_KEY_NAME);
+	public Jersey3DiscoveryClientOptionalArgs jersey3DiscoveryClientOptionalArgs(EurekaClientAuthProperties env) {
 		Jersey3DiscoveryClientOptionalArgs discoveryClientOptionalArgs = new Jersey3DiscoveryClientOptionalArgs();
 		discoveryClientOptionalArgs.setAdditionalFilters(Collections.singletonList(new ClientRequestFilter() {
 			@Override
 			public void filter(ClientRequestContext requestContext) throws IOException {
 				String timestamp = String.valueOf(System.currentTimeMillis());
 				String nonce = UUID.randomUUID().toString();
-				String secretKey = StringUtils.hasText(key) ? key : UUID.randomUUID().toString();
+				String secretKey = env.getSecretKey();
 				String sign = DigestUtils.md5DigestAsHex((timestamp + nonce + secretKey).getBytes());
 				requestContext.getHeaders().add(SIGN_HEADER_TIMESTAMP, timestamp);
 				requestContext.getHeaders().add(SIGN_HEADER_NONCE, nonce);
@@ -68,16 +65,17 @@ public class EurekaServerAuthConfig {
 	}
 
 	@Bean
-	EurekaServerAuthFilter eurekaServerAuthFilter(Environment env) {
-		String key = env.getProperty(SECRET_KEY_NAME);
-		String secretKey = StringUtils.hasText(key) ? key : UUID.randomUUID().toString();
-		return new EurekaServerAuthFilter(secretKey);
+	EurekaServerAuthFilter eurekaServerAuthFilter(EurekaClientAuthProperties env) {
+		return new EurekaServerAuthFilter(env);
 	}
 
-	@AllArgsConstructor
 	public class EurekaServerAuthFilter extends OncePerRequestFilter {
 
-		private String secretKey;
+		private EurekaClientAuthProperties env;
+
+		public EurekaServerAuthFilter(EurekaClientAuthProperties env) {
+			this.env = env;
+		}
 
 		@Override
 		protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
@@ -85,7 +83,8 @@ public class EurekaServerAuthConfig {
 			String timestamp = request.getHeader(SIGN_HEADER_TIMESTAMP);
 			String nonce = request.getHeader(SIGN_HEADER_NONCE);
 			String sign = request.getHeader(SIGN_HEADER_SIGN);
-			if (StringUtils.hasText(sign)) {
+			if (hasText(sign)) {
+				String secretKey = hasText(env.getSecretKey()) ? env.getSecretKey() : randomUUID().toString();
 				String md5DigestAsHex = DigestUtils.md5DigestAsHex((timestamp + nonce + secretKey).getBytes());
 				if (md5DigestAsHex.equals(sign)) {
 					Collection<? extends GrantedAuthority> authorities = Collections.emptySet();
