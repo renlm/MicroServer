@@ -3,7 +3,11 @@ package cn.renlm.micro.eureka;
 import static cn.renlm.micro.eureka.EurekaServerAuthConfig.SIGN_HEADER_NONCE;
 import static cn.renlm.micro.eureka.EurekaServerAuthConfig.SIGN_HEADER_SIGN;
 import static cn.renlm.micro.eureka.EurekaServerAuthConfig.SIGN_HEADER_TIMESTAMP;
+import static cn.renlm.micro.eureka.EurekaServerAuthConfig.X_XSRF_TOKEN;
+import static cn.renlm.micro.eureka.EurekaServerAuthConfig.createXoredCsrfToken;
 import static java.util.UUID.randomUUID;
+
+import java.security.SecureRandom;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -25,6 +29,8 @@ import cn.renlm.micro.properties.EurekaClientAuthProperties;
 @EnableConfigurationProperties({ EurekaClientAuthProperties.class })
 public class EurekaClientAuthConfig {
 
+	private SecureRandom secureRandom = new SecureRandom();
+
 	@Bean
 	public RestTemplateDiscoveryClientOptionalArgs restTemplateDiscoveryClientOptionalArgs(
 			EurekaClientAuthProperties env,
@@ -35,10 +41,12 @@ public class EurekaClientAuthConfig {
 						restTemplate.getInterceptors().addFirst(((request, body, execution) -> {
 							String timestamp = String.valueOf(System.currentTimeMillis());
 							String nonce = randomUUID().toString();
+							String token = createXoredCsrfToken(secureRandom, nonce);
 							String secretKey = env.getSecretKey();
-							String sign = DigestUtils.md5DigestAsHex((timestamp + nonce + secretKey).getBytes());
+							String sign = DigestUtils.md5DigestAsHex((timestamp + token + secretKey).getBytes());
 							request.getHeaders().add(SIGN_HEADER_TIMESTAMP, timestamp);
 							request.getHeaders().add(SIGN_HEADER_NONCE, nonce);
+							request.getHeaders().add(X_XSRF_TOKEN, token);
 							request.getHeaders().add(SIGN_HEADER_SIGN, sign);
 							return execution.execute(request, body);
 						}));

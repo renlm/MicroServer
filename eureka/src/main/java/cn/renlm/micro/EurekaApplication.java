@@ -9,7 +9,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.security.web.csrf.CsrfFilter;
+import org.springframework.security.web.csrf.CsrfTokenRepository;
+import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 
 import cn.renlm.micro.eureka.EurekaServerAuthConfig.EurekaServerAuthFilter;
 
@@ -29,13 +31,18 @@ public class EurekaApplication {
 	}
 
 	@Bean
+	CsrfTokenRepository csrfTokenRepository() {
+		return new HttpSessionCsrfTokenRepository();
+	}
+
+	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http, EurekaServerAuthFilter authFilter) throws Exception {
 		String[] anonymousRequests = { "/actuator/**" };
 		http.authorizeHttpRequests(r -> r.requestMatchers(anonymousRequests).permitAll().anyRequest().authenticated());
-		http.addFilterBefore(authFilter, BasicAuthenticationFilter.class);
+		http.csrf(csrf -> csrf.csrfTokenRepository(csrfTokenRepository()));
+		http.addFilterBefore(authFilter, CsrfFilter.class);
 		http.formLogin(withDefaults());
 		http.httpBasic(withDefaults());
-		http.csrf(csrf -> csrf.disable());
 		return http.build();
 	}
 
