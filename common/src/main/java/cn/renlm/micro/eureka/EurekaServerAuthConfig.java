@@ -3,6 +3,7 @@ package cn.renlm.micro.eureka;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.UUID;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.cloud.netflix.eureka.server.EurekaServerConfigBean;
@@ -18,11 +19,14 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.netflix.appinfo.AbstractEurekaIdentity;
+import com.netflix.discovery.Jersey3DiscoveryClientOptionalArgs;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.ws.rs.client.ClientRequestContext;
+import jakarta.ws.rs.client.ClientRequestFilter;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -33,12 +37,32 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Configuration(proxyBeanMethods = false)
-@ConditionalOnClass({ EurekaServerConfigBean.class, SecurityFilterChain.class })
+@ConditionalOnClass({ EurekaServerConfigBean.class, SecurityFilterChain.class,
+		Jersey3DiscoveryClientOptionalArgs.class })
 public class EurekaServerAuthConfig {
 
 	protected static final String SIGN_HEADER_TIMESTAMP = "EUREKA_TIMESTAMP";
 	protected static final String SIGN_HEADER_NONCE = "EUREKA_NONCE";
 	protected static final String SIGN_HEADER_SIGN = "EUREKA_SIGN";
+
+	@Bean
+	public Jersey3DiscoveryClientOptionalArgs discoveryClientOptionalArgs() {
+		Jersey3DiscoveryClientOptionalArgs discoveryClientOptionalArgs = new Jersey3DiscoveryClientOptionalArgs();
+		discoveryClientOptionalArgs.setAdditionalFilters(Collections.singletonList(new ClientRequestFilter() {
+			@Override
+			public void filter(ClientRequestContext requestContext) throws IOException {
+				String timestamp = String.valueOf(System.currentTimeMillis());
+				String nonce = UUID.randomUUID().toString();
+				String sign = DigestUtils.md5DigestAsHex((timestamp + nonce).getBytes());
+				requestContext.getHeaders().add(SIGN_HEADER_TIMESTAMP, timestamp);
+				requestContext.getHeaders().add(SIGN_HEADER_NONCE, nonce);
+				requestContext.getHeaders().add(SIGN_HEADER_SIGN, sign);
+			}
+		}));
+		{
+			return discoveryClientOptionalArgs;
+		}
+	}
 
 	@Bean
 	EurekaServerAuthFilter eurekaServerAuthFilter() {
