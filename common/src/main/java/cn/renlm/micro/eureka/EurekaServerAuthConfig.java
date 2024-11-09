@@ -37,7 +37,6 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Configuration(proxyBeanMethods = false)
-@ConditionalOnClass({ EurekaServerConfigBean.class, SecurityFilterChain.class })
 public class EurekaServerAuthConfig {
 
 	private static final String SIGN_HEADER_TIMESTAMP = "EUREKA_TIMESTAMP";
@@ -45,11 +44,13 @@ public class EurekaServerAuthConfig {
 	private static final String SIGN_HEADER_SIGN = "EUREKA_SIGN";
 
 	@Bean
+	@ConditionalOnClass({ EurekaServerConfigBean.class, SecurityFilterChain.class })
 	EurekaServerAuthFilter eurekaServerAuthFilter() {
 		return new EurekaServerAuthFilter();
 	}
 
 	@Bean
+	@ConditionalOnClass(Jersey3DiscoveryClientOptionalArgs.class)
 	public Jersey3DiscoveryClientOptionalArgs discoveryClientOptionalArgs() {
 		Jersey3DiscoveryClientOptionalArgs discoveryClientOptionalArgs = new Jersey3DiscoveryClientOptionalArgs();
 		discoveryClientOptionalArgs.setAdditionalFilters(Collections.singletonList(new ClientRequestFilter() {
@@ -63,7 +64,9 @@ public class EurekaServerAuthConfig {
 				requestContext.getHeaders().add(SIGN_HEADER_SIGN, sign);
 			}
 		}));
-		return discoveryClientOptionalArgs;
+		{
+			return discoveryClientOptionalArgs;
+		}
 	}
 
 	public class EurekaServerAuthFilter extends OncePerRequestFilter {
