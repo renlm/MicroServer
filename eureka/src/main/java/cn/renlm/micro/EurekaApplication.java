@@ -9,6 +9,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+
+import cn.renlm.micro.filter.EurekaServerAuthFilter;
 
 /**
  * 注册中心
@@ -26,9 +29,10 @@ public class EurekaApplication {
 	}
 
 	@Bean
-	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+	SecurityFilterChain securityFilterChain(HttpSecurity http, EurekaServerAuthFilter authFilter) throws Exception {
 		String[] anonymousRequests = { "/actuator/**" };
 		http.authorizeHttpRequests(r -> r.requestMatchers(anonymousRequests).permitAll().anyRequest().authenticated());
+		http.addFilterBefore(authFilter, BasicAuthenticationFilter.class);
 		http.formLogin(withDefaults());
 		http.httpBasic(withDefaults());
 		http.csrf(csrf -> csrf.disable());

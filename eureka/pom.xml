@@ -13,6 +13,10 @@
 	<description>注册中心</description>
 	<dependencies>
 		<dependency>
+			<groupId>cn.renlm.micro</groupId>
+			<artifactId>common</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-bootstrap</artifactId>
 		</dependency>
