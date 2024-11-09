@@ -14,4 +14,4 @@ management:
     web:
       exposure:
         basePath: /actuator
-        include: health,shutdown,metrics,info,prometheus
+        include: health,shutdown,metrics,info,prometheus,monitor
