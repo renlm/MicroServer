@@ -21,4 +21,4 @@ EXPOSE 7001
 EXPOSE 9001
 ARG PROFILES_ACTIVE
 ENV PROFILES_ACTIVE ${PROFILES_ACTIVE}
-ENTRYPOINT ["/sbin/tini","--","java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+ENTRYPOINT ["/usr/bin/tini","--","java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
