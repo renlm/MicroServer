@@ -1,11 +1,9 @@
 package cn.renlm.micro.eureka;
 
-import static cn.renlm.micro.eureka.EurekaServerAuthConfig.SIGN_HEADER_NONCE;
 import static cn.renlm.micro.eureka.EurekaServerAuthConfig.SIGN_HEADER_SIGN;
 import static cn.renlm.micro.eureka.EurekaServerAuthConfig.SIGN_HEADER_TIMESTAMP;
+import static cn.renlm.micro.eureka.EurekaServerAuthConfig.X_SERVER_TOKEN;
 import static cn.renlm.micro.eureka.EurekaServerAuthConfig.X_XSRF_TOKEN;
-import static cn.renlm.micro.eureka.EurekaServerAuthConfig.createXoredCsrfToken;
-import static java.util.UUID.randomUUID;
 
 import java.security.SecureRandom;
 
@@ -18,6 +16,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.util.DigestUtils;
 
 import cn.renlm.micro.properties.EurekaClientAuthProperties;
+import cn.renlm.micro.util.CsrfTokenUtil;
 
 /**
  * 注册中心认证
@@ -40,13 +39,13 @@ public class EurekaClientAuthConfig {
 					RestTemplateBuilder builder = new RestTemplateBuilder(restTemplate -> {
 						restTemplate.getInterceptors().addFirst(((request, body, execution) -> {
 							String timestamp = String.valueOf(System.currentTimeMillis());
-							String nonce = randomUUID().toString();
-							String token = createXoredCsrfToken(secureRandom, nonce);
+							String serverToken = CsrfTokenUtil.createServerToken();
+							String csrfToken = CsrfTokenUtil.createCsrfToken(secureRandom, serverToken);
 							String secretKey = env.getSecretKey();
-							String sign = DigestUtils.md5DigestAsHex((timestamp + token + secretKey).getBytes());
+							String sign = DigestUtils.md5DigestAsHex((timestamp + csrfToken + secretKey).getBytes());
+							request.getHeaders().add(X_SERVER_TOKEN, serverToken);
+							request.getHeaders().add(X_XSRF_TOKEN, csrfToken);
 							request.getHeaders().add(SIGN_HEADER_TIMESTAMP, timestamp);
-							request.getHeaders().add(SIGN_HEADER_NONCE, nonce);
-							request.getHeaders().add(X_XSRF_TOKEN, token);
 							request.getHeaders().add(SIGN_HEADER_SIGN, sign);
 							return execution.execute(request, body);
 						}));

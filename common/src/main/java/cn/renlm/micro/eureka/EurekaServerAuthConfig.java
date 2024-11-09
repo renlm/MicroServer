@@ -5,7 +5,6 @@ import static org.springframework.util.StringUtils.hasText;
 
 import java.io.IOException;
 import java.security.SecureRandom;
-import java.util.Base64;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -17,7 +16,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.codec.Utf8;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.csrf.DefaultCsrfToken;
@@ -27,6 +25,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import com.netflix.discovery.Jersey3DiscoveryClientOptionalArgs;
 
 import cn.renlm.micro.properties.EurekaClientAuthProperties;
+import cn.renlm.micro.util.CsrfTokenUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -44,11 +43,11 @@ import jakarta.ws.rs.client.ClientRequestFilter;
 @EnableConfigurationProperties({ EurekaClientAuthProperties.class })
 public class EurekaServerAuthConfig {
 
-	protected static final String SIGN_HEADER_TIMESTAMP = "X-EUREKA-TIMESTAMP";
-	protected static final String SIGN_HEADER_NONCE = "X-HEADER_NONCE";
-	protected static final String SIGN_HEADER_SIGN = "X-EUREKA-SIGN";
+	protected static final String X_SERVER_TOKEN = "X-SERVER-TOKEN";
 	protected static final String X_XSRF_TOKEN = "X-XSRF-TOKEN";
 	protected static final String _CSRF = "_csrf";
+	protected static final String SIGN_HEADER_TIMESTAMP = "X-EUREKA-TIMESTAMP";
+	protected static final String SIGN_HEADER_SIGN = "X-EUREKA-SIGN";
 	private SecureRandom secureRandom = new SecureRandom();
 
 	@Bean
@@ -59,13 +58,13 @@ public class EurekaServerAuthConfig {
 			@Override
 			public void filter(ClientRequestContext requestContext) throws IOException {
 				String timestamp = String.valueOf(System.currentTimeMillis());
-				String nonce = randomUUID().toString();
-				String token = createXoredCsrfToken(secureRandom, nonce);
+				String serverToken = CsrfTokenUtil.createServerToken();
+				String csrfToken = CsrfTokenUtil.createCsrfToken(secureRandom, serverToken);
 				String secretKey = env.getSecretKey();
-				String sign = DigestUtils.md5DigestAsHex((timestamp + token + secretKey).getBytes());
+				String sign = DigestUtils.md5DigestAsHex((timestamp + csrfToken + secretKey).getBytes());
+				requestContext.getHeaders().add(X_SERVER_TOKEN, serverToken);
+				requestContext.getHeaders().add(X_XSRF_TOKEN, csrfToken);
 				requestContext.getHeaders().add(SIGN_HEADER_TIMESTAMP, timestamp);
-				requestContext.getHeaders().add(SIGN_HEADER_NONCE, nonce);
-				requestContext.getHeaders().add(X_XSRF_TOKEN, token);
 				requestContext.getHeaders().add(SIGN_HEADER_SIGN, sign);
 			}
 		}));
@@ -95,15 +94,15 @@ public class EurekaServerAuthConfig {
 		protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
 				FilterChain filterChain) throws ServletException, IOException {
 			String timestamp = request.getHeader(SIGN_HEADER_TIMESTAMP);
-			String nonce = request.getHeader(SIGN_HEADER_NONCE);
-			String token = request.getHeader(X_XSRF_TOKEN);
+			String serverToken = request.getHeader(X_SERVER_TOKEN);
+			String csrfToken = request.getHeader(X_XSRF_TOKEN);
 			String sign = request.getHeader(SIGN_HEADER_SIGN);
 			if (hasText(sign)) {
 				String secretKey = hasText(env.getSecretKey()) ? env.getSecretKey() : randomUUID().toString();
-				String md5DigestAsHex = DigestUtils.md5DigestAsHex((timestamp + token + secretKey).getBytes());
+				String md5DigestAsHex = DigestUtils.md5DigestAsHex((timestamp + csrfToken + secretKey).getBytes());
 				if (md5DigestAsHex.equals(sign)) {
-					CsrfToken csrfToken = new DefaultCsrfToken(X_XSRF_TOKEN, _CSRF, nonce);
-					csrfTokenRepository.saveToken(csrfToken, request, response);
+					CsrfToken token = new DefaultCsrfToken(X_XSRF_TOKEN, _CSRF, serverToken);
+					csrfTokenRepository.saveToken(token, request, response);
 					Collection<? extends GrantedAuthority> authorities = Collections.emptySet();
 					Authentication auth = new UsernamePasswordAuthenticationToken(SIGN_HEADER_SIGN, sign, authorities);
 					SecurityContextHolder.getContext().setAuthentication(auth);
@@ -114,25 +113,6 @@ public class EurekaServerAuthConfig {
 			}
 		}
 
-	}
-	
-	public static final String createXoredCsrfToken(SecureRandom secureRandom, String token) {
-		byte[] csrfBytes = Utf8.encode(token);
-		byte[] randomBytes = new byte[csrfBytes.length];
-		secureRandom.nextBytes(randomBytes);
-
-		int len = csrfBytes.length;
-		byte[] xoredBytes = new byte[len];
-		System.arraycopy(csrfBytes, 0, xoredBytes, 0, len);
-		for (int i = 0; i < len; i++) {
-			xoredBytes[i] ^= randomBytes[i];
-		}
-		
-		byte[] combinedBytes = new byte[csrfBytes.length + randomBytes.length];
-		System.arraycopy(randomBytes, 0, combinedBytes, 0, randomBytes.length);
-		System.arraycopy(xoredBytes, 0, combinedBytes, randomBytes.length, xoredBytes.length);
-
-		return Base64.getUrlEncoder().encodeToString(combinedBytes);
 	}
 
 }
