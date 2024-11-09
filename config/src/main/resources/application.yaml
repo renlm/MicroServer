@@ -16,4 +16,5 @@ spring:
     - classpath:yaml/logging.yaml
     - classpath:yaml/security.yaml
     - classpath:yaml/server.yaml
+    - classpath:rabbitmq.yaml
     - classpath:config.yaml
