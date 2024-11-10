@@ -39,8 +39,8 @@ public class EurekaApplication {
 	SecurityFilterChain securityFilterChain(HttpSecurity http, EurekaServerAuthFilter authFilter) throws Exception {
 		String[] anonymousRequests = { "/actuator/**" };
 		http.authorizeHttpRequests(r -> r.requestMatchers(anonymousRequests).permitAll().anyRequest().authenticated());
-		http.csrf(csrf -> csrf.csrfTokenRepository(csrfTokenRepository()));
 		http.addFilterBefore(authFilter, CsrfFilter.class);
+		http.csrf(csrf -> csrf.disable());
 		http.formLogin(withDefaults());
 		http.httpBasic(withDefaults());
 		return http.build();
