@@ -31,8 +31,7 @@ public class EurekaClientAuthConfig {
 	private SecureRandom secureRandom = new SecureRandom();
 
 	@Bean
-	public RestTemplateDiscoveryClientOptionalArgs restTemplateDiscoveryClientOptionalArgs(
-			EurekaAuthProperties env,
+	public RestTemplateDiscoveryClientOptionalArgs restTemplateDiscoveryClientOptionalArgs(EurekaAuthProperties env,
 			EurekaClientHttpRequestFactorySupplier eurekaClientHttpRequestFactorySupplier) {
 		RestTemplateDiscoveryClientOptionalArgs discoveryClientOptionalArgs = new RestTemplateDiscoveryClientOptionalArgs(
 				eurekaClientHttpRequestFactorySupplier, () -> {

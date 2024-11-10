@@ -74,8 +74,7 @@ public class EurekaServerAuthConfig {
 	}
 
 	@Bean
-	EurekaServerAuthFilter eurekaServerAuthFilter(EurekaAuthProperties env,
-			CsrfTokenRepository csrfTokenRepository) {
+	EurekaServerAuthFilter eurekaServerAuthFilter(EurekaAuthProperties env, CsrfTokenRepository csrfTokenRepository) {
 		return new EurekaServerAuthFilter(env, csrfTokenRepository);
 	}
 
