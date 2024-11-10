@@ -62,9 +62,6 @@ public class EurekaServerAuthConfig {
 				String timestamp = String.valueOf(System.currentTimeMillis());
 				String secretKey = env.getSecretKey();
 				String sign = DigestUtils.md5DigestAsHex((csrfToken + timestamp + secretKey).getBytes());
-				requestContext.getHeaders().forEach((k, v) -> {
-					System.out.println("1-[" + k + "," + v + "]");
-				});
 				requestContext.getHeaders().add(X_SERVER_TOKEN, serverToken);
 				requestContext.getHeaders().add(X_XSRF_TOKEN, csrfToken);
 				requestContext.getHeaders().add(SIGN_HEADER_TIMESTAMP, timestamp);
@@ -85,9 +82,6 @@ public class EurekaServerAuthConfig {
 				String timestamp = String.valueOf(System.currentTimeMillis());
 				String secretKey = env.getSecretKey();
 				String sign = DigestUtils.md5DigestAsHex((csrfToken + timestamp + secretKey).getBytes());
-				requestContext.getHeaders().forEach((k, v) -> {
-					System.out.println("2-[" + k + "," + v + "]");
-				});
 				requestContext.getHeaders().add(X_SERVER_TOKEN, serverToken);
 				requestContext.getHeaders().add(X_XSRF_TOKEN, csrfToken);
 				requestContext.getHeaders().add(SIGN_HEADER_TIMESTAMP, timestamp);
