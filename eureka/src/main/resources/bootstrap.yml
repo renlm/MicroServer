@@ -1,8 +1,6 @@
 server:
   port: ${SERVER_PORT:7101}
   shutdown: graceful
-  servlet:
-    contextPath: /registrar
 management:
   server:
     port: ${MANAGEMENT_SERVER_PORT:9101}
