@@ -9,7 +9,7 @@ spring:
           defaultLabel: master
           search-paths: config/{profile}
           ignoreLocalSshSettings: true
-          passphrase: ${GIT_PASSPHRASE:123654}
+          passphrase: ${GIT_PASSPHRASE:ICgacH955iKjdfu8idh^988jErQ63moj3Uy54r}
           privateKey: |-
             -----BEGIN RSA PRIVATE KEY-----
             Proc-Type: 4,ENCRYPTED
