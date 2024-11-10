@@ -1,18 +1,24 @@
-FROM registry.cn-hangzhou.aliyuncs.com/rlm/graalvm-ce:21.0.2
+FROM openjdk:21-slim
 ADD . /build
 WORKDIR /build
-RUN --mount=type=cache,target=/root/.m2 cd gateway && mvn clean -Pnative native:compile
+ARG PROFILES_ACTIVE
+ENV PROFILES_ACTIVE ${PROFILES_ACTIVE}
+RUN --mount=type=cache,target=/root/.m2 \
+  # https://mirrors.tuna.tsinghua.edu.cn/help/debian/
+  sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list.d/debian.sources \
+  && apt update \
+  && apt install -y maven \
+  && mvn clean package -P ${PROFILES_ACTIVE}
 
-FROM alpine
-COPY --from=0 "/build/gateway/target/gateway" server
-RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories \
-  && apk update \
-  && apk upgrade \
-  && apk --no-cache add tzdata curl \
+FROM openjdk:21-slim
+COPY --from=0 "/build/gateway/target/gateway.jar" app.jar
+RUN sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list.d/debian.sources \
+  && apt update \
+  && apt install -y tini curl \
   && ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
-  && touch /server
+  && touch /app.jar
 EXPOSE 7001
 EXPOSE 9001
 ARG PROFILES_ACTIVE
 ENV PROFILES_ACTIVE ${PROFILES_ACTIVE}
-ENTRYPOINT ["sh","-c","./server"]
+ENTRYPOINT ["/usr/bin/tini","--","java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
