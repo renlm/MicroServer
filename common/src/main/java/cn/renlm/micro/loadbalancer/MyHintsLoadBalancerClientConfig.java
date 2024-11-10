@@ -9,6 +9,8 @@ import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.DefaultRequest;
@@ -29,13 +31,11 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Condition;
 import org.springframework.context.annotation.ConditionContext;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.core.type.AnnotatedTypeMetadata;
 import org.springframework.http.HttpHeaders;
 import org.springframework.util.StringUtils;
 
-import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
 
 /**
@@ -44,7 +44,6 @@ import reactor.core.publisher.Mono;
  * @author RenLiMing(任黎明)
  *
  */
-@Configuration(proxyBeanMethods = false)
 @ConditionalOnClass(ReactiveLoadBalancer.Factory.class)
 @LoadBalancerClients(defaultConfiguration = MyHintsLoadBalancerStrategy.class)
 public class MyHintsLoadBalancerClientConfig {
@@ -61,8 +60,9 @@ class HintsConfigurationCondition implements Condition {
 
 }
 
-@Slf4j
 class MyHintsLoadBalancerStrategy {
+
+	private static final Logger log = LoggerFactory.getLogger(MyHintsLoadBalancerStrategy.class);
 
 	private final static String DEFAULT_HINT = "DEFAULT";
 
