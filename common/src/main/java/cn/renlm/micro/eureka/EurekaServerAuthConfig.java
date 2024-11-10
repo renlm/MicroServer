@@ -10,6 +10,7 @@ import java.util.Collections;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.cloud.netflix.eureka.server.ReplicationClientAdditionalFilters;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -52,6 +53,28 @@ public class EurekaServerAuthConfig {
 
 	@Bean
 	@Primary
+	public ReplicationClientAdditionalFilters replicationClientAdditionalFilters(EurekaAuthProperties env) {
+		return new ReplicationClientAdditionalFilters(Collections.singletonList(new ClientRequestFilter() {
+			@Override
+			public void filter(ClientRequestContext requestContext) throws IOException {
+				String serverToken = CsrfUtil.createServerToken();
+				String csrfToken = CsrfUtil.createCsrfToken(secureRandom, serverToken);
+				String timestamp = String.valueOf(System.currentTimeMillis());
+				String secretKey = env.getSecretKey();
+				String sign = DigestUtils.md5DigestAsHex((csrfToken + timestamp + secretKey).getBytes());
+				requestContext.getHeaders().forEach((k, v) -> {
+					System.out.println("1-[" + k + "," + v + "]");
+				});
+				requestContext.getHeaders().add(X_SERVER_TOKEN, serverToken);
+				requestContext.getHeaders().add(X_XSRF_TOKEN, csrfToken);
+				requestContext.getHeaders().add(SIGN_HEADER_TIMESTAMP, timestamp);
+				requestContext.getHeaders().add(SIGN_HEADER_SIGN, sign);
+			}
+		}));
+	}
+
+	@Bean
+	@Primary
 	public Jersey3DiscoveryClientOptionalArgs jersey3DiscoveryClientOptionalArgs(EurekaAuthProperties env) {
 		Jersey3DiscoveryClientOptionalArgs discoveryClientOptionalArgs = new Jersey3DiscoveryClientOptionalArgs();
 		discoveryClientOptionalArgs.setAdditionalFilters(Collections.singletonList(new ClientRequestFilter() {
@@ -62,6 +85,9 @@ public class EurekaServerAuthConfig {
 				String timestamp = String.valueOf(System.currentTimeMillis());
 				String secretKey = env.getSecretKey();
 				String sign = DigestUtils.md5DigestAsHex((csrfToken + timestamp + secretKey).getBytes());
+				requestContext.getHeaders().forEach((k, v) -> {
+					System.out.println("2-[" + k + "," + v + "]");
+				});
 				requestContext.getHeaders().add(X_SERVER_TOKEN, serverToken);
 				requestContext.getHeaders().add(X_XSRF_TOKEN, csrfToken);
 				requestContext.getHeaders().add(SIGN_HEADER_TIMESTAMP, timestamp);
