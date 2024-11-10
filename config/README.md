@@ -1,10 +1,10 @@
-## 配置中心
-### keyStore.jks
+# 配置中心
+## keyStore.jks
 	keypass 与 storepass 要相同
 	Warning:  Different store and key passwords not supported for PKCS12 KeyStores.
 	$ keytool -genkeypair -alias alias -keyalg RSA -validity 365 -dname "C=CN" -keypass letmein -keystore keyStore.jks -storepass letmein
 	
-### 请求配置
+## 请求配置
 	$ curl http://default:123654@localhost:7001/master/rabbitmq-dev.yaml
 	$ curl http://default:123654@localhost:7001/master/rabbitmq-prod.yaml
 	
