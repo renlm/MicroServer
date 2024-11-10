@@ -24,7 +24,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.netflix.discovery.Jersey3DiscoveryClientOptionalArgs;
 
-import cn.renlm.micro.properties.EurekaClientAuthProperties;
+import cn.renlm.micro.properties.EurekaAuthProperties;
 import cn.renlm.micro.util.CsrfUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -40,7 +40,7 @@ import jakarta.ws.rs.client.ClientRequestFilter;
  *
  */
 @ConditionalOnClass({ Jersey3DiscoveryClientOptionalArgs.class })
-@EnableConfigurationProperties({ EurekaClientAuthProperties.class })
+@EnableConfigurationProperties({ EurekaAuthProperties.class })
 public class EurekaServerAuthConfig {
 
 	protected static final String X_SERVER_TOKEN = "X-SERVER-TOKEN";
@@ -52,7 +52,7 @@ public class EurekaServerAuthConfig {
 
 	@Bean
 	@Primary
-	public Jersey3DiscoveryClientOptionalArgs jersey3DiscoveryClientOptionalArgs(EurekaClientAuthProperties env) {
+	public Jersey3DiscoveryClientOptionalArgs jersey3DiscoveryClientOptionalArgs(EurekaAuthProperties env) {
 		Jersey3DiscoveryClientOptionalArgs discoveryClientOptionalArgs = new Jersey3DiscoveryClientOptionalArgs();
 		discoveryClientOptionalArgs.setAdditionalFilters(Collections.singletonList(new ClientRequestFilter() {
 			@Override
@@ -74,18 +74,18 @@ public class EurekaServerAuthConfig {
 	}
 
 	@Bean
-	EurekaServerAuthFilter eurekaServerAuthFilter(EurekaClientAuthProperties env,
+	EurekaServerAuthFilter eurekaServerAuthFilter(EurekaAuthProperties env,
 			CsrfTokenRepository csrfTokenRepository) {
 		return new EurekaServerAuthFilter(env, csrfTokenRepository);
 	}
 
 	public class EurekaServerAuthFilter extends OncePerRequestFilter {
 
-		private EurekaClientAuthProperties env;
+		private EurekaAuthProperties env;
 
 		private CsrfTokenRepository csrfTokenRepository;
 
-		public EurekaServerAuthFilter(EurekaClientAuthProperties env, CsrfTokenRepository csrfTokenRepository) {
+		public EurekaServerAuthFilter(EurekaAuthProperties env, CsrfTokenRepository csrfTokenRepository) {
 			this.env = env;
 			this.csrfTokenRepository = csrfTokenRepository;
 		}

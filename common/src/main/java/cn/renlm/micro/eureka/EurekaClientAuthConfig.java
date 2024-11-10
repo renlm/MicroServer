@@ -15,7 +15,7 @@ import org.springframework.cloud.netflix.eureka.http.RestTemplateDiscoveryClient
 import org.springframework.context.annotation.Bean;
 import org.springframework.util.DigestUtils;
 
-import cn.renlm.micro.properties.EurekaClientAuthProperties;
+import cn.renlm.micro.properties.EurekaAuthProperties;
 import cn.renlm.micro.util.CsrfUtil;
 
 /**
@@ -25,14 +25,14 @@ import cn.renlm.micro.util.CsrfUtil;
  *
  */
 @ConditionalOnClass(RestTemplateDiscoveryClientOptionalArgs.class)
-@EnableConfigurationProperties({ EurekaClientAuthProperties.class })
+@EnableConfigurationProperties({ EurekaAuthProperties.class })
 public class EurekaClientAuthConfig {
 
 	private SecureRandom secureRandom = new SecureRandom();
 
 	@Bean
 	public RestTemplateDiscoveryClientOptionalArgs restTemplateDiscoveryClientOptionalArgs(
-			EurekaClientAuthProperties env,
+			EurekaAuthProperties env,
 			EurekaClientHttpRequestFactorySupplier eurekaClientHttpRequestFactorySupplier) {
 		RestTemplateDiscoveryClientOptionalArgs discoveryClientOptionalArgs = new RestTemplateDiscoveryClientOptionalArgs(
 				eurekaClientHttpRequestFactorySupplier, () -> {

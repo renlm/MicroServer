@@ -8,8 +8,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @author RenLiMing(任黎明)
  *
  */
-@ConfigurationProperties("eureka.client.auth")
-public class EurekaClientAuthProperties {
+@ConfigurationProperties("eureka.auth")
+public class EurekaAuthProperties {
 
 	private String secretKey;
 
