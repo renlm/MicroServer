@@ -2,4 +2,4 @@ server:
   port: ${SERVER_PORT:7001}
   shutdown: graceful
   servlet:
-    context-path: /config
+    contextPath: /config
