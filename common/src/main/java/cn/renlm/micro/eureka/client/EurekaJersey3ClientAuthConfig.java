@@ -10,6 +10,7 @@ import java.security.SecureRandom;
 import java.util.Collections;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
@@ -28,6 +29,7 @@ import jakarta.ws.rs.client.ClientRequestFilter;
  * @author RenLiMing(任黎明)
  *
  */
+@ConditionalOnProperty(value = "eureka.client.jersey.enabled", havingValue = "true")
 @ConditionalOnClass({ Jersey3DiscoveryClientOptionalArgs.class })
 @EnableConfigurationProperties({ EurekaAuthProperties.class })
 public class EurekaJersey3ClientAuthConfig {
