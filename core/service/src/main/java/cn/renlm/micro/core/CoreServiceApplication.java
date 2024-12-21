@@ -4,16 +4,16 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * Api
+ * CoreService
  * 
  * @author RenLiMing(任黎明)
  *
  */
 @SpringBootApplication
-public class ApiApplication {
+public class CoreServiceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ApiApplication.class, args);
+		SpringApplication.run(CoreServiceApplication.class, args);
 	}
 
 }

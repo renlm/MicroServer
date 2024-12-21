@@ -4,16 +4,16 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * Web
+ * CoreWeb
  * 
  * @author RenLiMing(任黎明)
  *
  */
 @SpringBootApplication
-public class WebApplication {
+public class CoreWebApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(WebApplication.class, args);
+		SpringApplication.run(CoreWebApplication.class, args);
 	}
 
 }
