@@ -35,7 +35,7 @@ import jakarta.ws.rs.client.ClientRequestContext;
 import jakarta.ws.rs.client.ClientRequestFilter;
 
 /**
- * 注册中心认证
+ * 注册中心认证（EurekaServer）
  * 
  * @author RenLiMing(任黎明)
  *
