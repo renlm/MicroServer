@@ -1,6 +1,5 @@
 cn.renlm.micro.eureka.EurekaServerAuthConfig
 cn.renlm.micro.eureka.client.EurekaJersey3ClientAuthConfig
 cn.renlm.micro.eureka.client.EurekaRestClientAuthConfig
-cn.renlm.micro.eureka.client.EurekaWebClientAuthConfig
 cn.renlm.micro.loadbalancer.MyHintsLoadBalancerClientConfig
 cn.renlm.micro.loadbalancer.MyHintsLoadBalancerFeignConfig
