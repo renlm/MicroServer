@@ -4,6 +4,9 @@ server:
 management:
   server:
     port: ${MANAGEMENT_SERVER_PORT:9002}
+eureka:
+  client:
+    webclient.enabled: true
 spring:
   application:
     name: gateway-server
