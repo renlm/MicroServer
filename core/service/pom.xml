@@ -5,10 +5,10 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>cn.renlm.micro</groupId>
-		<artifactId>service</artifactId>
+		<artifactId>core</artifactId>
 		<version>0.0.1</version>
 	</parent>
 	<artifactId>core-service</artifactId>
 	<name>core-service</name>
-	<description>core</description>
+	<description>业务层</description>
 </project>

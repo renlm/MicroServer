@@ -14,6 +14,6 @@
 	<description>核心功能</description>
 	<modules>
 		<module>core-service</module>
-		<module>core-api</module>
+		<module>core-web</module>
 	</modules>
 </project>
