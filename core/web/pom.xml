@@ -8,7 +8,13 @@
 		<artifactId>core</artifactId>
 		<version>0.0.1</version>
 	</parent>
-	<artifactId>core-web</artifactId>
+	<artifactId>core</artifactId>
 	<name>core-web</name>
 	<description>控制层</description>
+	<dependencies>
+		<dependency>
+			<groupId>cn.renlm.micro</groupId>
+			<artifactId>common</artifactId>
+		</dependency>
+	</dependencies>
 </project>

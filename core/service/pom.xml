@@ -8,7 +8,13 @@
 		<artifactId>core</artifactId>
 		<version>0.0.1</version>
 	</parent>
-	<artifactId>core-service</artifactId>
+	<artifactId>core</artifactId>
 	<name>core-service</name>
 	<description>业务层</description>
+	<dependencies>
+		<dependency>
+			<groupId>cn.renlm.micro</groupId>
+			<artifactId>common</artifactId>
+		</dependency>
+	</dependencies>
 </project>
