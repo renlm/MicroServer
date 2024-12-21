@@ -8,7 +8,7 @@
 		<artifactId>core</artifactId>
 		<version>0.0.1</version>
 	</parent>
-	<artifactId>core</artifactId>
+	<artifactId>web</artifactId>
 	<name>web</name>
 	<description>控制层</description>
 	<dependencies>

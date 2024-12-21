@@ -8,7 +8,7 @@
 		<artifactId>core</artifactId>
 		<version>0.0.1</version>
 	</parent>
-	<artifactId>core</artifactId>
+	<artifactId>service</artifactId>
 	<name>service</name>
 	<description>业务层</description>
 	<dependencies>
