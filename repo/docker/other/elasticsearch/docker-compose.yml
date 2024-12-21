@@ -1,0 +1,24 @@
+# https://docs.docker.com/reference/compose-file/
+services:
+  elasticsearch:
+    image: elasticsearch:7.12.1
+    container_name: elasticsearch
+    restart: always
+    ports:
+    - 9200:9200
+    - 9300:9300
+    environment:
+    - TZ=Asia/Shanghai
+    - discovery.type=single-node
+    - bootstrap.memory_lock=true
+    - ES_JAVA_OPTS=-Xms256m -Xmx512m
+    - xpack.security.enabled=true
+    - ELASTIC_PASSWORD=KK_fyw4bnmdf4Ksp7IMYuPWD@20stdt^tn50jlsfy
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+networks:
+  default:
+    external: true
+    name: share

@@ -1,0 +1,24 @@
+# https://docs.docker.com/reference/compose-file/
+services:
+  jenkins:
+    image: jenkins/jenkins:lts-jdk21
+    container_name: jenkins
+    restart: always
+    privileged: true
+    user: root
+    ports:
+    - 8080:8080
+    - 50000:50000
+    environment:
+      TZ: Asia/Shanghai
+    volumes:
+    - /root/.m2:/root/.m2
+    - /usr/bin/docker:/usr/bin/docker
+    - /usr/libexec/docker:/usr/libexec/docker
+    - /var/run/docker.sock:/var/run/docker.sock
+    - /etc/docker/daemon.json:/etc/docker/daemon.json
+    - /var/jenkins_home:/var/jenkins_home
+networks:
+  default:
+    external: true
+    name: share

@@ -1,0 +1,12 @@
+# https://istio.io/latest/docs/ops/configuration/mesh/app-health-check/
+# https://istio.io/latest/zh/docs/ops/integrations/prometheus/
+apiVersion: v1
+kind: List
+items:
+- apiVersion: security.istio.io/v1
+  kind: PeerAuthentication
+  metadata:
+    name: default
+  spec:
+    mtls:
+      mode: STRICT

@@ -1,0 +1,14 @@
+spring:
+  data:
+    redis:
+      database: 0
+      host: redis.renlm.cn
+      port: 6379
+      password: KK_fyw4bnmdf4Ksp7IMYuPWD@20stdt^tn50jlsfy
+      timeout: 10s
+      lettuce:
+        pool:
+          maxActive: 256
+          maxWait: 2000ms
+          maxIdle: 10
+          minIdle: 5

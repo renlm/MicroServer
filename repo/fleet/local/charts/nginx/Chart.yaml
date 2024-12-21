@@ -1,0 +1,10 @@
+# https://github.com/nginxinc/docker-nginx
+# https://opentelemetry.io/blog/2022/instrument-nginx/
+# https://github.com/open-telemetry/opentelemetry-cpp-contrib/tree/main/instrumentation/otel-webserver-module
+# https://github.com/open-telemetry/opentelemetry-cpp-contrib/releases
+apiVersion: v2
+name: nginx
+description: A Helm chart for nginx.
+type: application
+version: 1.25.5
+appVersion: 0.0.1

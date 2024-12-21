@@ -1,0 +1,18 @@
+management:
+  metrics:
+    tags:
+      application: ${spring.application.name}
+      region: default
+  endpoint:
+    shutdown:
+      enabled: true
+    health:
+      enabled: true
+      probes.enabled: true
+  info:
+    os.enabled: true
+    java.enabled: true
+  endpoints:
+    web.exposure:
+      basePath: /actuator
+      include: shutdown,health,info,metrics,prometheus

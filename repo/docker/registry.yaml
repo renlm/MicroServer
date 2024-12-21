@@ -1,0 +1,39 @@
+# https://cr.console.aliyun.com/cn-hangzhou/instances/mirrors
+# docker login --username=renlm@21cn.com registry.cn-hangzhou.aliyuncs.com
+aliyuncs:
+  docker-server: registry.cn-hangzhou.aliyuncs.com
+  docker-username: renlm@21cn.com
+  docker-password: s170^0lGR2_MR1^rr8dh7di^df
+# https://harbor.renlm.cn
+# docker login --username=admin harbor.renlm.cn
+harbor:
+  docker-server: harbor.renlm.cn
+  docker-username: admin
+  docker-password: Mtrlm49101
+# K3S 镜像代理
+# https://docs.k3s.io/zh/installation/private-registry
+mirrors:
+  docker.io:
+    endpoint:
+    - https://harbor.renlm.cn
+    rewrite:
+      "(.*)": "docker.io/$1"
+  quay.io:
+    endpoint:
+    - https://harbor.renlm.cn
+    rewrite:
+      "(.*)": "quay.io/$1"
+  gcr.io:
+    endpoint:
+    - https://gcr-io.renlm.cn
+  ghcr.io:
+    endpoint:
+    - https://ghcr-io.renlm.cn
+  registry.k8s.io:
+    endpoint:
+    - https://registry-k8s-io.renlm.cn
+configs:
+  harbor.renlm.cn:
+    auth:
+      username: admin
+      password: Mtrlm49101

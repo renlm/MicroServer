@@ -1,0 +1,23 @@
+eureka:
+  auth.secretKey: ${EUREKA_AUTH_SECRETKEY:123654}
+  datacenter: micro
+  environment: ${spring.profiles.active}
+  instance:
+    preferIpAddress: false
+    hostname: ${HOSTNAME}
+    nonSecurePort: ${server.port}
+    instanceId: ${eureka.instance.hostname}:${eureka.instance.nonSecurePort}
+    leaseRenewalIntervalInSeconds: 30
+    leaseExpirationDurationInSeconds: 90
+  server:
+    enableSelfPreservation: true
+    peerNodeReadTimeoutMs: 5000
+    evictionIntervalTimerInMs: 60000
+    responseCacheUpdateIntervalMs: 30000
+    useReadOnlyResponseCache: true
+  client:
+    jersey.enabled: true
+    registerWithEureka: ${REGISTER_WITH_EUREKA:true}
+    fetchRegistry: ${FETCH_REGISTRY:false}
+    serviceUrl:
+      defaultZone: ${EUREKA_SERVER}

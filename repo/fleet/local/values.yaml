@@ -1,0 +1,10 @@
+nginx:
+  enabled: false
+jaeger:
+  enabled: false
+redis:
+  enabled: false
+postgres:
+  enabled: false
+rabbitmq:
+  enabled: false

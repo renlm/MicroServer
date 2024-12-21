@@ -1,0 +1,16 @@
+{{- $fullName := include "redis.fullname" . -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ $fullName }}
+  labels:
+    {{- include "redis.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - name: tcp
+      port: {{ .Values.service.port }}
+      protocol: TCP
+      targetPort: tcp
+  selector:
+    {{- include "redis.selectorLabels" . | nindent 4 }}

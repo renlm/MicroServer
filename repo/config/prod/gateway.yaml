@@ -1,0 +1,33 @@
+spring:
+  cloud:
+    gateway:
+      defaultFilters:
+      - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+      globalcors:
+        addToSimpleUrlHandlerMapping: true
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+            - https://renlm.cn
+            - https://gw.renlm.cn
+            - https://site.renlm.cn
+            allowedMethods:
+            - GET
+            - POST
+      routes:
+      - id: config
+        uri: http://config-server:7001
+        predicates:
+        - Path=/config/**
+        filters:
+        - RewriteLocationResponseHeader=AS_IN_REQUEST, Location
+        - AddRequestHeader=X-Request-Router, Spring-Cloud-Gateway
+        - AddResponseHeader=X-Response-Router, Spring-Cloud-Gateway
+      - id: registrar
+        uri: lb://eureka-server
+        predicates:
+        - Path=/registrar/**
+        filters:
+        - RewriteLocationResponseHeader=AS_IN_REQUEST, Location
+        - AddRequestHeader=X-Request-Router, Spring-Cloud-Gateway
+        - AddResponseHeader=X-Response-Router, Spring-Cloud-Gateway

@@ -1,0 +1,90 @@
+{{- $fullName := include "postgres.fullname" . -}}
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ $fullName }}
+  labels:
+    {{- include "postgres.labels" . | nindent 4 }}
+spec:
+  serviceName: {{ $fullName }}
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "postgres.selectorLabels" . | nindent 6 }}
+  updateStrategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "postgres.selectorLabels" . | nindent 8 }}
+        {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.Version }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        {{- if .Values.env }}
+        env:
+        {{- range $key, $value := .Values.env }}
+        - name: {{ $key }}
+          value: {{ $value | quote }}
+        {{- end }}
+        {{- end }}
+        ports:
+        - name: tcp
+          containerPort: {{ .Values.service.port }}
+          protocol: TCP
+        livenessProbe:
+          {{- toYaml .Values.livenessProbe | nindent 10 }}
+        readinessProbe:
+          {{- toYaml .Values.readinessProbe | nindent 10 }}
+        volumeMounts:
+        - name: postgres-init
+          mountPath: /docker-entrypoint-initdb.d
+        - name: postgres-data
+          mountPath: /var/lib/postgresql/data
+      - name: postgres-exporter
+        image: quay.io/prometheuscommunity/postgres-exporter
+        command: 
+        - sh
+        - -c
+        - sleep 20; exec /bin/postgres_exporter --config.file=/etc/postgres_exporter.yml
+        env:
+        - name: DATA_SOURCE_URI
+          value: {{ $fullName }}:{{ .Values.service.port }}/{{ .Values.env.POSTGRES_DB }}?sslmode=disable
+        - name: DATA_SOURCE_USER
+          value: {{ .Values.env.POSTGRES_USER }}
+        - name: DATA_SOURCE_PASS
+          value: {{ .Values.env.POSTGRES_PASSWORD }}
+        ports:
+        - name: http
+          containerPort: 9187
+          protocol: TCP
+        volumeMounts:
+        - name: postgres-init
+          mountPath: /etc/postgres_exporter.yml
+          subPath: postgres_exporter.yml
+      volumes:
+      - name: postgres-init
+        configMap:
+          name: {{ $fullName }}-configmap
+          items:
+          - key: pgpass
+            path: .pgpass
+          - key: init-user-db.sh
+            path: init-user-db.sh
+          - key: postgres_exporter.yml
+            path: postgres_exporter.yml
+      - name: postgres-data
+        hostPath:
+          path: /var/lib/postgresql/data
