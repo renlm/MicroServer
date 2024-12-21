@@ -26,7 +26,7 @@ import cn.renlm.micro.properties.EurekaAuthProperties;
 import cn.renlm.micro.util.CsrfUtil;
 
 /**
- * Eureka客户端认证
+ * Eureka 客户端认证
  * 
  * @author RenLiMing(任黎明)
  *
