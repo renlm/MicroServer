@@ -9,7 +9,7 @@
 		<version>0.0.1</version>
 	</parent>
 	<artifactId>core</artifactId>
-	<name>core-web</name>
+	<name>web</name>
 	<description>控制层</description>
 	<dependencies>
 		<dependency>

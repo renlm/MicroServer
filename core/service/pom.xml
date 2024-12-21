@@ -9,7 +9,7 @@
 		<version>0.0.1</version>
 	</parent>
 	<artifactId>core</artifactId>
-	<name>core-service</name>
+	<name>service</name>
 	<description>业务层</description>
 	<dependencies>
 		<dependency>

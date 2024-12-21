@@ -13,7 +13,7 @@
 	<name>core</name>
 	<description>核心功能</description>
 	<modules>
-		<module>core-service</module>
-		<module>core-web</module>
+		<module>service</module>
+		<module>web</module>
 	</modules>
 </project>
