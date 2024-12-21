@@ -6,7 +6,7 @@ import static cn.renlm.micro.constant.ServiceNameConstants.CORE_SERVICE;
 /**
  * 用户
  * 
- * @author Renlm
+ * @author RenLiMing(任黎明)
  *
  */
 @FeignClient(contextId = "userClient", name = CORE_SERVICE)
