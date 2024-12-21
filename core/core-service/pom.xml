@@ -8,9 +8,9 @@
 		<artifactId>core</artifactId>
 		<version>0.0.1</version>
 	</parent>
-	<artifactId>web</artifactId>
-	<name>web</name>
-	<description>控制层</description>
+	<artifactId>core-service</artifactId>
+	<name>core-service</name>
+	<description>CoreService</description>
 	<dependencies>
 		<dependency>
 			<groupId>cn.renlm.micro</groupId>
