@@ -26,7 +26,7 @@ import cn.renlm.micro.util.CsrfUtil;
  */
 @ConditionalOnClass(RestClient.class)
 @EnableConfigurationProperties({ EurekaAuthProperties.class })
-public class EurekaRestClientAuthConfig {
+public class EurekaClientRestAuthConfig {
 
 	private SecureRandom secureRandom = new SecureRandom();
 
