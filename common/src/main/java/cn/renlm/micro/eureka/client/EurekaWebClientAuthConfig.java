@@ -31,8 +31,8 @@ import cn.renlm.micro.util.CsrfUtil;
  *
  */
 @ConditionalOnProperty(value = "eureka.client.webclient.enabled", havingValue = "true")
-@ConditionalOnMissingBean({ EurekaJersey3ClientAuthConfig.class })
 @ConditionalOnClass({ WebClient.class })
+@ConditionalOnMissingBean({ EurekaJersey3ClientAuthConfig.class })
 @EnableConfigurationProperties({ EurekaAuthProperties.class })
 public class EurekaWebClientAuthConfig {
 

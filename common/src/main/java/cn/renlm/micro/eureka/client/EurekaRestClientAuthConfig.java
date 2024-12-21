@@ -10,6 +10,7 @@ import java.security.GeneralSecurityException;
 import java.security.SecureRandom;
 
 import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -33,8 +34,9 @@ import cn.renlm.micro.util.CsrfUtil;
  *
  */
 @ConditionalOnProperty(value = "eureka.client.restclient.enabled", havingValue = "true")
-@ConditionalOnMissingBean({ EurekaJersey3ClientAuthConfig.class })
 @ConditionalOnClass({ RestClient.class })
+@ConditionalOnMissingBean({ EurekaJersey3ClientAuthConfig.class })
+@ConditionalOnBean({ EurekaClientHttpRequestFactorySupplier.class })
 @EnableConfigurationProperties({ EurekaAuthProperties.class })
 public class EurekaRestClientAuthConfig {
 
