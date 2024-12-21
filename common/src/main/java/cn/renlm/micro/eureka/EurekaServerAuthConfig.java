@@ -23,8 +23,6 @@ import org.springframework.security.web.csrf.DefaultCsrfToken;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.netflix.discovery.Jersey3DiscoveryClientOptionalArgs;
-
 import cn.renlm.micro.properties.EurekaAuthProperties;
 import cn.renlm.micro.util.CsrfUtil;
 import jakarta.servlet.FilterChain;
@@ -35,20 +33,20 @@ import jakarta.ws.rs.client.ClientRequestContext;
 import jakarta.ws.rs.client.ClientRequestFilter;
 
 /**
- * 注册中心认证（EurekaServer）
+ * Eureka 注册中心认证
  * 
  * @author RenLiMing(任黎明)
  *
  */
-@ConditionalOnClass({ Jersey3DiscoveryClientOptionalArgs.class })
+@ConditionalOnClass({ ReplicationClientAdditionalFilters.class })
 @EnableConfigurationProperties({ EurekaAuthProperties.class })
 public class EurekaServerAuthConfig {
 
-	protected static final String X_SERVER_TOKEN = "X-SERVER-TOKEN";
-	protected static final String X_XSRF_TOKEN = "X-XSRF-TOKEN";
-	protected static final String _CSRF = "_csrf";
-	protected static final String SIGN_HEADER_TIMESTAMP = "X-EUREKA-TIMESTAMP";
-	protected static final String SIGN_HEADER_SIGN = "X-EUREKA-SIGN";
+	public static final String X_SERVER_TOKEN = "X-SERVER-TOKEN";
+	public static final String X_XSRF_TOKEN = "X-XSRF-TOKEN";
+	public static final String _CSRF = "_csrf";
+	public static final String SIGN_HEADER_TIMESTAMP = "X-EUREKA-TIMESTAMP";
+	public static final String SIGN_HEADER_SIGN = "X-EUREKA-SIGN";
 	private SecureRandom secureRandom = new SecureRandom();
 
 	@Bean
@@ -68,29 +66,6 @@ public class EurekaServerAuthConfig {
 				requestContext.getHeaders().add(SIGN_HEADER_SIGN, sign);
 			}
 		}));
-	}
-
-	@Bean
-	@Primary
-	public Jersey3DiscoveryClientOptionalArgs jersey3DiscoveryClientOptionalArgs(EurekaAuthProperties env) {
-		Jersey3DiscoveryClientOptionalArgs discoveryClientOptionalArgs = new Jersey3DiscoveryClientOptionalArgs();
-		discoveryClientOptionalArgs.setAdditionalFilters(Collections.singletonList(new ClientRequestFilter() {
-			@Override
-			public void filter(ClientRequestContext requestContext) throws IOException {
-				String serverToken = CsrfUtil.createServerToken();
-				String csrfToken = CsrfUtil.createCsrfToken(secureRandom, serverToken);
-				String timestamp = String.valueOf(System.currentTimeMillis());
-				String secretKey = env.getSecretKey();
-				String sign = DigestUtils.md5DigestAsHex((csrfToken + timestamp + secretKey).getBytes());
-				requestContext.getHeaders().add(X_SERVER_TOKEN, serverToken);
-				requestContext.getHeaders().add(X_XSRF_TOKEN, csrfToken);
-				requestContext.getHeaders().add(SIGN_HEADER_TIMESTAMP, timestamp);
-				requestContext.getHeaders().add(SIGN_HEADER_SIGN, sign);
-			}
-		}));
-		{
-			return discoveryClientOptionalArgs;
-		}
 	}
 
 	@Bean

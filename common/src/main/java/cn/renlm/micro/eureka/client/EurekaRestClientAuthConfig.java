@@ -1,4 +1,4 @@
-package cn.renlm.micro.eureka;
+package cn.renlm.micro.eureka.client;
 
 import static cn.renlm.micro.eureka.EurekaServerAuthConfig.SIGN_HEADER_SIGN;
 import static cn.renlm.micro.eureka.EurekaServerAuthConfig.SIGN_HEADER_TIMESTAMP;
@@ -25,7 +25,7 @@ import cn.renlm.micro.properties.EurekaAuthProperties;
 import cn.renlm.micro.util.CsrfUtil;
 
 /**
- * RestClient（Eureka客户端认证）
+ * Eureka客户端认证
  * 
  * @author RenLiMing(任黎明)
  *
