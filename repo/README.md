@@ -62,10 +62,7 @@ Environment="BUILDKIT_STEP_LOG_MAX_SPEED=10240000"
 	$ docker login --username=renlm@21cn.com registry.cn-hangzhou.aliyuncs.com
 	$ docker-compose -f /root/MicroServer/repo/docker/docker-compose.yml up -d
 	$ rm -fr /etc/nginx/conf.d && ln -sf /root/MicroServer/repo/nginx/conf.d /etc/nginx/conf.d
-	$ ln -sf /root/MicroServer/repo/nginx/modules-enabled/mysql.conf /etc/nginx/modules-enabled/mysql.conf
-	$ ln -sf /root/MicroServer/repo/nginx/modules-enabled/postgres.conf /etc/nginx/modules-enabled/postgres.conf
-	$ ln -sf /root/MicroServer/repo/nginx/modules-enabled/rabbitmq.conf /etc/nginx/modules-enabled/rabbitmq.conf
-	$ ln -sf /root/MicroServer/repo/nginx/modules-enabled/redis.conf /etc/nginx/modules-enabled/redis.conf
+	$ ln -sf /root/MicroServer/repo/nginx/modules-enabled/* /etc/nginx/modules-enabled
 	$ nginx -v
 	$ nginx -t
 	$ nginx -s reload
