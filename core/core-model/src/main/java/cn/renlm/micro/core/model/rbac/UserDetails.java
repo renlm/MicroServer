@@ -1,4 +1,4 @@
-package cn.renlm.micro.core.model.user;
+package cn.renlm.micro.core.model.rbac;
 
 import java.io.Serializable;
 
@@ -16,7 +16,7 @@ public class UserDetails implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * 用户ID
+	 * 用户Id
 	 */
 	private String userId;
 

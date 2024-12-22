@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import cn.renlm.micro.core.model.rbac.UserDetails;
 import cn.renlm.micro.core.rbac.service.UserService;
 import jakarta.annotation.Resource;
 
@@ -31,8 +32,8 @@ public class UserController {
 	 */
 	@ResponseBody
 	@GetMapping("/loadUserByUserName")
-	public Object loadUserByUserName(String userName) {
-		return null;
+	public UserDetails loadUserByUserName(String userName) {
+		return userService.loadUserByUserName(userName);
 	}
 
 }

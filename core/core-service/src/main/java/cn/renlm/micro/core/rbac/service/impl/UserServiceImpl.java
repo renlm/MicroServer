@@ -2,6 +2,7 @@ package cn.renlm.micro.core.rbac.service.impl;
 
 import org.springframework.stereotype.Service;
 
+import cn.renlm.micro.core.model.rbac.UserDetails;
 import cn.renlm.micro.core.rbac.service.UserService;
 
 /**
@@ -14,5 +15,10 @@ import cn.renlm.micro.core.rbac.service.UserService;
  */
 @Service
 public class UserServiceImpl implements UserService {
+
+	@Override
+	public UserDetails loadUserByUserName(String userName) {
+		return null;
+	}
 
 }

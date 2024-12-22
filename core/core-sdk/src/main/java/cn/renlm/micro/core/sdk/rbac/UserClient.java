@@ -1,11 +1,11 @@
-package cn.renlm.micro.core.sdk.user.client;
+package cn.renlm.micro.core.sdk.rbac;
 
 import static cn.renlm.micro.constant.ServiceNameConstants.CORE_SERVICE;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import cn.renlm.micro.core.model.user.UserDetails;
+import cn.renlm.micro.core.model.rbac.UserDetails;
 
 /**
  * 用户
