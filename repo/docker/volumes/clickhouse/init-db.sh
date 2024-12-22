@@ -3,9 +3,6 @@ set -e
 
 # https://clickhouse.com/docs/en/engines/table-engines
 clickhouse client -n <<-EOSQL
-    CREATE DATABASE grafana;
-    CREATE USER grafana IDENTIFIED BY '$CLICKHOUSE_PASSWORD';
-    GRANT ALL ON grafana.* TO grafana;
     CREATE DATABASE logging;
     CREATE USER logging IDENTIFIED BY '$CLICKHOUSE_PASSWORD';
     GRANT ALL ON logging.* TO logging;
