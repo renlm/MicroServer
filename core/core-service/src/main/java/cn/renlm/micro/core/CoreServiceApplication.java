@@ -2,6 +2,7 @@ package cn.renlm.micro.core;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 /**
  * CoreService
@@ -9,6 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author RenLiMing(任黎明)
  *
  */
+@EnableDiscoveryClient
 @SpringBootApplication
 public class CoreServiceApplication {
 
