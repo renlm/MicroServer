@@ -84,6 +84,17 @@ services:
     ports:
     - 3306:3306
     command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --skip-log-bin
+    healthcheck:
+      test:
+      - CMD
+      - mysqladmin
+      - ping
+      - -u
+      - root
+      - -p${MYSQL_ROOT_PASSWORD}
+      interval: 5s
+      timeout: 5s
+      retries: 12
     environment:
       TZ: Asia/Shanghai
       MYSQL_DATABASE: dev
