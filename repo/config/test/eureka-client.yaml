@@ -23,4 +23,4 @@ eureka:
     fetchRegistry: true
     registryFetchIntervalSeconds: 3
     serviceUrl:
-      defaultZone: ${EUREKA_SERVER:http://localhost:7101/registrar/eureka}
+      defaultZone: ${EUREKA_SERVER:https://gw.renlm.cn/registrar/eureka}
