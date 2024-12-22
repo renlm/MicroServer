@@ -3,11 +3,11 @@ spring:
     config:
       server:
         git:
-          uri: git@gitee.com:renlm/ConfigRepo.git
+          uri: git@gitee.com:renlm/MicroServer.git
           forcePull: true
           cloneOnStart: true
           defaultLabel: master
-          search-paths: config/{profile}
+          search-paths: repo/config/{profile}
           ignoreLocalSshSettings: true
           passphrase: ${GIT_PASSPHRASE:ICgacH955iKjdfu8idh^988jErQ63moj3Uy54r}
           privateKey: |-
