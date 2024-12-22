@@ -18,7 +18,10 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserDetails loadUserByUserName(String userName) {
-		return null;
+		UserDetails user = new UserDetails();
+		user.setUserId("0");
+		user.setUserName("admin");
+		return user;
 	}
 
 }
