@@ -106,6 +106,21 @@ services:
       CLICKHOUSE_PASSWORD: KK_fyw4bnmdf4Ksp7IMYuPWD@20stdt^tn50jlsfy
     volumes:
     - /root/MicroServer/repo/docker/volumes/clickhouse/init-db.sh:/docker-entrypoint-initdb.d/init-db.sh
+  grafana:
+    image: grafana/grafana-oss
+    container_name: grafana
+    restart: always
+    ports:
+    - 3000:3000
+    environment:
+      TZ: Asia/Shanghai
+      GF_AUTH_ANONYMOUS_ENABLED: false
+      GF_DATABASE_TYPE: clickhouse
+      GF_DATABASE_HOST: clickhouse:8123
+      GF_DATABASE_NAME: grafana
+      GF_DATABASE_USER: grafana
+      GF_DATABASE_PASSWORD: KK_fyw4bnmdf4Ksp7IMYuPWD@20stdt^tn50jlsfy
+      GF_DATABASE_SSL_MODE: disable
   config-server:
     image: registry.cn-hangzhou.aliyuncs.com/rlm/config-server:0.0.1
     container_name: config-server
