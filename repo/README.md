@@ -45,11 +45,6 @@ Environment="BUILDKIT_STEP_LOG_MAX_SPEED=10240000"
 	$ systemctl restart nginx
 	$ systemctl status nginx
 	
-	开发组件
-	$ ssh-keygen -m PEM -t rsa -b 4096 -C "renlm@21cn.com"
-	$ git clone git@gitee.com:renlm/MicroServer.git
-	$ docker network create share
-	$ docker network ls
 	环境变量
 	$ sed -i '$a export SECURITY_USER_NAME=default' ~/.bashrc \
         && sed -i '$a export SECURITY_USER_PASSWORD=M1h62Gj3Uy54r' ~/.bashrc \
@@ -57,6 +52,12 @@ Environment="BUILDKIT_STEP_LOG_MAX_SPEED=10240000"
         && sed -i '$a export DB_PASSWORD=KK_fyw4bnmdf4Ksp7IMYuPWD@20stdt^tn50jlsfy' ~/.bashrc \
         && sed -i '$a export EUREKA_AUTH_SECRETKEY=KK_fyw4bnmdf4Ksp7IMYuPWD@20stdt^tn50jlsfy' ~/.bashrc \
         && source ~/.bashrc
+	
+	开发组件
+	$ ssh-keygen -m PEM -t rsa -b 4096 -C "renlm@21cn.com"
+	$ git clone git@gitee.com:renlm/MicroServer.git
+	$ docker network create share
+	$ docker network ls
 	配置证书
 	$ docker login --username=renlm@21cn.com registry.cn-hangzhou.aliyuncs.com
 	$ docker-compose -f /root/MicroServer/repo/docker/docker-compose.yml up -d

@@ -91,7 +91,7 @@ services:
       - ping
       - -u
       - root
-      - -p${MYSQL_ROOT_PASSWORD}
+      - -p${DB_PASSWORD}
       interval: 5s
       timeout: 5s
       retries: 12
