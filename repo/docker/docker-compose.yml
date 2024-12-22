@@ -138,7 +138,7 @@ services:
     - 3000:3000
     environment:
       TZ: Asia/Shanghai
-      GF_AUTH_ANONYMOUS_ENABLED: false
+      GF_AUTH_ANONYMOUS_ENABLED: "false"
       GF_DATABASE_TYPE: clickhouse
       GF_DATABASE_HOST: clickhouse:8123
       GF_DATABASE_NAME: grafana
