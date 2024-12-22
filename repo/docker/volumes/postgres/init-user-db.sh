@@ -2,10 +2,6 @@
 set -e
 
 export PGPASSFILE=/docker-entrypoint-initdb.d/.pgpass
-cat <<EOF | tee $PGPASSFILE
-localhost:5432:postgres:postgres:$POSTGRES_PASSWORD
-EOF
-
 psql -v ON_ERROR_STOP=1 <<-EOSQL
 	CREATE USER grafana WITH PASSWORD '$POSTGRES_PASSWORD';
 	CREATE DATABASE grafana OWNER grafana;

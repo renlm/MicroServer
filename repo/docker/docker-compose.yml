@@ -76,6 +76,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     volumes:
+    - /root/MicroServer/repo/docker/volumes/postgres/pgpass:/docker-entrypoint-initdb.d/.pgpass
     - /root/MicroServer/repo/docker/volumes/postgres/init-user-db.sh:/docker-entrypoint-initdb.d/init-user-db.sh
   mysql:
     image: mysql
