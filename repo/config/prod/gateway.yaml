@@ -10,9 +10,9 @@ spring:
             allowedOrigins:
             - https://renlm.cn
             - https://gw.renlm.cn
-            - https://site.renlm.cn
             allowedMethods:
             - GET
+            - PUT
             - POST
       routes:
       - id: config
@@ -24,7 +24,7 @@ spring:
         - AddRequestHeader=X-Request-Router, Spring-Cloud-Gateway
         - AddResponseHeader=X-Response-Router, Spring-Cloud-Gateway
       - id: registrar
-        uri: lb://eureka-server
+        uri: lb://EUREKA-SERVER
         predicates:
         - Path=/registrar/**
         filters:

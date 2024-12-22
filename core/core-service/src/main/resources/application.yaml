@@ -8,14 +8,14 @@ spring:
   application:
     name: CORE-SERVICE
   profiles:
-    active: ${PROFILES_ACTIVE:dev}
+    active: ${PROFILES_ACTIVE:test}
   config:
     import: configserver:https://gw.renlm.cn/config
   cloud:
     config:
       username: ${SECURITY_USER_NAME:default}
       password: ${SECURITY_USER_PASSWORD:123654}
-      name: eureka-client,logging,actuator
+      name: eureka-client,logging,actuator,core-service
       profile: ${spring.profiles.active}
       label: master
       failFast: true
