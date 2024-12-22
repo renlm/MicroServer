@@ -1,12 +1,12 @@
 server:
-  port: ${SERVER_PORT:8001}
+  port: ${SERVER_PORT:8002}
   shutdown: graceful
 management:
   server:
-    port: ${MANAGEMENT_SERVER_PORT:8091}
+    port: ${MANAGEMENT_SERVER_PORT:8092}
 spring:
   application:
-    name: CORE-SERVICE
+    name: CORE-WEB
   profiles:
     active: ${PROFILES_ACTIVE:dev}
   config:

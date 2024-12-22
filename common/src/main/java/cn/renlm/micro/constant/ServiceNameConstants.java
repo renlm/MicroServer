@@ -24,8 +24,13 @@ public interface ServiceNameConstants {
 	String GATEWAYSERVER_SERVICE = "GATEWAY-SERVER";
 
 	/**
-	 * 核心业务
+	 * CoreService
 	 */
 	String CORE_SERVICE = "CORE-SERVICE";
+
+	/**
+	 * CoreWeb
+	 */
+	String CORE_WEB = "CORE-WEB";
 
 }
