@@ -17,7 +17,7 @@ services:
     environment:
       TZ: Asia/Shanghai
     volumes:
-    - /root/ConfigRepo/docker/volumes/redis/redis.conf:/etc/redis/redis.conf
+    - /root/MicroServer/repo/docker/volumes/redis/redis.conf:/etc/redis/redis.conf
   rabbitmq:
     image: rabbitmq:management
     container_name: rabbitmq
@@ -57,7 +57,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: KK_fyw4bnmdf4Ksp7IMYuPWD@20stdt^tn50jlsfy
     volumes:
-    - /root/ConfigRepo/docker/volumes/postgres/init-user-db.sh:/docker-entrypoint-initdb.d/init-user-db.sh
+    - /root/MicroServer/repo/docker/volumes/postgres/init-user-db.sh:/docker-entrypoint-initdb.d/init-user-db.sh
   config-server:
     image: registry.cn-hangzhou.aliyuncs.com/rlm/config-server:0.0.1
     container_name: config-server
