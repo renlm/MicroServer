@@ -47,6 +47,11 @@
 				<artifactId>common</artifactId>
 				<version>${project.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>cn.renlm.micro</groupId>
+				<artifactId>core-sdk</artifactId>
+				<version>${project.version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 	<build>

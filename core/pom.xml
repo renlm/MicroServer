@@ -11,7 +11,7 @@
 	</parent>
 	<artifactId>core</artifactId>
 	<name>core</name>
-	<description>核心功能</description>
+	<description>Core</description>
 	<modules>
 		<module>core-sdk</module>
 		<module>core-service</module>
