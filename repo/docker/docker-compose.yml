@@ -92,6 +92,14 @@ services:
       MYSQL_ROOT_PASSWORD: KK_fyw4bnmdf4Ksp7IMYuPWD@20stdt^tn50jlsfy
     volumes:
     - /root/MicroServer/repo/docker/volumes/mysql/init-user-db.sql:/docker-entrypoint-initdb.d/init-user-db.sql
+  clickhouse:
+    image: clickhouse/clickhouse-server
+    container_name: clickhouse
+    restart: always
+    ports:
+    - 8123:8123
+    environment:
+      TZ: Asia/Shanghai
   config-server:
     image: registry.cn-hangzhou.aliyuncs.com/rlm/config-server:0.0.1
     container_name: config-server
