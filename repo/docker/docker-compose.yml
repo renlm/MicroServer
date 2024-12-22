@@ -109,6 +109,7 @@ services:
     restart: always
     ports:
     - 8123:8123
+    - 9000:9000
     healthcheck:
       test:
       - CMD
@@ -141,7 +142,7 @@ services:
       GF_INSTALL_PLUGINS: grafana-clickhouse-datasource
       GF_AUTH_ANONYMOUS_ENABLED: 0
       GF_DATABASE_TYPE: clickhouse
-      GF_DATABASE_HOST: clickhouse:8123
+      GF_DATABASE_HOST: clickhouse:9000
       GF_DATABASE_NAME: grafana
       GF_DATABASE_USER: grafana
       GF_DATABASE_PASSWORD: ${DB_PASSWORD}
