@@ -138,6 +138,7 @@ services:
     - 3000:3000
     environment:
       TZ: Asia/Shanghai
+      GF_INSTALL_PLUGINS: grafana-clickhouse-datasource
       GF_AUTH_ANONYMOUS_ENABLED: 0
       GF_DATABASE_TYPE: clickhouse
       GF_DATABASE_HOST: clickhouse:8123
