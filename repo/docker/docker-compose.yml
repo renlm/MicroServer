@@ -35,8 +35,8 @@ services:
       retries: 12
     environment:
       TZ: Asia/Shanghai
-      RABBITMQ_DEFAULT_VHOST: /share
-      RABBITMQ_DEFAULT_USER: share
+      RABBITMQ_DEFAULT_VHOST: /dev
+      RABBITMQ_DEFAULT_USER: dev
       RABBITMQ_DEFAULT_PASS: KK_fyw4bnmdf4Ksp7IMYuPWD@20stdt^tn50jlsfy
   postgres:
     image: postgres
@@ -58,6 +58,21 @@ services:
       POSTGRES_PASSWORD: KK_fyw4bnmdf4Ksp7IMYuPWD@20stdt^tn50jlsfy
     volumes:
     - /root/MicroServer/repo/docker/volumes/postgres/init-user-db.sh:/docker-entrypoint-initdb.d/init-user-db.sh
+  mysql:
+    image: mysql
+    container_name: mysql
+    restart: always
+    ports:
+    - 3306:3306
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --skip-log-bin
+    environment:
+      TZ: Asia/Shanghai
+      MYSQL_DATABASE: dev
+      MYSQL_USER: dev
+      MYSQL_PASSWORD: KK_fyw4bnmdf4Ksp7IMYuPWD@20stdt^tn50jlsfy
+      MYSQL_ROOT_PASSWORD: KK_fyw4bnmdf4Ksp7IMYuPWD@20stdt^tn50jlsfy
+    volumes:
+    - /root/MicroServer/repo/docker/volumes/mysql/init-user-db.sql:/docker-entrypoint-initdb.d/init-user-db.sql
   config-server:
     image: registry.cn-hangzhou.aliyuncs.com/rlm/config-server:0.0.1
     container_name: config-server
