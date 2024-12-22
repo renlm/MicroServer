@@ -1,7 +1,7 @@
 spring:
   data:
     redis:
-      database: 1
+      database: 2
       host: jedis
       port: 6379
       password: KK_fyw4bnmdf4Ksp7IMYuPWD@20stdt^tn50jlsfy

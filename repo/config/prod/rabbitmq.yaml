@@ -1,7 +1,7 @@
 spring:
   rabbitmq:
-    virtual-host: /share
+    virtual-host: /dev
     host: rabbitmq
     port: 5672
-    username: share
+    username: dev
     password: KK_fyw4bnmdf4Ksp7IMYuPWD@20stdt^tn50jlsfy
