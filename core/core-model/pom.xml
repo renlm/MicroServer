@@ -8,22 +8,10 @@
 		<artifactId>core</artifactId>
 		<version>0.0.1</version>
 	</parent>
-	<artifactId>core-sdk</artifactId>
-	<name>core-sdk</name>
-	<description>CoreSdk</description>
+	<artifactId>core-model</artifactId>
+	<name>core-model</name>
+	<description>CoreModel</description>
 	<dependencies>
-		<dependency>
-			<groupId>cn.renlm.micro</groupId>
-			<artifactId>common</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>cn.renlm.micro</groupId>
-			<artifactId>core-model</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-openfeign-core</artifactId>
-		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>

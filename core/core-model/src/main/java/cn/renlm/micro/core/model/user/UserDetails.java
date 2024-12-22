@@ -1,4 +1,4 @@
-package cn.renlm.micro.core.sdk.user.dto;
+package cn.renlm.micro.core.model.user;
 
 import java.io.Serializable;
 

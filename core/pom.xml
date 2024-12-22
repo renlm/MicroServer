@@ -13,6 +13,7 @@
 	<name>core</name>
 	<description>Core</description>
 	<modules>
+		<module>core-model</module>
 		<module>core-sdk</module>
 		<module>core-service</module>
 		<module>core-web</module>
