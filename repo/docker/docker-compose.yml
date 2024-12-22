@@ -98,6 +98,16 @@ services:
     restart: always
     ports:
     - 8123:8123
+    healthcheck:
+      test:
+      - CMD
+      - wget
+      - --spider
+      - -q
+      - http://localhost:8123
+      interval: 5s
+      timeout: 5s
+      retries: 12
     environment:
       TZ: Asia/Shanghai
       CLICKHOUSE_DB: dev
@@ -110,6 +120,9 @@ services:
     image: grafana/grafana-oss
     container_name: grafana
     restart: always
+    depends_on:
+      clickhouse:
+        condition: service_healthy
     ports:
     - 3000:3000
     environment:
