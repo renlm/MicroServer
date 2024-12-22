@@ -12,8 +12,13 @@ spring:
             - https://gw.renlm.cn
             allowedMethods:
             - GET
-            - PUT
+            - HEAD
             - POST
+            - PUT
+            - PATCH
+            - DELETE
+            - OPTIONS
+            - TRACE
       routes:
       - id: config
         uri: http://config-server:7001
