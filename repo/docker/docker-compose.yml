@@ -297,6 +297,32 @@ services:
       CONFIGSERVER: http://config-server:7001/config
       EUREKA_SERVER: http://eureka-server1:7101/registrar/eureka,http://eureka-server2:7102/registrar/eureka,http://eureka-server3:7103/registrar/eureka
       EUREKA_AUTH_SECRETKEY: ${EUREKA_AUTH_SECRETKEY}
+  mygraph:
+    image: registry.cn-hangzhou.aliyuncs.com/rlm/mygraph:1.0.1
+    container_name: mygraph
+    hostname: mygraph
+    restart: always
+    init: true
+    ports:
+    - 7080:7080
+    - 7090:7090
+    healthcheck:
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost:7090/actuator/health
+      interval: 5s
+      timeout: 5s
+      retries: 36
+    environment:
+      TZ: Asia/Shanghai
+      SERVER_PORT: 7080
+      MANAGEMENT_SERVER_PORT: 7090
+      DB_INIT_MODE: NEVER
+      SECURITY_USER_NAME: ${SECURITY_USER_NAME}
+      SECURITY_USER_PASSWORD: ${SECURITY_USER_PASSWORD}
+      CONFIGSERVER: http://config-server:7001/config
 networks:
   default:
     external: true
