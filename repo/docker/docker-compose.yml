@@ -141,8 +141,8 @@ services:
       TZ: Asia/Shanghai
       GF_INSTALL_PLUGINS: grafana-clickhouse-datasource
       GF_AUTH_ANONYMOUS_ENABLED: 0
-      GF_DATABASE_TYPE: clickhouse
-      GF_DATABASE_HOST: clickhouse:9000
+      GF_DATABASE_TYPE: postgres
+      GF_DATABASE_HOST: postgres:5432
       GF_DATABASE_NAME: grafana
       GF_DATABASE_USER: grafana
       GF_DATABASE_PASSWORD: ${DB_PASSWORD}
@@ -303,6 +303,13 @@ services:
     hostname: mygraph
     restart: always
     init: true
+    depends_on:
+      redis:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+      mysql:
+        condition: service_healthy
     ports:
     - 7080:7080
     - 7090:7090
