@@ -4,8 +4,4 @@ spring:
   profiles:
     active: ${PROFILES_ACTIVE:dev}
   config:
-    import: configserver:https://${SECURITY_USER_NAME:default}:${SECURITY_USER_PASSWORD:123654}@gw.renlm.cn/config
-    name: eureka-client,logging,actuator
-    profile: ${spring.profiles.active}
-    label: master
-    failFast: true
+    import: configserver:https://${SECURITY_USER_NAME:default}:${SECURITY_USER_PASSWORD:123654}@gw.renlm.cn/config/eureka-client,logging,actuator/${spring.profiles.active}/master?fail-fast=true
