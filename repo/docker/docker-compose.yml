@@ -100,6 +100,12 @@ services:
     - 8123:8123
     environment:
       TZ: Asia/Shanghai
+      CLICKHOUSE_DB: dev
+      CLICKHOUSE_USER: dev
+      CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT: 1
+      CLICKHOUSE_PASSWORD: KK_fyw4bnmdf4Ksp7IMYuPWD@20stdt^tn50jlsfy
+    volumes:
+    - /root/MicroServer/repo/docker/volumes/clickhouse/init-db.sh:/docker-entrypoint-initdb.d/init-db.sh
   config-server:
     image: registry.cn-hangzhou.aliyuncs.com/rlm/config-server:0.0.1
     container_name: config-server
