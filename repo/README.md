@@ -1,4 +1,4 @@
-# ConfigRepo
+# 环境配置
 
-#### 介绍
-私有配置仓库
+[参考文档](https://github-io.renlm.cn)  
+

@@ -1,8 +1,0 @@
-# https://github.com/postgres/postgres
-# https://github.com/prometheus-community/postgres_exporter
-apiVersion: v2
-name: postgres
-description: A Helm chart for postgres.
-type: application
-version: 16.6
-appVersion: 0.0.1

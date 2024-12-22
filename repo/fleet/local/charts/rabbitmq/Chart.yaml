@@ -1,9 +1,0 @@
-# https://github.com/rabbitmq/rabbitmq-server
-# https://github.com/docker-library/rabbitmq
-# https://www.rabbitmq.com/docs/monitoring#health-checks
-apiVersion: v2
-name: rabbitmq
-description: A Helm chart for rabbitmq.
-type: application
-version: 4.0.4
-appVersion: 0.0.1
