@@ -5,7 +5,7 @@
 # https://opentelemetry.io/docs/specs/otel/configuration/sdk-environment-variables/
 otel:
   service.name: ${spring.application.name}
-  otel.exporter.otlp.headers: Authorization=Basic ZGVmYXVsdDpNMWg2MkdqM1V5NTRy
+  exporter.otlp.headers: Authorization=Basic ZGVmYXVsdDpNMWg2MkdqM1V5NTRy
   exporter.otlp.endpoint: http://otel.renlm.cn
   exporter.otlp.protocol: http/protobuf
   metrics.exporter: otlp
