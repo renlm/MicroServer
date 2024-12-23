@@ -1,5 +1,5 @@
 # https://prometheus.io/docs/prometheus/latest/getting_started/
 # apt install -y apache2-utils
-# htpasswd -bc .users default M1h62Gj3Uy54r
+# htpasswd -b -nBC12 default M1h62Gj3Uy54r
 basic_auth_users:
-  default: $apr1$vrzW2M9D$47eCemFvbLOKgqheuRVqY1
+  default: $2y$12$wTt0jufTLAzjSnIW.ZFQ4.QFkxeqo1pclz8GiSLbAEoQkwRUkUMFq
