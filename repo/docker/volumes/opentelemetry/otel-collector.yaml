@@ -59,21 +59,21 @@ service:
           exporter:
             otlp:
               protocol: grpc/protobuf
-              endpoint: http://localhost:4317
+              endpoint: http://otel-collector:4317
     traces:
       processors:
       - batch:
           exporter:
             otlp:
               protocol: grpc/protobuf
-              endpoint: http://localhost:4317
+              endpoint: http://otel-collector:4317
     logs:
       processors:
       - batch:
           exporter:
             otlp:
               protocol: grpc/protobuf
-              endpoint: http://localhost:4317
+              endpoint: http://otel-collector:4317
   pipelines:
     metrics:
       receivers: [otlp]
