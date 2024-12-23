@@ -110,6 +110,8 @@ services:
     restart: always
     ports:
     - 9090:9090
+    command:
+    - --web.config.file=/etc/prometheus/web.yaml
     healthcheck:
       test:
       - CMD
@@ -124,6 +126,7 @@ services:
       TZ: Asia/Shanghai
     volumes:
     - /root/MicroServer/repo/docker/volumes/prometheus/prometheus.yaml:/etc/prometheus/prometheus.yml
+    - /root/MicroServer/repo/docker/volumes/prometheus/web.yaml:/etc/prometheus/web.yaml
   clickhouse:
     image: clickhouse/clickhouse-server
     container_name: clickhouse
