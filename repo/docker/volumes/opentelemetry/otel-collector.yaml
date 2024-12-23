@@ -2,9 +2,9 @@ receivers:
   otlp:
     protocols:
       grpc:
-        endpoint: 0.0.0.0:4317
+        endpoint: otel-collector:4317
       http:
-        endpoint: 0.0.0.0:4318
+        endpoint: otel-collector:4318
 processors:
   batch:
     timeout: 5s
@@ -13,7 +13,7 @@ exporters:
   debug:
     verbosity: detailed
   prometheus:
-    endpoint: 0.0.0.0:8889
+    endpoint: otel-collector:8889
     namespace: monitor
   clickhouse:
     endpoint: tcp://clickhouse:9000?dial_timeout=10s
@@ -46,9 +46,9 @@ exporters:
 extensions:
   health_check: {}
   pprof:
-    endpoint: :1888
+    endpoint: otel-collector:1888
   zpages:
-    endpoint: :55679
+    endpoint: otel-collector:55679
 service:
   extensions: [pprof, zpages, health_check]
   pipelines:
