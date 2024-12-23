@@ -363,12 +363,15 @@ services:
       timeout: 5s
       retries: 36
     environment:
+      HOSTNAME: core-service
       TZ: Asia/Shanghai
       SERVER_PORT: 8001
       MANAGEMENT_SERVER_PORT: 8091
       SECURITY_USER_NAME: ${SECURITY_USER_NAME}
       SECURITY_USER_PASSWORD: ${SECURITY_USER_PASSWORD}
       CONFIGSERVER: http://config-server:7001/config
+      EUREKA_SERVER: http://eureka-server1:7101/registrar/eureka,http://eureka-server2:7102/registrar/eureka,http://eureka-server3:7103/registrar/eureka
+      EUREKA_AUTH_SECRETKEY: ${EUREKA_AUTH_SECRETKEY}
   mygraph:
     image: registry.cn-hangzhou.aliyuncs.com/rlm/mygraph:1.0.1
     container_name: mygraph
