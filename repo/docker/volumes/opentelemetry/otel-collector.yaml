@@ -11,8 +11,6 @@ receivers:
 processors:
   batch: {}
 exporters:
-  debug:
-    verbosity: detailed
   prometheus:
     endpoint: otel-collector:8888
     namespace: monitor
@@ -57,7 +55,7 @@ service:
     logs:
       receivers: [otlp]
       processors: [batch]
-      exporters: [debug, clickhouse]
+      exporters: [clickhouse]
   telemetry:
     metrics:
       level: detailed
