@@ -1,3 +1,5 @@
+# https://opentelemetry.io/zh/docs/collector/internal-telemetry/
+# https://clickhouse.com/docs/en/observability/integrating-opentelemetry
 receivers:
   otlp:
     protocols:
