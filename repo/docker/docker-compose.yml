@@ -150,12 +150,12 @@ services:
     - 4317:4317
     - 4318:4318
     command:
-    - --config=/etc/otel-collector-config.yaml
+    - --config=/etc/otel-collector.yaml
     - --set=service.telemetry.logs.level=INFO
     environment:
       TZ: Asia/Shanghai
     volumes:
-    - /root/MicroServer/repo/docker/volumes/opentelemetry/otel-collector-config.yaml:/etc/otel-collector-config.yaml
+    - /root/MicroServer/repo/docker/volumes/opentelemetry/otel-collector.yaml:/etc/otel-collector.yaml
   grafana:
     image: grafana/grafana-oss
     container_name: grafana
