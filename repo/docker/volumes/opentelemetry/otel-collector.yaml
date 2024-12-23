@@ -8,14 +8,12 @@ receivers:
       http:
         endpoint: otel-collector:4318
 processors:
-  batch:
-    timeout: 5s
-    send_batch_size: 100000
+  batch: {}
 exporters:
   debug:
     verbosity: detailed
   prometheus:
-    endpoint: otel-collector:8889
+    endpoint: otel-collector:8888
     namespace: monitor
   clickhouse:
     endpoint: tcp://clickhouse:9000?dial_timeout=10s
@@ -31,28 +29,34 @@ exporters:
     timeout: 5s
     metrics_tables:
       gauge: 
-        name: "otel_metrics_gauge"
+        name: otel_metrics_gauge
       sum: 
-        name: "otel_metrics_sum"
+        name: otel_metrics_sum
       summary: 
-        name: "otel_metrics_summary"
+        name: otel_metrics_summary
       histogram: 
-        name: "otel_metrics_histogram"
+        name: otel_metrics_histogram
       exponential_histogram: 
-        name: "otel_metrics_exp_histogram"
+        name: otel_metrics_exp_histogram
     retry_on_failure:
       enabled: true
       initial_interval: 5s
       max_interval: 30s
       max_elapsed_time: 300s
-extensions:
-  health_check: {}
-  pprof:
-    endpoint: otel-collector:1888
-  zpages:
-    endpoint: otel-collector:55679
 service:
-  extensions: [pprof, zpages, health_check]
+  pipelines:
+    metrics:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [prometheus, clickhouse]
+    traces:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [clickhouse]
+    logs:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [debug, clickhouse]
   telemetry:
     metrics:
       level: detailed
@@ -76,16 +80,3 @@ service:
             otlp:
               protocol: grpc/protobuf
               endpoint: http://otel-collector:4317
-  pipelines:
-    metrics:
-      receivers: [otlp]
-      processors: [batch]
-      exporters: [prometheus, clickhouse]
-    traces:
-      receivers: [otlp]
-      processors: [batch]
-      exporters: [clickhouse]
-    logs:
-      receivers: [otlp]
-      processors: [batch]
-      exporters: [debug, clickhouse]
