@@ -117,10 +117,7 @@ services:
     healthcheck:
       test:
       - CMD
-      - wget
-      - --spider
-      - -q
-      - http://localhost:9090/-/healthy
+      - promtool check healthy
       interval: 5s
       timeout: 5s
       retries: 12
