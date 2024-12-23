@@ -12,7 +12,7 @@ processors:
   batch: {}
 exporters:
   prometheus:
-    endpoint: otel-collector:8888
+    endpoint: otel-collector:9999
     namespace: monitor
   clickhouse:
     endpoint: tcp://clickhouse:9000?dial_timeout=10s
@@ -47,24 +47,9 @@ service:
       exporters: [clickhouse]
   telemetry:
     metrics:
-      level: detailed
       readers:
-      - periodic:
+      - pull:
           exporter:
-            otlp:
-              protocol: http/protobuf
-              endpoint: http://otel-collector:4318
-    traces:
-      processors:
-      - batch:
-          exporter:
-            otlp:
-              protocol: http/protobuf
-              endpoint: http://otel-collector:4318
-    logs:
-      processors:
-      - batch:
-          exporter:
-            otlp:
-              protocol: http/protobuf
-              endpoint: http://otel-collector:4318
+            prometheus:
+              host: otel-collector
+              port: 8888
