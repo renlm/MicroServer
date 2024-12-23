@@ -117,13 +117,14 @@ services:
     healthcheck:
       test:
       - CMD
-      - promtool check healthy
+      - promtool check healthy --http.config.file /etc/prometheus/http_config.yaml
       interval: 5s
       timeout: 5s
       retries: 12
     environment:
       TZ: Asia/Shanghai
     volumes:
+    - /root/MicroServer/repo/docker/volumes/prometheus/http_config.yaml:/etc/prometheus/http_config.yaml
     - /root/MicroServer/repo/docker/volumes/prometheus/prometheus.yaml:/etc/prometheus/prometheus.yaml
     - /root/MicroServer/repo/docker/volumes/prometheus/web.yaml:/etc/prometheus/web.yaml
   clickhouse:

@@ -1,0 +1,5 @@
+# https://prometheus.io/docs/prometheus/latest/command-line/promtool/#promtool-check
+# https://prometheus.io/docs/alerting/latest/configuration/#http_config
+basic_auth:
+  username: default
+  password: $2y$12$wTt0jufTLAzjSnIW.ZFQ4.QFkxeqo1pclz8GiSLbAEoQkwRUkUMFq
