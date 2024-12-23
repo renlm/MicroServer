@@ -51,6 +51,15 @@ extensions:
     endpoint: otel-collector:55679
 service:
   extensions: [pprof, zpages, health_check]
+  telemetry:
+    metrics:
+      level: normal
+      readers:
+      - pull:
+          exporter:
+            prometheus:
+              host: otel-collector
+              port: 8888
   pipelines:
     metrics:
       receivers: [otlp]
