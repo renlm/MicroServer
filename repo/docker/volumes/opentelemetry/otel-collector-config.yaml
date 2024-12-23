@@ -1,15 +1,18 @@
 receivers:
   otlp:
     protocols:
-      grpc: 
+      grpc:
         endpoint: 0.0.0.0:4317
-      http: 
+      http:
         endpoint: 0.0.0.0:4318
 processors:
   batch: {}
 exporters:
   debug:
     verbosity: detailed
+  prometheus:
+    endpoint: prometheus:9090
+    namespace: monitor
   clickhouse:
     endpoint: tcp://clickhouse:9000
     database: logging
