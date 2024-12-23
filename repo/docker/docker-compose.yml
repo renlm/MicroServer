@@ -116,7 +116,7 @@ services:
     - --web.config.file=/etc/prometheus/web.yaml
     healthcheck:
       test:
-      - CMD
+      - CMD-SHELL
       - promtool check healthy --http.config.file /etc/prometheus/http_config.yaml
       interval: 5s
       timeout: 5s
