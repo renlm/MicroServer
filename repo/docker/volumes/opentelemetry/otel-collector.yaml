@@ -53,9 +53,23 @@ service:
   extensions: [pprof, zpages, health_check]
   telemetry:
     metrics:
-      level: normal
+      level: detailed
       readers:
       - periodic:
+          exporter:
+            otlp:
+              protocol: grpc/protobuf
+              endpoint: http://localhost:4317
+    traces:
+      processors:
+      - batch:
+          exporter:
+            otlp:
+              protocol: grpc/protobuf
+              endpoint: http://localhost:4317
+    logs:
+      processors:
+      - batch:
           exporter:
             otlp:
               protocol: grpc/protobuf
