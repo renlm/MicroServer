@@ -12,5 +12,4 @@ otel:
   logs.exporter: otlp
   propagators:
   - tracecontext
-  - baggage
   - b3
