@@ -65,16 +65,19 @@ service:
       - periodic:
           exporter:
             otlp:
-              endpoint: http://otel-collector:4317
+              protocol: http/protobuf
+              endpoint: http://otel-collector:4318
     traces:
       processors:
       - batch:
           exporter:
             otlp:
-              endpoint: http://otel-collector:4317
+              protocol: http/protobuf
+              endpoint: http://otel-collector:4318
     logs:
       processors:
       - batch:
           exporter:
             otlp:
-              endpoint: http://otel-collector:4317
+              protocol: http/protobuf
+              endpoint: http://otel-collector:4318
