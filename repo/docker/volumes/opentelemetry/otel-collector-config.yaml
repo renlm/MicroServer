@@ -11,7 +11,7 @@ exporters:
   debug:
     verbosity: detailed
   prometheus:
-    endpoint: prometheus:9090
+    endpoint: 0.0.0.0:8889
     namespace: monitor
   clickhouse:
     endpoint: tcp://clickhouse:9000

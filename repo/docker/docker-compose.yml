@@ -104,6 +104,16 @@ services:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
     volumes:
     - /root/MicroServer/repo/docker/volumes/mysql/init-user-db.sql:/docker-entrypoint-initdb.d/init-user-db.sql
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    restart: always
+    ports:
+    - 9090:9090
+    environment:
+      TZ: Asia/Shanghai
+    volumes:
+    - /root/MicroServer/repo/docker/volumes/prometheus/prometheus.yaml:/etc/prometheus/prometheus.yml
   clickhouse:
     image: clickhouse/clickhouse-server
     container_name: clickhouse
@@ -129,9 +139,9 @@ services:
       CLICKHOUSE_PASSWORD: ${DB_PASSWORD}
     volumes:
     - /root/MicroServer/repo/docker/volumes/clickhouse/init-db.sh:/docker-entrypoint-initdb.d/init-db.sh
-  otel:
+  otel-collector:
     image: otel/opentelemetry-collector-contrib
-    container_name: otel
+    container_name: otel-collector
     restart: always
     depends_on:
       clickhouse:
