@@ -2,6 +2,16 @@
 # https://opentelemetry.io/zh/docs/collector/internal-telemetry/
 # https://github.com/open-telemetry/opentelemetry-collector-contrib/blob/main/extension/basicauthextension/README.md
 # https://clickhouse.com/docs/en/observability/integrating-opentelemetry
+extensions:
+  basicauth/server:
+    htpasswd: 
+      file: .htpasswd
+      inline: |
+        default:$2y$12$wTt0jufTLAzjSnIW.ZFQ4.QFkxeqo1pclz8GiSLbAEoQkwRUkUMFq
+  basicauth/client:
+    client_auth: 
+      username: default
+      password: M1h62Gj3Uy54r
 receivers:
   otlp:
     protocols:
@@ -34,16 +44,6 @@ exporters:
       initial_interval: 5s
       max_interval: 30s
       max_elapsed_time: 300s
-extensions:
-  basicauth/server:
-    htpasswd: 
-      file: .htpasswd
-      inline: |
-        default:$2y$12$wTt0jufTLAzjSnIW.ZFQ4.QFkxeqo1pclz8GiSLbAEoQkwRUkUMFq
-  basicauth/client:
-    client_auth: 
-      username: default
-      password: M1h62Gj3Uy54r
 service:
   extensions: [basicauth/server, basicauth/client]
   pipelines:
