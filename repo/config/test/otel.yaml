@@ -1,4 +1,5 @@
 # https://opentelemetry.io/docs/languages/java/configuration/#zero-code-sdk-autoconfigure
+# https://opentelemetry.io/docs/zero-code/java/spring-boot-starter/getting-started/
 # https://opentelemetry.io/docs/languages/java/configuration/#environment-variables-and-system-properties
 # https://opentelemetry.io/docs/specs/otel/configuration/sdk-environment-variables/
 otel:
