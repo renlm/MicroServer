@@ -117,7 +117,7 @@ services:
     healthcheck:
       test:
       - CMD
-      - promtool check healthy --http.config.file /etc/prometheus/http_config.yaml
+      - promtool check healthy
       interval: 5s
       timeout: 5s
       retries: 12
