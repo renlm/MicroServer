@@ -4,3 +4,16 @@ scrape_configs:
   static_configs:
   - targets: [otel-collector:8888]
   - targets: [otel-collector:9999]
+- job_name: prometheus
+  scrape_interval: 5s
+  metrics_path: /metrics
+  scheme: http
+  basic_auth:
+    username: default
+    password: $2y$12$wTt0jufTLAzjSnIW.ZFQ4.QFkxeqo1pclz8GiSLbAEoQkwRUkUMFq
+  static_configs:
+    - targets: [localhost:9090]
+      labels:
+        instance: prometheus
+  health_check_path: /-/healthy
+  health_check_interval: 5s
