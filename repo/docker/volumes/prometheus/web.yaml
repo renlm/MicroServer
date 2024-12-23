@@ -2,4 +2,4 @@
 # apt install -y apache2-utils
 # htpasswd -bc .users default M1h62Gj3Uy54r
 basic_auth_users:
-  default: $apr1$f3PVXzRL$s18MXUjpgNMmV5R6NNZUV/
+  default: $apr1$vrzW2M9D$47eCemFvbLOKgqheuRVqY1
