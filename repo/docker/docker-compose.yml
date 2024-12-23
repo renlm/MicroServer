@@ -129,6 +129,23 @@ services:
       CLICKHOUSE_PASSWORD: ${DB_PASSWORD}
     volumes:
     - /root/MicroServer/repo/docker/volumes/clickhouse/init-db.sh:/docker-entrypoint-initdb.d/init-db.sh
+  otel:
+    image: otel/opentelemetry-collector-contrib
+    container_name: otel
+    restart: always
+    depends_on:
+      clickhouse:
+        condition: service_healthy
+    ports:
+    - 4317:4317
+    - 4318:4318
+    command:
+    - --config=/etc/otel-collector-config.yaml
+    - --set=service.telemetry.logs.level=INFO
+    environment:
+      TZ: Asia/Shanghai
+    volumes:
+    - /root/MicroServer/repo/docker/volumes/opentelemetry/otel-collector-config.yaml:/etc/otel-collector-config.yaml
   grafana:
     image: grafana/grafana-oss
     container_name: grafana
