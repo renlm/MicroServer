@@ -5,7 +5,6 @@
 extensions:
   basicauth/server:
     htpasswd: 
-      file: .htpasswd
       inline: |
         default:$2y$12$wTt0jufTLAzjSnIW.ZFQ4.QFkxeqo1pclz8GiSLbAEoQkwRUkUMFq
   basicauth/client:
