@@ -6,7 +6,9 @@ receivers:
       http:
         endpoint: 0.0.0.0:4318
 processors:
-  batch: {}
+  batch:
+    timeout: 5s
+    send_batch_size: 100000
 exporters:
   debug:
     verbosity: detailed
@@ -14,15 +16,28 @@ exporters:
     endpoint: 0.0.0.0:8889
     namespace: monitor
   clickhouse:
-    endpoint: tcp://clickhouse:9000
+    endpoint: tcp://clickhouse:9000?dial_timeout=10s
     database: logging
+    username: logging
+    password: KK_fyw4bnmdf4Ksp7IMYuPWD@20stdt^tn50jlsfy
+    async_insert: true
+    ttl: 72h
+    compress: lz4
+    create_schema: true
     logs_table_name: otel_logs
     traces_table_name: otel_traces
-    create_schema: true
-    ttl: 12h
-    timeout: 10s
-    sending_queue:
-      queue_size: 100
+    timeout: 5s
+    metrics_tables:
+      gauge: 
+        name: "otel_metrics_gauge"
+      sum: 
+        name: "otel_metrics_sum"
+      summary: 
+        name: "otel_metrics_summary"
+      histogram: 
+        name: "otel_metrics_histogram"
+      exponential_histogram: 
+        name: "otel_metrics_exp_histogram"
     retry_on_failure:
       enabled: true
       initial_interval: 5s
@@ -40,7 +55,7 @@ service:
     metrics:
       receivers: [otlp]
       processors: [batch]
-      exporters: [prometheus]
+      exporters: [prometheus, clickhouse]
     traces:
       receivers: [otlp]
       processors: [batch]
