@@ -1,3 +1,4 @@
+# https://opentelemetry.io/zh/docs/collector/configuration/#receivers
 # https://opentelemetry.io/zh/docs/collector/internal-telemetry/
 # https://clickhouse.com/docs/en/observability/integrating-opentelemetry
 receivers:
@@ -64,19 +65,16 @@ service:
       - periodic:
           exporter:
             otlp:
-              protocol: grpc/protobuf
               endpoint: http://otel-collector:4317
     traces:
       processors:
       - batch:
           exporter:
             otlp:
-              protocol: grpc/protobuf
               endpoint: http://otel-collector:4317
     logs:
       processors:
       - batch:
           exporter:
             otlp:
-              protocol: grpc/protobuf
               endpoint: http://otel-collector:4317
