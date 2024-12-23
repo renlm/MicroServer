@@ -178,7 +178,7 @@ services:
     container_name: grafana
     restart: always
     depends_on:
-      clickhouse:
+      postgres:
         condition: service_healthy
     ports:
     - 3000:3000
