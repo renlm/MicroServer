@@ -363,8 +363,6 @@ services:
       timeout: 5s
       retries: 36
     environment:
-      HOSTNAME: core-service
-      TZ: Asia/Shanghai
       SERVER_PORT: 8001
       MANAGEMENT_SERVER_PORT: 8091
       SECURITY_USER_NAME: ${SECURITY_USER_NAME}
