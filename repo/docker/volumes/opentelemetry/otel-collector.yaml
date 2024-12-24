@@ -7,10 +7,6 @@ extensions:
     htpasswd: 
       inline: |
         default:$2y$12$wTt0jufTLAzjSnIW.ZFQ4.QFkxeqo1pclz8GiSLbAEoQkwRUkUMFq
-  basicauth/client:
-    client_auth: 
-      username: default
-      password: M1h62Gj3Uy54r
 receivers:
   otlp:
     protocols:
@@ -44,7 +40,7 @@ exporters:
       max_interval: 30s
       max_elapsed_time: 300s
 service:
-  extensions: [basicauth/server, basicauth/client]
+  extensions: [basicauth/server]
   pipelines:
     metrics:
       receivers: [otlp]
