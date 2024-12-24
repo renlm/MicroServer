@@ -14,3 +14,8 @@ otel:
   - tracecontext
   - baggage
   - b3
+  resource:
+    attributes:
+      environment: prod
+      service:
+        namespace: docker
