@@ -1,5 +1,7 @@
 package cn.renlm.micro.core.rbac.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +23,8 @@ import jakarta.annotation.Resource;
 @RequestMapping("/user")
 public class UserController {
 
+	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+
 	@Resource
 	private UserService userService;
 
@@ -33,6 +37,7 @@ public class UserController {
 	@ResponseBody
 	@GetMapping("/loadUserByUserName")
 	public UserDetails loadUserByUserName(String userName) {
+		logger.info("根据登录账号获取用户信息");
 		return userService.loadUserByUserName(userName);
 	}
 
