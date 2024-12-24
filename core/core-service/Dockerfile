@@ -11,7 +11,7 @@ RUN --mount=type=cache,target=/root/.m2 \
   && mvn clean package -P ${PROFILES_ACTIVE}
 
 FROM openjdk:21-slim
-COPY --from=0 "/build/config/target/config.jar" app.jar
+COPY --from=0 "/build/core/core-service/target/core-service.jar" app.jar
 RUN sed -i 's/deb.debian.org/mirrors.aliyun.com/g' /etc/apt/sources.list.d/debian.sources \
   && apt update \
   && apt install -y tini curl \
