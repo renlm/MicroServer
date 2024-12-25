@@ -7,4 +7,4 @@ spring:
           forcePull: true
           cloneOnStart: false
           defaultLabel: master
-          search-paths: repo/config/{profile}
+          searchPaths: repo/config/{profile}
