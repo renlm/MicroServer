@@ -3,41 +3,8 @@ spring:
     config:
       server:
         git:
-          uri: git@gitee.com:renlm/MicroServer.git
+          uri: https://gitee.com/renlm/MicroServer.git
           forcePull: true
           cloneOnStart: true
           defaultLabel: master
           search-paths: repo/config/{profile}
-          ignoreLocalSshSettings: true
-          passphrase: ${GIT_PASSPHRASE:ICgacH955iKjdfu8idh^988jErQ63moj3Uy54r}
-          privateKey: |-
-            -----BEGIN RSA PRIVATE KEY-----
-            Proc-Type: 4,ENCRYPTED
-            DEK-Info: AES-128-CBC,AE08A8C01485E1F75120DE271F91BA91
-            
-            LNV0MApRdyXsuiH0Uu9wOuuB71VijL+xwm8m6D8b6aw2p/7uvkPnBd9+MaY8JHfl
-            Pf5G1kog+CHkF+AbWqegDEzYpZ94ml7vMBN2E4B+gO7e7KsHhWOYmF2M1WH7MH4B
-            g4mgbXmcO0wGBYv1VxJ27ogyRfbP+aVJtmA85wUYipfdZQgvD3Soc50guuzZxrUa
-            O/dsgD7xaGMqyYwo0mIfSSp4elkYIs9uhnd4NADzeyNKDO5U31+Yspia4GQ0ol6J
-            B14afAD8dU75hanwVzUNQTCprPUUi0iH1erHEhWWCJIwp4rnR3a9CMhKvKSDgBJp
-            gf3V6cBJheEpPBScsoSVlZfVGJwpJeKwG3EAjwVCDazjacZ9JHavVMwAbHt4MFsZ
-            KJSUWhkgFRiamVi/F/hAjCiagzvvpeoDKI6HvXGSftOrpl7tii7GXF7LOBkp2vjX
-            zaM9TJYIIW/gldjrnmSDYluMlXse10IGUSjAy2QHMuglA0V0yHAFGj6LcjrjKByC
-            lOfq+I41rHd6J4VFRu7ykjPihKpjMqCTk21mllA5ZaOrJ9PzFLMp+zSuGWhHUUvs
-            JzBhnv7kl0fagEyjomg0Oifv9Sf0xA5+qOGsXtEp8FNAeKTiQCo7MMHRzw6MH47g
-            DKOOeDTFxKMPb7MhVSB/+SgR6QK3wSuqIuVtuWvK3jLrw7Y+k+OkzzoaEzwDeDzA
-            K0UZmZHKBLMZjM1pA1S55URnxFN+0TAzNUp6WL+1Erm/1R5CGtAI+o+KwnJ7tH+r
-            8XpejDQreItkukYWeh9agWxPM2mwl2V+N0XjbzRlJAHRzEhA4FAfV+esIcAES0tz
-            qwSW6azfUAnwdi3WoeOCR/QxaoRihYe0kP78A2x1gbr7N7dRAbnX3casfzaOJAF+
-            m8gFVOv2jvsznbnD7yuAqFk6QLBogqA8qMGSLCTKZYUAQvMhifK3+uL+GVeqWU55
-            4GeZ7ake85usva1+fkEsijA3R0k0na2ufmYwsRotvJ4baLI29ZAdUM3l9kb5wDEz
-            Sr3Pf5eUrTEoqWpAooexl49D8SrusTJZUfwLzDhqPFjZZ0XE+6M2d3oV+XP+QvSn
-            augfssLS/NEbifGjpTZS4E8J4EL0yNEUX9vhkYgaFK/frzhFHaNmVSL53iSmtbn9
-            YKqSVlT0S98Uwb6OOSih60hViN/XVynas5CpI/uV6xP98LC/jS7e+w7lX58XAq0j
-            yquQQzmaQXwUjw1fHdCcocsz7iPqpCB6VvlrHx/shfBDqwDDtqJT4Bd9F9Iapzw2
-            M3aVF6qxj6UoOsPFLKNKNjx0agwYfr26FbQc7DSdGNAIQJOiaGpsRscYgLViU67J
-            LLT6W+LMVgDjRbnGJzOpc80pRDKZf8z9ybS+WsC9+BxIqTgmjvYzlq2VCIGzhPpm
-            kLX42XSTOkYAo9CHfIHST5ekuc0w7b2U8+CCPQ6BcppR8AQurbpz3rrP+t0xOT95
-            8msNwWk1RGDeCwPU3SX93TlnImMuCeWpVQk2WzeGOeo6FZ4WxLhUrABSpnYMfaQu
-            ZsILUolmr/fUWl2pbQGwHfJH/Dnero8Vx7QVq6W7zWNRlMIF6fsxAK0qOJlJ9FPO
-            -----END RSA PRIVATE KEY-----
