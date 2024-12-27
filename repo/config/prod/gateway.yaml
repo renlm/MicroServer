@@ -20,14 +20,6 @@ spring:
             - OPTIONS
             - TRACE
       routes:
-      - id: test
-        uri: https://estate-pa.glodon.com
-        predicates:
-        - Path=/estate-field-qdg-standard/**
-        filters:
-        - RewriteLocationResponseHeader=AS_IN_REQUEST, Location
-        - AddRequestHeader=X-Request-Router, Spring-Cloud-Gateway
-        - AddResponseHeader=X-Response-Router, Spring-Cloud-Gateway
       - id: config
         uri: http://config-server:7001
         predicates:
