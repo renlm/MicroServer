@@ -1,4 +1,5 @@
 -- 用户
+DROP TABLE IF EXISTS "user";
 CREATE TABLE "user"(
     "id" BIGSERIAL PRIMARY KEY,
     "user_id" CHAR(32) NOT NULL,
