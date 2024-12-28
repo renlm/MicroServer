@@ -86,7 +86,7 @@
 		</dependency>
 		<dependency>
 			<groupId>com.anji-plus</groupId>
-			<artifactId>spring-boot-starter-captcha</artifactId>
+    		<artifactId>captcha</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.webjars</groupId>
