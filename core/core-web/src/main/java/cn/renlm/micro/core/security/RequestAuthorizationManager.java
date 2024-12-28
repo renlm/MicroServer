@@ -1,14 +1,17 @@
 package cn.renlm.micro.core.security;
 
+import static java.util.Objects.isNull;
+import static org.apache.commons.lang.BooleanUtils.isFalse;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.authorization.AuthorizationManager;
 import org.springframework.security.core.Authentication;
@@ -39,11 +42,15 @@ public class RequestAuthorizationManager implements AuthorizationManager<Request
 	public AuthorizationDecision check(Supplier<Authentication> authentication, RequestAuthorizationContext object) {
 		Authentication info = authentication.get();
 
-		if (Objects.isNull(info)) {
+		if (isNull(info)) {
 			return new AuthorizationDecision(false);
 		}
 
-		if (!info.isAuthenticated()) {
+		if (isFalse(info instanceof UsernamePasswordAuthenticationToken)) {
+			return new AuthorizationDecision(false);
+		}
+
+		if (isFalse(info.isAuthenticated())) {
 			return new AuthorizationDecision(false);
 		}
 
