@@ -65,6 +65,7 @@ public class UsernamePasswordAuthenticationProvider extends DaoAuthenticationPro
 				String credentials = authentication.getCredentials().toString();
 				String decryptCredentials = AESUtil.aesDecrypt(credentials, webAuthenticationDetails.secretKey);
 				Field field = ReflectionUtils.findField(UsernamePasswordAuthenticationToken.class, "credentials");
+				field.setAccessible(true);
 				ReflectionUtils.setField(field, authentication, decryptCredentials);
 			} catch (Exception e) {
 				e.printStackTrace();
