@@ -4,17 +4,3 @@ spring:
     username: dev
     password: KK_fyw4bnmdf4Ksp7IMYuPWD@20stdt^tn50jlsfy
     driverClassName: org.postgresql.Driver
-  jpa:
-    openInView: false
-    showSql: true
-    hibernate:
-      ddlAuto: none
-  sql:
-    init:
-      mode: ${DB_INIT_MODE:ALWAYS}
-      schemaLocations:
-      - classpath:database/schema/rbac.sql
-      dataLocations:
-      - classpath:database/data/rbac.sql
-      continueOnError: false
-      separator: ;
