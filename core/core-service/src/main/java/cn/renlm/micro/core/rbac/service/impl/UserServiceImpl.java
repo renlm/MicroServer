@@ -1,5 +1,7 @@
 package cn.renlm.micro.core.rbac.service.impl;
 
+import java.util.Objects;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -27,8 +29,14 @@ public class UserServiceImpl implements UserService {
 	public UserInfoDto loadUserByUsername(String username) {
 		UserInfoDto dto = new UserInfoDto();
 		User user = userRepository.findByUsername(username);
-		BeanUtils.copyProperties(user, dto);
-		return dto;
+		if (Objects.isNull(user)) {
+			dto.setUsername(username);
+		} else {
+			BeanUtils.copyProperties(user, dto);
+		}
+		{
+			return dto;
+		}
 	}
 
 }
