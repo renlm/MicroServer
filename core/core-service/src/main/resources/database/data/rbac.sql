@@ -1,6 +1,6 @@
 -- 用户
-DROP TABLE IF EXISTS "user";
-CREATE TABLE "user"(
+DROP TABLE IF EXISTS "users";
+CREATE TABLE "users"(
     "id" BIGSERIAL PRIMARY KEY,
     "user_id" CHAR(32) NOT NULL,
     "username" VARCHAR(255) NOT NULL,
