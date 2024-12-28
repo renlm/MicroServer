@@ -11,8 +11,8 @@ spring:
     init:
       mode: ${DB_INIT_MODE:ALWAYS}
       schemaLocations:
-      - classpath:db/schema/rbac.sql
+      - classpath:database/schema/rbac.sql
       dataLocations:
-      - classpath:db/data/rbac.sql
+      - classpath:database/data/rbac.sql
       continueOnError: false
       separator: ;
