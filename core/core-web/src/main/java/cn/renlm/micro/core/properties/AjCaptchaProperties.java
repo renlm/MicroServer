@@ -5,6 +5,7 @@ import static cn.renlm.micro.core.properties.AjCaptchaProperties.PREFIX;
 import java.awt.Font;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
 
 import com.anji.captcha.model.common.CaptchaTypeEnum;
 import com.anji.captcha.util.StringUtils;
@@ -18,6 +19,7 @@ import lombok.Data;
  *
  */
 @Data
+@Configuration
 @ConfigurationProperties(PREFIX)
 public class AjCaptchaProperties {
 	public static final String PREFIX = "aj.captcha";
