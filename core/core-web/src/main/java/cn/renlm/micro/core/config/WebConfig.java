@@ -1,6 +1,5 @@
 package cn.renlm.micro.core.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.thymeleaf.ThymeleafProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
@@ -13,6 +12,8 @@ import org.springframework.web.servlet.resource.LiteWebJarsResourceResolver;
 import org.springframework.web.servlet.resource.PathResourceResolver;
 import org.springframework.web.servlet.resource.VersionResourceResolver;
 
+import jakarta.annotation.Resource;
+
 /**
  * Web 配置
  *
@@ -21,7 +22,7 @@ import org.springframework.web.servlet.resource.VersionResourceResolver;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
-	@Autowired
+	@Resource
 	private ThymeleafProperties thymeleafProperties;
 
 	@Override
