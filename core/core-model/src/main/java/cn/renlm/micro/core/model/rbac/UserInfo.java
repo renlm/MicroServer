@@ -3,7 +3,10 @@ package cn.renlm.micro.core.model.rbac;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
  * 用户信息
@@ -12,6 +15,8 @@ import lombok.Data;
  *
  */
 @Data
+@Accessors(chain = true)
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
 public class UserInfo implements Serializable {
 
 	private static final long serialVersionUID = 1L;
