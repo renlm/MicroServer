@@ -19,10 +19,10 @@ public interface UserClient {
 	/**
 	 * 根据登录账号获取用户信息
 	 * 
-	 * @param userName
+	 * @param username
 	 * @return
 	 */
-	@GetMapping(value = "/loadUserByUserName")
-	UserInfoDto loadUserByUserName(String userName);
+	@GetMapping(value = "/loadUserByUsername")
+	UserInfoDto loadUserByUsername(String username);
 
 }
