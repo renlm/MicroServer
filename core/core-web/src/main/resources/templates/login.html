@@ -5,7 +5,7 @@
 	<title>平台登录</title>
 	<link rel="shortcut icon" th:href="@{/static/favicon.ico}" type="image/x-icon" />
 	<link href="webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-	<link href="webjars/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+	<link href="webjars/font-awesome/css/fontawesome.min.css" rel="stylesheet" />
 	<link href="webjars/animate.css/animate.min.css" rel="stylesheet" />
 	<link href="static/css/login.css" rel="stylesheet" />
 	<link href="static/AJ-Captcha/css/verify.css" rel="stylesheet" />
@@ -52,7 +52,7 @@
 		</div>
 	</div>
 	<input id="errMsg" type="hidden" th:value="${session.SPRING_SECURITY_LAST_EXCEPTION?.message}" />
-	<script src="webjars/jquery/dist/jquery.min.js"></script>
+	<script src="webjars/jquery/jquery.min.js"></script>
 	<script src="webjars/bootstrap/js/bootstrap.min.js"></script>
 	<script type="text/javascript">(function(){if(!window.Promise){document.writeln('<script src="webjars/es6-promise/es6-promise.min.js"><'+'/'+'script>');}})();</script>
 	<script type="text/javascript">function alertMsg(message) { $("#alertMsg").html(message); $("#myModal").modal(); }</script>
