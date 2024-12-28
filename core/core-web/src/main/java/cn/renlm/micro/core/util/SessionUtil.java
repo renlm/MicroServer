@@ -17,7 +17,7 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class SessionUtil {
 
-	public static final String AES_KEY = "AES-KEY";
+	public static final String AES_KEY = "AESKEY";
 
 	/**
 	 * 获取AES加密串
