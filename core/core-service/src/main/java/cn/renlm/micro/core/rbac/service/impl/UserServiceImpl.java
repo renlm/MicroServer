@@ -1,9 +1,13 @@
 package cn.renlm.micro.core.rbac.service.impl;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import cn.renlm.micro.core.model.rbac.UserInfoDto;
+import cn.renlm.micro.core.rbac.entity.User;
+import cn.renlm.micro.core.rbac.repository.UserRepository;
 import cn.renlm.micro.core.rbac.service.UserService;
+import jakarta.annotation.Resource;
 
 /**
  * <p>
@@ -16,9 +20,15 @@ import cn.renlm.micro.core.rbac.service.UserService;
 @Service
 public class UserServiceImpl implements UserService {
 
+	@Resource
+	private UserRepository userRepository;
+
 	@Override
 	public UserInfoDto loadUserByUsername(String username) {
-		return null;
+		UserInfoDto dto = new UserInfoDto();
+		User user = userRepository.findByUsername(username);
+		BeanUtils.copyProperties(user, dto);
+		return dto;
 	}
 
 }
