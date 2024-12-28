@@ -2,7 +2,7 @@ package cn.renlm.micro.core.rbac.service.impl;
 
 import org.springframework.stereotype.Service;
 
-import cn.renlm.micro.core.model.rbac.UserDetails;
+import cn.renlm.micro.core.model.rbac.UserInfoDto;
 import cn.renlm.micro.core.rbac.service.UserService;
 
 /**
@@ -17,11 +17,8 @@ import cn.renlm.micro.core.rbac.service.UserService;
 public class UserServiceImpl implements UserService {
 
 	@Override
-	public UserDetails loadUserByUserName(String userName) {
-		UserDetails user = new UserDetails();
-		user.setUserId("0");
-		user.setUserName("admin");
-		return user;
+	public UserInfoDto loadUserByUsername(String username) {
+		return null;
 	}
 
 }

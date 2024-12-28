@@ -5,7 +5,7 @@ import static cn.renlm.micro.constant.ServiceNameConstants.CORE_SERVICE;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import cn.renlm.micro.core.model.rbac.UserDetails;
+import cn.renlm.micro.core.model.rbac.UserInfoDto;
 
 /**
  * 用户
@@ -23,6 +23,6 @@ public interface UserClient {
 	 * @return
 	 */
 	@GetMapping(value = "/loadUserByUserName")
-	UserDetails loadUserByUserName(String userName);
+	UserInfoDto loadUserByUserName(String userName);
 
 }
