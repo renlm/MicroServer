@@ -1,0 +1,6 @@
+encrypt:
+  keyStore:
+    location: classpath:keyStore.jks
+    password: ${KEY_STORE_PASSWORD:letmein}
+    alias: ${KEY_STORE_ALIAS:alias}
+    secret: ${KEY_STORE_SECRET:letmein}
