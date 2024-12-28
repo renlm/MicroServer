@@ -1,7 +1,12 @@
-package cn.renlm.micro.core.model.rbac;
+package cn.renlm.micro.core.dto;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -14,14 +19,10 @@ import lombok.experimental.Accessors;
  */
 @Data
 @Accessors(chain = true)
-public class UserInfo implements Serializable {
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
+public class UserClaim implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
-	/**
-	 * 主键
-	 */
-	private Long id;
 
 	/**
 	 * 用户ID
@@ -32,11 +33,6 @@ public class UserInfo implements Serializable {
 	 * 账号
 	 */
 	private String username;
-
-	/**
-	 * 密码
-	 */
-	private String password;
 
 	/**
 	 * 昵称
@@ -69,38 +65,9 @@ public class UserInfo implements Serializable {
 	private String email;
 
 	/**
-	 * 是否未过期（账号）
+	 * 权限列表
 	 */
-	boolean accountNonExpired;
-
-	/**
-	 * 是否未锁定（账号）
-	 */
-	boolean accountNonLocked;
-
-	/**
-	 * 是否未过期（账号）
-	 */
-	boolean credentialsNonExpired;
-
-	/**
-	 * 是否启用
-	 */
-	boolean enabled;
-
-	/**
-	 * 创建时间
-	 */
-	private Date createdAt;
-
-	/**
-	 * 更新时间
-	 */
-	private Date updatedAt;
-
-	/**
-	 * 备注
-	 */
-	private String remark;
+	@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
+	private List<GrantedAuthority> authorities;
 
 }

@@ -39,7 +39,7 @@ import cn.renlm.micro.core.dto.UserDetails;
 import cn.renlm.micro.core.properties.KeyStoreProperties;
 
 /**
- * 认证服务 
+ * 认证服务
  * 
  * @author RenLiMing(任黎明)
  *
@@ -111,8 +111,7 @@ public class AuthorizationServerConfig {
 					Object principal = authentication.getPrincipal();
 					if (principal instanceof UserDetails) {
 						UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-						claim.put("principal", userDetails);
-						claim.put("authorities", userDetails.getAuthorities());
+						claim.put("principal", userDetails.toClaim());
 					}
 				});
 			}
