@@ -17,9 +17,14 @@ public class UserInfoDto implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * id
+	 * 主键
 	 */
-	private String id;
+	private Long id;
+
+	/**
+	 * 用户ID
+	 */
+	private String userId;
 
 	/**
 	 * 账号
@@ -80,5 +85,20 @@ public class UserInfoDto implements Serializable {
 	 * 是否启用
 	 */
 	boolean enabled;
+
+	/**
+	 * 创建时间
+	 */
+	private Date createdAt;
+
+	/**
+	 * 更新时间
+	 */
+	private Date updatedAt;
+
+	/**
+	 * 备注
+	 */
+	private String remark;
 
 }
