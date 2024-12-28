@@ -1,14 +1,14 @@
 spring:
-  jpa:
-    openInView: false
-    showSql: true
-    hibernate:
-      ddlAuto: none
   datasource:
     url: jdbc:postgresql://gw.renlm.cn:31432/dev
     username: dev
     password: KK_fyw4bnmdf4Ksp7IMYuPWD@20stdt^tn50jlsfy
     driverClassName: org.postgresql.Driver
+  jpa:
+    openInView: false
+    showSql: true
+    hibernate:
+      ddlAuto: none
   sql:
     init:
       mode: ${DB_INIT_MODE:ALWAYS}
