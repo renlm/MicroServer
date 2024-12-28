@@ -9,7 +9,6 @@ import java.util.Objects;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.authorization.AuthorizationManager;
 import org.springframework.security.core.Authentication;
@@ -17,7 +16,6 @@ import org.springframework.security.web.access.intercept.RequestAuthorizationCon
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.stereotype.Component;
 
-import cn.renlm.micro.core.sdk.rbac.UserClient;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
@@ -37,17 +35,11 @@ public class RequestAuthorizationManager implements AuthorizationManager<Request
 		REQUEST_MATCHER_MAP = Collections.synchronizedMap(new HashMap<>());
 	}
 
-	private final UserClient userClient;
-
 	@Override
 	public AuthorizationDecision check(Supplier<Authentication> authentication, RequestAuthorizationContext object) {
 		Authentication info = authentication.get();
 
 		if (Objects.isNull(info)) {
-			return new AuthorizationDecision(false);
-		}
-
-		if (!(info instanceof UsernamePasswordAuthenticationToken)) {
 			return new AuthorizationDecision(false);
 		}
 

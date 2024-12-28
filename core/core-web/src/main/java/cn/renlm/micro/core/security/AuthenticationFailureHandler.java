@@ -17,7 +17,7 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  */
 @Component
-public class MyAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
+public class AuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
 
 	@Override
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,

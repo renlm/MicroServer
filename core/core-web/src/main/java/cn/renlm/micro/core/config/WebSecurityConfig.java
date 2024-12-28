@@ -2,7 +2,6 @@ package cn.renlm.micro.core.config;
 
 import java.util.Locale;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -26,8 +25,8 @@ import org.springframework.session.FindByIndexNameSessionRepository;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisIndexedHttpSession;
 import org.springframework.session.security.SpringSessionBackedSessionRegistry;
 
-import cn.renlm.micro.core.security.MyAuthenticationFailureHandler;
-import cn.renlm.micro.core.security.MyAuthenticationSuccessHandler;
+import cn.renlm.micro.core.security.AuthenticationFailureHandler;
+import cn.renlm.micro.core.security.AuthenticationSuccessHandler;
 import cn.renlm.micro.core.security.RequestAuthorizationManager;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
@@ -65,11 +64,6 @@ public class WebSecurityConfig {
 	public static final String CaptchaAntMatcher = "/captcha/**";
 
 	/**
-	 * 开放网页匹配路径
-	 */
-	public static final String PubAntMatcher = "/pub/**";
-
-	/**
 	 * 白名单
 	 */
 	public static final String[] WHITE_LIST = { 
@@ -77,7 +71,6 @@ public class WebSecurityConfig {
 			logoutUrl, 
 			LoginProcessingUrl, 
 			CaptchaAntMatcher,
-			PubAntMatcher, 
 			"/actuator/**" 
 		};
 
@@ -93,11 +86,11 @@ public class WebSecurityConfig {
 	@Resource
 	private FindByIndexNameSessionRepository<? extends Session> sessionRepository;
 
-	@Autowired
-	private MyAuthenticationSuccessHandler myAuthenticationSuccessHandler;
+	@Resource
+	private AuthenticationSuccessHandler authenticationSuccessHandler;
 
-	@Autowired
-	private MyAuthenticationFailureHandler myAuthenticationFailureHandler;
+	@Resource
+	private AuthenticationFailureHandler authenticationFailureHandler;
 
 	@Bean
 	SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http, RequestAuthorizationManager authorizationManager)
@@ -109,8 +102,7 @@ public class WebSecurityConfig {
 		});
 		// 启用Csrf
 		http.csrf(csrf -> {
-			csrf.ignoringRequestMatchers(PubAntMatcher)
-				.ignoringRequestMatchers(CaptchaAntMatcher)
+			csrf.ignoringRequestMatchers(CaptchaAntMatcher)
 				.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
 		});
 		// 会话
@@ -142,8 +134,8 @@ public class WebSecurityConfig {
 			formLogin.loginPage(LoginPage)
 				.loginProcessingUrl(LoginProcessingUrl)
 				.authenticationDetailsSource(authenticationDetailsSource())
-				.successHandler(myAuthenticationSuccessHandler)
-				.failureHandler(myAuthenticationFailureHandler);
+				.successHandler(authenticationSuccessHandler)
+				.failureHandler(authenticationFailureHandler);
 		});
 		// 注销
 		http.logout(logout -> {
