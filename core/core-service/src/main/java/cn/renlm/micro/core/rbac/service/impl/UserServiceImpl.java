@@ -5,7 +5,7 @@ import java.util.Objects;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
-import cn.renlm.micro.core.model.rbac.UserInfoDto;
+import cn.renlm.micro.core.model.rbac.UserInfo;
 import cn.renlm.micro.core.rbac.entity.User;
 import cn.renlm.micro.core.rbac.repository.UserRepository;
 import cn.renlm.micro.core.rbac.service.UserService;
@@ -26,8 +26,8 @@ public class UserServiceImpl implements UserService {
 	private UserRepository userRepository;
 
 	@Override
-	public UserInfoDto loadUserByUsername(String username) {
-		UserInfoDto dto = new UserInfoDto();
+	public UserInfo loadUserByUsername(String username) {
+		UserInfo dto = new UserInfo();
 		User user = userRepository.findByUsername(username);
 		if (Objects.isNull(user)) {
 			dto.setUsername(username);

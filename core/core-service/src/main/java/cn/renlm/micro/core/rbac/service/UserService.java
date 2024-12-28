@@ -1,6 +1,6 @@
 package cn.renlm.micro.core.rbac.service;
 
-import cn.renlm.micro.core.model.rbac.UserInfoDto;
+import cn.renlm.micro.core.model.rbac.UserInfo;
 
 /**
  * <p>
@@ -18,6 +18,6 @@ public interface UserService {
 	 * @param username
 	 * @return
 	 */
-	UserInfoDto loadUserByUsername(String username);
+	UserInfo loadUserByUsername(String username);
 
 }

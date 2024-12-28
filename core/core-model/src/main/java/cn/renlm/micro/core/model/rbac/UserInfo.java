@@ -12,7 +12,7 @@ import lombok.Data;
  *
  */
 @Data
-public class UserInfoDto implements Serializable {
+public class UserInfo implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

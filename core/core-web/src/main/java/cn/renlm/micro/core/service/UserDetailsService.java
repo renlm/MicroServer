@@ -1,15 +1,9 @@
 package cn.renlm.micro.core.service;
 
-import java.util.Collection;
-import java.util.Collections;
-
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.stereotype.Service;
 
-import cn.renlm.micro.core.model.rbac.UserInfoDto;
+import cn.renlm.micro.core.dto.UserDetails;
+import cn.renlm.micro.core.model.rbac.UserInfo;
 import cn.renlm.micro.core.sdk.rbac.UserClient;
 import jakarta.annotation.Resource;
 
@@ -23,34 +17,12 @@ import jakarta.annotation.Resource;
 public class UserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService {
 
 	@Resource
-	private SecurityContextRepository securityContextRepository;
-
-	@Resource
 	private UserClient userClient;
 
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		UserInfoDto userInfo = userClient.loadUserByUsername(username);
-		return new UserDetails() {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public String getUsername() {
-				return userInfo.getUsername();
-			}
-
-			@Override
-			public String getPassword() {
-				return userInfo.getPassword();
-			}
-
-			@Override
-			public Collection<? extends GrantedAuthority> getAuthorities() {
-				return Collections.emptyList();
-			}
-
-		};
+	public UserDetails loadUserByUsername(String username) {
+		UserInfo userInfo = userClient.loadUserByUsername(username);
+		return UserDetails.of(userInfo);
 	}
 
 }
