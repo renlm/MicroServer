@@ -1,7 +1,6 @@
 package cn.renlm.micro.core.config;
 
-import java.util.function.Function;
-
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
@@ -22,7 +21,6 @@ import org.springframework.security.oauth2.server.authorization.client.JdbcRegis
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
-import org.springframework.security.oauth2.server.authorization.oidc.authentication.OidcUserInfoAuthenticationContext;
 import org.springframework.security.oauth2.server.authorization.oidc.authentication.OidcUserInfoAuthenticationToken;
 import org.springframework.security.oauth2.server.authorization.settings.AuthorizationServerSettings;
 import org.springframework.security.oauth2.server.authorization.token.JwtEncodingContext;
@@ -39,32 +37,33 @@ import cn.renlm.micro.core.dto.UserDetails;
 import cn.renlm.micro.core.properties.KeyStoreProperties;
 
 /**
- * 认证服务
+ * 认证服务器
  * 
  * @author RenLiMing(任黎明)
  *
  */
 @Configuration(proxyBeanMethods = false)
+@AutoConfigureAfter(OAuth2AuthorizationServerConfiguration.class)
 public class AuthorizationServerConfig {
 
 	@Bean
-	@Order(Ordered.HIGHEST_PRECEDENCE + 1)
+	@Order(Ordered.HIGHEST_PRECEDENCE)
 	public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http) throws Exception {
-		OAuth2AuthorizationServerConfigurer oAuth2Configurer = http
-				.getConfigurer(OAuth2AuthorizationServerConfigurer.class);
-		oAuth2Configurer.oidc(Customizer.withDefaults());
-		http.exceptionHandling(exceptions -> {
-			exceptions.authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login"));
-		});
-		Function<OidcUserInfoAuthenticationContext, OidcUserInfo> userInfoMapper = (context) -> {
-			OidcUserInfoAuthenticationToken authentication = context.getAuthentication();
-			JwtAuthenticationToken principal = (JwtAuthenticationToken) authentication.getPrincipal();
-			return new OidcUserInfo(principal.getToken().getClaims());
-		};
-		oAuth2Configurer.oidc((oidc) -> oidc.userInfoEndpoint((userInfo) -> userInfo.userInfoMapper(userInfoMapper)));
-		http.oauth2ResourceServer((resourceServer) -> resourceServer.jwt(Customizer.withDefaults()));
-		SecurityFilterChain securityFilterChain = http.build();
-		return securityFilterChain;
+		OAuth2AuthorizationServerConfigurer oAuth2Configurer = OAuth2AuthorizationServerConfigurer
+				.authorizationServer();
+		return http.oauth2ResourceServer((resourceServer) -> resourceServer.jwt(Customizer.withDefaults()))
+				.securityMatcher(oAuth2Configurer.getEndpointsMatcher()).with(oAuth2Configurer, (configurer) -> {
+					configurer.oidc((oidc) -> oidc.userInfoEndpoint((userInfo) -> {
+						userInfo.userInfoMapper((context) -> {
+							OidcUserInfoAuthenticationToken authentication = context.getAuthentication();
+							JwtAuthenticationToken principal = (JwtAuthenticationToken) authentication.getPrincipal();
+							return new OidcUserInfo(principal.getToken().getClaims());
+						});
+					}));
+				}).authorizeHttpRequests((authorize) -> authorize.anyRequest().authenticated())
+				.exceptionHandling(exceptions -> {
+					exceptions.authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login"));
+				}).build();
 	}
 
 	@Bean
