@@ -82,11 +82,11 @@
 		</dependency>
 		<dependency>
 			<groupId>org.webjars</groupId>
-			<artifactId>webjars-locator</artifactId>
+			<artifactId>webjars-locator-lite</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.anji-plus</groupId>
-    		<artifactId>captcha</artifactId>
+			<artifactId>captcha</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.webjars</groupId>
