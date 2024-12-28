@@ -22,7 +22,7 @@ import lombok.Data;
  */
 @Data
 @Configuration
-@ConfigurationProperties("encrypt.key-store")
+@ConfigurationProperties("key-store")
 public class KeyStoreProperties {
 
 	private Resource location;
