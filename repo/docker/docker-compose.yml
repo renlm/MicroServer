@@ -146,8 +146,8 @@ services:
       retries: 12
     environment:
       TZ: Asia/Shanghai
-      CLICKHOUSE_DB: dev
-      CLICKHOUSE_USER: dev
+      CLICKHOUSE_DB: default
+      CLICKHOUSE_USER: default
       CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT: 1
       CLICKHOUSE_PASSWORD: ${DB_PASSWORD}
     volumes:

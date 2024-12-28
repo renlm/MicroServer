@@ -3,9 +3,9 @@ set -e
 
 # https://clickhouse.com/docs/en/engines/table-engines
 clickhouse client -n <<-EOSQL
-    CREATE DATABASE logging;
-    CREATE USER logging IDENTIFIED BY '$CLICKHOUSE_PASSWORD';
-    GRANT ALL ON logging.* TO logging;
+    CREATE DATABASE dev;
+    CREATE USER dev IDENTIFIED BY '$CLICKHOUSE_PASSWORD';
+    GRANT ALL ON dev.* TO dev;
     use dev;
     CREATE NAMED COLLECTION local_mysql_dev AS host = 'mysql', port = 3306, database = 'dev', user = 'dev', password = '$CLICKHOUSE_PASSWORD';
     CREATE NAMED COLLECTION local_postgres_dev AS host = 'postgres', port = 5432, database = 'dev', schema = 'public', user = 'dev', password = '$CLICKHOUSE_PASSWORD';
