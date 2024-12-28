@@ -9,6 +9,8 @@ aj:
     aesStatus: true
     interferenceOptions: 0
 spring:
+  thymeleaf:
+    cache: false
   sql:
     init:
       mode: ${DB_INIT_MODE:ALWAYS}
