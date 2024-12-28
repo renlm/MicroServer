@@ -1,5 +1,7 @@
 package cn.renlm.micro.core.config;
 
+import static cn.renlm.micro.core.config.WebSecurityConfig.LoginPage;
+
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -62,7 +64,7 @@ public class AuthorizationServerConfig {
 					}));
 				}).authorizeHttpRequests((authorize) -> authorize.anyRequest().authenticated())
 				.exceptionHandling(exceptions -> {
-					exceptions.authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login"));
+					exceptions.authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint(LoginPage));
 				}).build();
 	}
 

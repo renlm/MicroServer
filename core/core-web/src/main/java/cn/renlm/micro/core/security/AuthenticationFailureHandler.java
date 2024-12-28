@@ -1,5 +1,7 @@
 package cn.renlm.micro.core.security;
 
+import static cn.renlm.micro.core.config.WebSecurityConfig.LoginPage;
+
 import java.io.IOException;
 
 import org.springframework.security.core.AuthenticationException;
@@ -22,7 +24,7 @@ public class AuthenticationFailureHandler extends SimpleUrlAuthenticationFailure
 	@Override
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException exception) throws IOException, ServletException {
-		super.setDefaultFailureUrl("/login?error");
+		super.setDefaultFailureUrl(LoginPage + "?error");
 		super.onAuthenticationFailure(request, response, exception);
 	}
 
