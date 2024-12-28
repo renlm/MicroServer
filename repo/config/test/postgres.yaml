@@ -1,4 +1,7 @@
 spring:
+  jpa:
+    openInView: false
+    showSql: true
   datasource:
     url: jdbc:postgresql://gw.renlm.cn:31432/dev
     username: dev
