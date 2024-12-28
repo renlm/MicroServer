@@ -1,6 +1,7 @@
 package cn.renlm.micro.core.service;
 
 import java.util.Collection;
+import java.util.Collections;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,25 +30,26 @@ public class UserDetailsService implements org.springframework.security.core.use
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		UserInfoDto userInfo = userClient.loadUserByUserName(username);
+		UserInfoDto userInfo = userClient.loadUserByUsername(username);
 		return new UserDetails() {
-			
+
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			public String getUsername() {
 				return userInfo.getUsername();
 			}
-			
+
 			@Override
 			public String getPassword() {
 				return userInfo.getPassword();
 			}
-			
+
 			@Override
 			public Collection<? extends GrantedAuthority> getAuthorities() {
-				return null;
+				return Collections.emptyList();
 			}
+
 		};
 	}
 
