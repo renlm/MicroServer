@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>平台登录</title>
+	<link rel="shortcut icon" th:href="@{/static/favicon.ico}" type="image/x-icon" />
+	<link href="webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="webjars/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+	<link href="webjars/animate.css/animate.min.css" rel="stylesheet" />
+	<link href="static/css/login.css" rel="stylesheet" />
+	<link href="static/AJ-Captcha/css/verify.css" rel="stylesheet" />
+</head>
+<body>
+	<div id="main-box"></div>
+	<div id="main-content">
+		<div id="verifyPanel"></div>
+		<div class="login-body animated fadeInLeft">
+			<div class="login-main pr">
+				<form id="login-form" class="login-form" method="post" th:action="@{/doLogin}">
+					<h3>平台登录</h3>
+					<div id="MobileBox" class="item-box">
+						<div class="input-group user-name">
+							<span class="input-group-addon"><i class="fa fa-user"></i></span>
+							<input type="text" name="username" class="form-control" placeholder="用户名" autocomplete="new-password" />
+						</div>
+						<div class="input-group password">
+							<span class="input-group-addon"><i class="fa fa-lock"></i></span>
+							<input type="password" name="password" class="form-control" placeholder="密码" autocomplete="new-password" />
+						</div>
+						<div class="login_btn_panel">
+							<input type="hidden" name="captchaVerification" />
+							<button id="loginBtn" type="button" class="btn btn-primary btn-block btn-lg">登录</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div id="ie-warn">
+	    <p>
+	    	您正在使用低版本浏览器，建议您使用<a href="https://www.google.cn/chrome" target="_blank">谷歌浏览器</a>
+			或使用<a href="http://se.360.cn/" target="_blank">360安全浏览器</a>的极速模式浏览
+	    </p>
+	</div>
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog modal-sm" role="document">
+			<div class="modal-content">
+				<div class="modal-body">
+					<span class="text-danger"><i class="fa fa-warning"></i> <span id="alertMsg">用户名或密码错误，请重试！</span></span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<input id="errMsg" type="hidden" th:value="${session.SPRING_SECURITY_LAST_EXCEPTION?.message}" />
+	<script src="webjars/jquery/dist/jquery.min.js"></script>
+	<script src="webjars/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript">(function(){if(!window.Promise){document.writeln('<script src="webjars/es6-promise/es6-promise.min.js"><'+'/'+'script>');}})();</script>
+	<script type="text/javascript">function alertMsg(message) { $("#alertMsg").html(message); $("#myModal").modal(); }</script>
+	<script type="text/javascript">$(function(){ var errMsg = $("#errMsg").val(); if(errMsg) { alertMsg(errMsg); } });</script>
+	<script type="text/javascript">if(self != top) { top.location.href = self.location.href; }</script>
+	<script type="text/javascript">if(!!window.ActiveXObject || "ActiveXObject" in window) { $("#ie-warn").show(); $("#main-content").hide(); }</script>
+	<script type="text/javascript">document.onkeydown = function(event){ if (event.keyCode == "13") document.getElementById("loginBtn").click(); }</script>
+	<script src="webjars/crypto-js/crypto-js.js"></script>
+	<script src="static/AJ-Captcha/js/ase.js"></script>
+	<script src="static/AJ-Captcha/js/verify.js"></script>
+	<script type="text/javascript">
+		window.CTX = window.ctx = "[(@{/})]".substr(0, "[(@{/})]".length - 1);
+		$("#verifyPanel").slideVerify({
+			baseUrl: window.CTX,
+			mode: "pop",
+			containerId: "loginBtn",
+			imgSize: { width: "400px", height: "200px" },
+			barSize: { width: "400px", height: "40px" },
+			beforeCheck: function(e1, e2) {
+				var username = $("input[name='username']").val();
+				var password = $("input[name='password']").val();
+				if (!username) {
+					alertMsg("用户名错误");
+					return false;
+				} else if (!password) {
+					alertMsg("密码错误");
+					return false;
+				} else {
+					return true;
+				}
+			},
+			success: function(params) {
+				var password = $("input[name='password']").val();
+				$("input[name='password']").val(aesEncrypt(password, "[(${aesKey})]"));
+				$("input[name='captchaVerification']").val(params.captchaVerification);
+				document.getElementById("login-form").submit();
+			}
+		});
+	</script>
+</body>
+</html>
