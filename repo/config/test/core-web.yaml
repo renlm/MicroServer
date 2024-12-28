@@ -1,3 +1,13 @@
+aj:
+  captcha:
+    cacheType: redis
+    jigsaw: classpath:images/jigsaw
+    picClick: classpath:images/pic-click
+    type: default
+    waterMark: localhost
+    slipOffset: 5
+    aesStatus: true
+    interferenceOptions: 0
 spring:
   sql:
     init:
