@@ -1,0 +1,10 @@
+spring:
+  sql:
+    init:
+      mode: ${DB_INIT_MODE:ALWAYS}
+      schemaLocations:
+      - classpath:org/springframework/security/oauth2/server/authorization/oauth2-authorization-schema.sql
+      - classpath:org/springframework/security/oauth2/server/authorization/oauth2-authorization-consent-schema.sql
+      - classpath:org/springframework/security/oauth2/server/authorization/client/oauth2-registered-client-schema.sql
+      continueOnError: false
+      separator: ;
