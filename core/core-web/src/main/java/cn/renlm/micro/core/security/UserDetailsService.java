@@ -1,4 +1,4 @@
-package cn.renlm.micro.core.service;
+package cn.renlm.micro.core.security;
 
 import org.springframework.stereotype.Service;
 
