@@ -2,7 +2,6 @@ package cn.renlm.micro.core.config;
 
 import static cn.renlm.micro.core.config.WebSecurityConfig.LoginPage;
 
-import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
@@ -45,7 +44,6 @@ import cn.renlm.micro.core.properties.KeyStoreProperties;
  *
  */
 @Configuration(proxyBeanMethods = false)
-@AutoConfigureAfter(OAuth2AuthorizationServerConfiguration.class)
 public class AuthorizationServerConfig {
 
 	@Bean
