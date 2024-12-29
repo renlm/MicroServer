@@ -20,6 +20,7 @@ import org.springframework.cloud.netflix.eureka.http.WebClientTransportClientFac
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 import org.springframework.util.DigestUtils;
+import org.springframework.web.reactive.function.client.ClientRequest;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import cn.renlm.micro.properties.EurekaAuthProperties;
@@ -41,17 +42,18 @@ public class EurekaWebClientAuthConfig {
 
 	@Bean
 	public WebClient.Builder eurekaWebClientBuilder(EurekaAuthProperties env) {
-		return WebClient.builder().filter((request, next) -> {
-			String serverToken = CsrfUtil.createServerToken();
-			String csrfToken = CsrfUtil.createCsrfToken(secureRandom, serverToken);
-			String timestamp = String.valueOf(System.currentTimeMillis());
-			String secretKey = env.getSecretKey();
-			String sign = DigestUtils.md5DigestAsHex((csrfToken + timestamp + secretKey).getBytes());
-			request.headers().add(X_SERVER_TOKEN, serverToken);
-			request.headers().add(X_XSRF_TOKEN, csrfToken);
-			request.headers().add(SIGN_HEADER_TIMESTAMP, timestamp);
-			request.headers().add(SIGN_HEADER_SIGN, sign);
-			return next.exchange(request);
+		return WebClient.builder().filter((req, next) -> {
+			final String serverToken = CsrfUtil.createServerToken();
+			final String csrfToken = CsrfUtil.createCsrfToken(secureRandom, serverToken);
+			final String timestamp = String.valueOf(System.currentTimeMillis());
+			final String secretKey = env.getSecretKey();
+			final String sign = DigestUtils.md5DigestAsHex((csrfToken + timestamp + secretKey).getBytes());
+			final ClientRequest.Builder request = ClientRequest.from(req);
+			request.header(X_SERVER_TOKEN, serverToken);
+			request.header(X_XSRF_TOKEN, csrfToken);
+			request.header(SIGN_HEADER_TIMESTAMP, timestamp);
+			request.header(SIGN_HEADER_SIGN, sign);
+			return next.exchange(request.build());
 		});
 	}
 
@@ -72,6 +74,7 @@ public class EurekaWebClientAuthConfig {
 	}
 
 	@Bean
+	@Primary
 	public WebClientTransportClientFactories webClientTransportClientFactories(EurekaAuthProperties env) {
 		return new WebClientTransportClientFactories(() -> {
 			return this.eurekaWebClientBuilder(env);
