@@ -7,8 +7,8 @@ eureka:
     hostname: ${HOSTNAME}
     nonSecurePort: ${server.port}
     instanceId: ${eureka.instance.hostname}:${eureka.instance.nonSecurePort}
-    leaseRenewalIntervalInSeconds: 30
-    leaseExpirationDurationInSeconds: 90
+    leaseRenewalIntervalInSeconds: 3
+    leaseExpirationDurationInSeconds: 9
   server:
     enableSelfPreservation: true
     peerNodeReadTimeoutMs: 5000
