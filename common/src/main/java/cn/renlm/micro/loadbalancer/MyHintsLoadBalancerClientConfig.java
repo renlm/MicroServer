@@ -12,6 +12,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClass;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.DefaultRequest;
 import org.springframework.cloud.client.loadbalancer.DefaultResponse;
@@ -21,7 +22,6 @@ import org.springframework.cloud.client.loadbalancer.LoadBalancerProperties;
 import org.springframework.cloud.client.loadbalancer.Request;
 import org.springframework.cloud.client.loadbalancer.RequestDataContext;
 import org.springframework.cloud.client.loadbalancer.Response;
-import org.springframework.cloud.client.loadbalancer.reactive.ReactiveLoadBalancer;
 import org.springframework.cloud.loadbalancer.annotation.LoadBalancerClients;
 import org.springframework.cloud.loadbalancer.core.ReactorLoadBalancer;
 import org.springframework.cloud.loadbalancer.core.ReactorServiceInstanceLoadBalancer;
@@ -31,6 +31,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Condition;
 import org.springframework.context.annotation.ConditionContext;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.core.env.Environment;
 import org.springframework.core.type.AnnotatedTypeMetadata;
 import org.springframework.http.HttpHeaders;
@@ -44,7 +45,7 @@ import reactor.core.publisher.Mono;
  * @author RenLiMing(任黎明)
  *
  */
-@ConditionalOnClass(ReactiveLoadBalancer.Factory.class)
+@Conditional(HintsConfigurationCondition.class)
 @LoadBalancerClients(defaultConfiguration = MyHintsLoadBalancerStrategy.class)
 public class MyHintsLoadBalancerClientConfig {
 
@@ -67,6 +68,17 @@ class MyHintsLoadBalancerStrategy {
 	private final static String DEFAULT_HINT = "DEFAULT";
 
 	@Bean
+	@ConditionalOnMissingClass("org.springframework.web.reactive.function.client.WebClient")
+	public ReactorLoadBalancer<ServiceInstance> reactorServiceInstanceBlockingLoadBalancer(Environment environment,
+			LoadBalancerProperties properties, ConfigurableApplicationContext context) {
+		String name = environment.getProperty(LoadBalancerClientFactory.PROPERTY_NAME);
+		ServiceInstanceListSupplier supplier = builder().withBlockingDiscoveryClient().withCaching().build(context);
+		log.info("MyHintsLoadBalancerStrategy loaded.");
+		return new HintsLoadBalancer(properties, supplier, name);
+	}
+
+	@Bean
+	@ConditionalOnClass(name = "org.springframework.web.reactive.function.client.WebClient")
 	public ReactorLoadBalancer<ServiceInstance> reactorServiceInstanceLoadBalancer(Environment environment,
 			LoadBalancerProperties properties, ConfigurableApplicationContext context) {
 		String name = environment.getProperty(LoadBalancerClientFactory.PROPERTY_NAME);
