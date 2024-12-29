@@ -8,7 +8,7 @@ spring:
     gateway:
       routes:
       - id: config
-        uri: lb://config-server
+        uri: http://localhost:7001
         predicates:
         - Path=/config/**
         filters:
@@ -16,9 +16,17 @@ spring:
         - AddRequestHeader=X-Request-Router, Spring-Cloud-Gateway
         - AddResponseHeader=X-Response-Router, Spring-Cloud-Gateway
       - id: registrar
-        uri: lb://eureka-server
+        uri: lb://EUREKA-SERVER
         predicates:
         - Path=/registrar/**
+        filters:
+        - RewriteLocationResponseHeader=AS_IN_REQUEST, Location
+        - AddRequestHeader=X-Request-Router, Spring-Cloud-Gateway
+        - AddResponseHeader=X-Response-Router, Spring-Cloud-Gateway
+      - id: corew
+        uri: lb://CORE-WEB
+        predicates:
+        - Path=/**
         filters:
         - RewriteLocationResponseHeader=AS_IN_REQUEST, Location
         - AddRequestHeader=X-Request-Router, Spring-Cloud-Gateway
