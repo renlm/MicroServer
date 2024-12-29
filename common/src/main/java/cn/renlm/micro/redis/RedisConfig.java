@@ -25,7 +25,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnClass(RedisCacheConfiguration.class)
-public class CachingConfig implements CachingConfigurer {
+public class RedisConfig implements CachingConfigurer {
 
 	public static final String DEFAULT_CACHE_MANAGER = "cacheManager";
 
