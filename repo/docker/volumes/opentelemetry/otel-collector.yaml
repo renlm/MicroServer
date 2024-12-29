@@ -24,8 +24,8 @@ exporters:
     namespace: monitor
   clickhouse:
     endpoint: tcp://clickhouse:9000?dial_timeout=10s
-    database: logging
-    username: logging
+    database: default
+    username: default
     password: KK_fyw4bnmdf4Ksp7IMYuPWD@20stdt^tn50jlsfy
     async_insert: true
     ttl: 72h
