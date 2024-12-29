@@ -3,4 +3,3 @@ cn.renlm.micro.eureka.client.EurekaJersey3ClientAuthConfig
 cn.renlm.micro.eureka.client.EurekaRestClientAuthConfig
 cn.renlm.micro.loadbalancer.MyHintsLoadBalancerClientConfig
 cn.renlm.micro.loadbalancer.MyHintsLoadBalancerFeignConfig
-cn.renlm.micro.redis.RedisConfig
