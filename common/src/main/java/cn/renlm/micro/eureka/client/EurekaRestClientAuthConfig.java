@@ -10,6 +10,7 @@ import java.security.GeneralSecurityException;
 import java.security.SecureRandom;
 
 import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -31,6 +32,7 @@ import cn.renlm.micro.util.CsrfUtil;
  * @author RenLiMing(任黎明)
  *
  */
+@AutoConfigureAfter(EurekaWebClientAuthConfig.class)
 @ConditionalOnClass({ RestClient.class })
 @ConditionalOnMissingBean({ EurekaJersey3ClientAuthConfig.class, EurekaWebClientAuthConfig.class })
 @EnableConfigurationProperties({ EurekaAuthProperties.class })
