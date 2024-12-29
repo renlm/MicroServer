@@ -66,6 +66,7 @@ public class WebSecurityConfig {
 	/**
 	 * 白名单
 	 */
+	// @formatter:off
 	public static final String[] WHITE_LIST = { 
 			LoginPage, 
 			logoutUrl, 
@@ -73,15 +74,18 @@ public class WebSecurityConfig {
 			CaptchaAntMatcher,
 			"/actuator/**" 
 		};
+	// @formatter:on
 
 	/**
 	 * 静态资源
 	 */
+	// @formatter:off
 	public static final String[] STATIC_PATHS = { 
 			"/favicon.ico", 
 			"/static/**", 
 			"/webjars/**" 
 		};
+	// @formatter:on
 
 	@Resource
 	private FindByIndexNameSessionRepository<? extends Session> sessionRepository;
@@ -93,6 +97,7 @@ public class WebSecurityConfig {
 	private AuthenticationFailureHandler authenticationFailureHandler;
 
 	@Bean
+	// @formatter:off
 	SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http, RequestAuthorizationManager authorizationManager)
 			throws Exception {
 		// 显示保存 SecurityContext
@@ -144,11 +149,14 @@ public class WebSecurityConfig {
 		});
 		return http.build();
 	}
+	// @formatter:on
 
 	@Bean
+	// @formatter:off
 	SecurityContextRepository securityContextRepository() {
 		return new DelegatingSecurityContextRepository(new RequestAttributeSecurityContextRepository(), new HttpSessionSecurityContextRepository());
 	}
+	// @formatter:on
 
 	/**
 	 * 会话并发
