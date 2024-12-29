@@ -6,7 +6,18 @@
 	<script src="webjars/jquery/jquery.min.js"></script>
 </head>
 <body>
-<textarea rows="40" cols="100" id="json"></textarea>
+<div>
+	<div style="float: left;">
+		<textarea rows="30" cols="100" id="json"></textarea>
+	</div>
+	<div style="float: left;margin-left: 10px;">
+		<form 
+			style="color: #fff;cursor: pointer;"
+			th:action="@{/logout}" method="post" onclick="this.submit();">
+			<button type="submit" style="background-color: black;color: #fff;cursor: pointer;">注销</button>
+		</form>
+	</div>
+</div>
 <script type="text/javascript">
 	window.CTX = window.ctx = "[(@{/})]".substr(0, "[(@{/})]".length - 1);
 	$(document).ajaxSend(function(event, jqxhr, settings) { 
