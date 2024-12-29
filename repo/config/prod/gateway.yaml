@@ -36,15 +36,6 @@ spring:
         - RewriteLocationResponseHeader=AS_IN_REQUEST, Location
         - AddRequestHeader=X-Request-Router, Spring-Cloud-Gateway
         - AddResponseHeader=X-Response-Router, Spring-Cloud-Gateway
-      - id: cores
-        uri: lb://CORE-SERVICE
-        predicates:
-        - Path=/cores/**
-        filters:
-        - StripPrefix=1
-        - RewriteLocationResponseHeader=AS_IN_REQUEST, Location
-        - AddRequestHeader=X-Request-Router, Spring-Cloud-Gateway
-        - AddResponseHeader=X-Response-Router, Spring-Cloud-Gateway
       - id: corew
         uri: lb://CORE-WEB
         predicates:
