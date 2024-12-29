@@ -4,7 +4,7 @@ spring:
       WRITE_DATES_AS_TIMESTAMPS: true
   jpa:
     openInView: false
-    showSql: true
+    showSql: false
     hibernate:
       ddlAuto: none
   sql:
