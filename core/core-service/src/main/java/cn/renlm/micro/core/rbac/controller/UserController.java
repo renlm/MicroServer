@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +31,9 @@ public class UserController {
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
 	@Resource
+	private ApplicationContext applicationContext;
+
+	@Resource
 	private UserService userService;
 
 	@Resource
@@ -45,10 +49,13 @@ public class UserController {
 	@GetMapping("/loadUserByUsername")
 	public UserInfo loadUserByUsername(String username) {
 		Map<String, String> metadataMap = eurekaInstanceConfig.getMetadataMap();
+		String serviceName = applicationContext.getId();
 		String instanceId = eurekaInstanceConfig.getInstanceId();
 		String hint = metadataMap.get("hint");
-		logger.info("username: {}, instanceId: {}, hint: {}", username, instanceId, hint);
-		return userService.loadUserByUsername(username);
+		logger.info("=== {} - username: {}, instanceId: {}, hint: {}", serviceName, username, instanceId, hint);
+		UserInfo userInfo = userService.loadUserByUsername(username);
+		userInfo.setRemark(hint);
+		return userInfo;
 	}
 
 }
