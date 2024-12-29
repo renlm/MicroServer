@@ -17,7 +17,7 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class SessionUtil {
 
-	public static final String AES_KEY = "AESKEY";
+	public static final String AES_KEY = "aesKey";
 
 	/**
 	 * 获取AES加密串
@@ -28,7 +28,7 @@ public class SessionUtil {
 	public static final String getAesKey(final HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		String aesKey = (String) session.getAttribute(AES_KEY);
-		if (StringUtils.hasText(aesKey)) {
+		if (!StringUtils.hasText(aesKey)) {
 			aesKey = AESUtil.getKey();
 			session.setAttribute(AES_KEY, aesKey);
 		}
