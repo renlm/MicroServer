@@ -11,9 +11,9 @@ eureka:
     leaseExpirationDurationInSeconds: 9
   server:
     enableSelfPreservation: false
-    peerNodeReadTimeoutMs: 5000
-    evictionIntervalTimerInMs: 60000
-    responseCacheUpdateIntervalMs: 30000
+    peerNodeReadTimeoutMs: 1500
+    evictionIntervalTimerInMs: 6000
+    responseCacheUpdateIntervalMs: 3000
     useReadOnlyResponseCache: true
   client:
     jersey.enabled: true
