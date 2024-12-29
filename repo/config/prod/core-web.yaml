@@ -11,6 +11,9 @@ aj:
 spring:
   thymeleaf:
     cache: false
+  jackson:
+    serialization:
+      WRITE_DATES_AS_TIMESTAMPS: true
   sql:
     init:
       mode: ${DB_INIT_MODE:ALWAYS}
