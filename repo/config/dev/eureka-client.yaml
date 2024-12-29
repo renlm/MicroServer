@@ -18,7 +18,8 @@ eureka:
       hint: ${HINT:mylb}
   client:
     jersey.enabled: false
-    restclient.enabled: true
+    restclient.enabled: false
+    webclient.enabled: true
     registerWithEureka: true
     fetchRegistry: true
     registryFetchIntervalSeconds: 3
