@@ -1,5 +1,0 @@
-spring:
-  security:
-    user:
-      name: ${SECURITY_USER_NAME:default}
-      password: ${SECURITY_USER_PASSWORD:123654}

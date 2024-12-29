@@ -1,7 +1,0 @@
-spring:
-  rabbitmq:
-    virtual-host: /dev
-    host: gw.renlm.cn
-    port: 31672
-    username: dev
-    password: KK_fyw4bnmdf4Ksp7IMYuPWD@20stdt^tn50jlsfy
