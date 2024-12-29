@@ -17,8 +17,9 @@ eureka:
     metadataMap:
       hint: ${HINT:mylb}
   client:
-    jersey.enabled: false
-    restclient.enabled: true
+    jersey.enabled: ${eureka.client.jerseyEnabled:false}
+    restclient.enabled: ${eureka.client.restclientEnabled:true}
+    webclient.enabled: ${eureka.client.webclientEnabled:false}
     registerWithEureka: ${REGISTER_WITH_EUREKA:true}
     fetchRegistry: ${FETCH_REGISTRY:true}
     registryFetchIntervalSeconds: 3
