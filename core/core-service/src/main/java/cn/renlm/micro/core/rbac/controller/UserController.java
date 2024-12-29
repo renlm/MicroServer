@@ -1,9 +1,15 @@
 package cn.renlm.micro.core.rbac.controller;
 
+import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.netflix.appinfo.EurekaInstanceConfig;
 
 import cn.renlm.micro.core.model.rbac.UserInfo;
 import cn.renlm.micro.core.rbac.service.UserService;
@@ -21,8 +27,13 @@ import jakarta.annotation.Resource;
 @RequestMapping("/user")
 public class UserController {
 
+	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+
 	@Resource
 	private UserService userService;
+
+	@Resource
+	private EurekaInstanceConfig eurekaInstanceConfig;
 
 	/**
 	 * 根据登录账号获取用户信息
@@ -33,6 +44,10 @@ public class UserController {
 	@ResponseBody
 	@GetMapping("/loadUserByUsername")
 	public UserInfo loadUserByUsername(String username) {
+		Map<String, String> metadataMap = eurekaInstanceConfig.getMetadataMap();
+		String instanceId = eurekaInstanceConfig.getInstanceId();
+		String hint = metadataMap.get("hint");
+		logger.info("username: {}, instanceId: {}, hint: {}", username, instanceId, hint);
 		return userService.loadUserByUsername(username);
 	}
 
