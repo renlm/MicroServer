@@ -1,3 +1,8 @@
+eureka:
+  client:
+    jerseyEnabled: false
+    restclientEnabled: false
+    webclientEnabled: true
 spring:
   cloud:
     gateway:
