@@ -40,7 +40,7 @@ public class EurekaWebClientAuthConfig {
 
 	private SecureRandom secureRandom = new SecureRandom();
 
-	public WebClient.Builder eurekaWebClientBuilder(EurekaAuthProperties env) {
+	private WebClient.Builder eurekaWebClientBuilder(EurekaAuthProperties env) {
 		return WebClient.builder().filter((req, next) -> {
 			final String serverToken = CsrfUtil.createServerToken();
 			final String csrfToken = CsrfUtil.createCsrfToken(secureRandom, serverToken);
