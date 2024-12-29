@@ -10,7 +10,7 @@ spring:
   profiles:
     active: ${PROFILES_ACTIVE:dev}
   config:
-    import: configserver:https://gw.renlm.cn/config
+    import: configserver:http://localhost:7001/config
   cloud:
     config:
       username: ${SECURITY_USER_NAME:default}
