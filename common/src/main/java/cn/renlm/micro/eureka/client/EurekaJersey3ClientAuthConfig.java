@@ -29,7 +29,7 @@ import jakarta.ws.rs.client.ClientRequestFilter;
  * @author RenLiMing(任黎明)
  *
  */
-@ConditionalOnProperty(value = "eureka.client.jersey.enabled", havingValue = "true", matchIfMissing = true)
+@ConditionalOnProperty(value = "eureka.client.jersey.enabled", havingValue = "true")
 @ConditionalOnClass({ Jersey3DiscoveryClientOptionalArgs.class })
 @EnableConfigurationProperties({ EurekaAuthProperties.class })
 public class EurekaJersey3ClientAuthConfig {

@@ -32,7 +32,7 @@ import cn.renlm.micro.util.CsrfUtil;
  * @author RenLiMing(任黎明)
  *
  */
-@ConditionalOnProperty(value = "eureka.client.webclient.enabled", havingValue = "true")
+@ConditionalOnProperty(value = "eureka.client.webclient.enabled", havingValue = "true", matchIfMissing = true)
 @ConditionalOnClass({ WebClient.class })
 @ConditionalOnMissingBean({ EurekaJersey3ClientAuthConfig.class })
 @EnableConfigurationProperties({ EurekaAuthProperties.class })
