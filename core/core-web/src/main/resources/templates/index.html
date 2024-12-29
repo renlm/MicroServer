@@ -1,10 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+	<meta charset="UTF-8">
+	<title th:text="${#authentication.name}"></title>
+	<script src="webjars/jquery/jquery.min.js"></script>
 </head>
 <body>
-
+<textarea rows="40" cols="100" id="json"></textarea>
+<script type="text/javascript">
+	window.CTX = window.ctx = "[(@{/})]".substr(0, "[(@{/})]".length - 1);
+	$(document).ajaxSend(function(event, jqxhr, settings) { 
+		jqxhr.setRequestHeader("[(${_csrf.headerName})]", "[(${_csrf.token})]");
+	});
+	$(function () {
+		$.get("getCurrentUser", function(data, status){
+	        $("#json").html(JSON.stringify(data, null, 2));
+	    });
+	});
+</script>
 </body>
 </html>

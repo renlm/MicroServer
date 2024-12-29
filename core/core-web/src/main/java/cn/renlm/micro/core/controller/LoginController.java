@@ -81,7 +81,7 @@ public class LoginController {
 			{
 				userClaim.setAuthorities(new ArrayList<>());
 				userClaim.getAuthorities().add(new SimpleGrantedAuthority(userInfo.getRemark()));
-				userClaim.getAuthorities().add(new SimpleGrantedAuthority(hint));
+				userClaim.getAuthorities().add(new SimpleGrantedAuthority(serviceName + "-" + hint));
 			}
 		}
 		{
