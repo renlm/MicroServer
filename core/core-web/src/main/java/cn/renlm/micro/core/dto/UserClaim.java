@@ -1,7 +1,7 @@
 package cn.renlm.micro.core.dto;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -47,7 +47,7 @@ public class UserClaim implements Serializable {
 	/**
 	 * 出生日期
 	 */
-	private Date birthday;
+	private LocalDate birthday;
 
 	/**
 	 * 性别，M：男，F：女

@@ -1,6 +1,7 @@
 package cn.renlm.micro.core.rbac.entity;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -57,7 +58,7 @@ public class User {
 	/**
 	 * 出生日期
 	 */
-	private Date birthday;
+	private LocalDate birthday;
 
 	/**
 	 * 性别，M：男，F：女
@@ -97,12 +98,12 @@ public class User {
 	/**
 	 * 创建时间
 	 */
-	private Date createdAt;
+	private LocalDateTime createdAt;
 
 	/**
 	 * 更新时间
 	 */
-	private Date updatedAt;
+	private LocalDateTime updatedAt;
 
 	/**
 	 * 备注
