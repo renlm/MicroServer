@@ -73,7 +73,7 @@ class MyHintsLoadBalancerStrategy {
 			LoadBalancerProperties properties, ConfigurableApplicationContext context) {
 		String name = environment.getProperty(LoadBalancerClientFactory.PROPERTY_NAME);
 		ServiceInstanceListSupplier supplier = builder().withBlockingDiscoveryClient().withCaching().build(context);
-		log.info("MyHintsLoadBalancerStrategy loaded.");
+		log.info("MyHintsLoadBalancerStrategy withBlockingDiscoveryClient loaded.");
 		return new HintsLoadBalancer(properties, supplier, name);
 	}
 
@@ -83,7 +83,7 @@ class MyHintsLoadBalancerStrategy {
 			LoadBalancerProperties properties, ConfigurableApplicationContext context) {
 		String name = environment.getProperty(LoadBalancerClientFactory.PROPERTY_NAME);
 		ServiceInstanceListSupplier supplier = builder().withDiscoveryClient().withCaching().build(context);
-		log.info("MyHintsLoadBalancerStrategy loaded.");
+		log.info("MyHintsLoadBalancerStrategy withDiscoveryClient loaded.");
 		return new HintsLoadBalancer(properties, supplier, name);
 	}
 
