@@ -54,7 +54,7 @@ public class UserController {
 		String hint = metadataMap.get("hint");
 		logger.info("=== {} - username: {}, instanceId: {}, hint: {}", serviceName, username, instanceId, hint);
 		UserInfo userInfo = userService.loadUserByUsername(username);
-		userInfo.setRemark(serviceName + "-" + hint);
+		userInfo.setRemark(serviceName + "/" + instanceId + "/" + hint);
 		return userInfo;
 	}
 

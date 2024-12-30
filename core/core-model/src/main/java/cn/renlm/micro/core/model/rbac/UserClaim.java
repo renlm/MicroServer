@@ -1,10 +1,8 @@
-package cn.renlm.micro.core.dto;
+package cn.renlm.micro.core.model.rbac;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
-
-import org.springframework.security.core.GrantedAuthority;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
@@ -12,7 +10,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 /**
- * 用户信息
+ * 登录用户信息
  * 
  * @author RenLiMing(任黎明)
  *
@@ -68,6 +66,6 @@ public class UserClaim implements Serializable {
 	 * 权限列表
 	 */
 	@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
-	private List<GrantedAuthority> authorities;
+	private List<?> authorities;
 
 }

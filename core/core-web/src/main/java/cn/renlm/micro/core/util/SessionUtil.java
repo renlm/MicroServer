@@ -1,9 +1,13 @@
 package cn.renlm.micro.core.util;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StringUtils;
 
 import com.anji.captcha.util.AESUtil;
 
+import cn.renlm.micro.core.dto.UserDetails;
+import cn.renlm.micro.core.model.rbac.UserClaim;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.experimental.UtilityClass;
@@ -35,6 +39,17 @@ public class SessionUtil {
 		{
 			return aesKey;
 		}
+	}
+	
+	/**
+	 * 获取当前登录用户信息
+	 * 
+	 * @return
+	 */
+	public static final UserClaim getCurrentUser() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		return userDetails.toClaim();
 	}
 
 }

@@ -8,6 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
+import cn.renlm.micro.core.model.rbac.UserClaim;
 import cn.renlm.micro.core.model.rbac.UserInfo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
