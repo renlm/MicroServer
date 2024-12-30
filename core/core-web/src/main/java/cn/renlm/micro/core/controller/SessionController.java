@@ -1,6 +1,9 @@
 package cn.renlm.micro.core.controller;
 
+import static org.apache.commons.lang.StringUtils.EMPTY;
+
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -10,11 +13,16 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -24,11 +32,14 @@ import com.netflix.discovery.EurekaClient;
 import com.netflix.discovery.shared.Application;
 import com.netflix.discovery.shared.Applications;
 
+import cn.renlm.micro.core.dto.UserDetails;
 import cn.renlm.micro.core.model.rbac.UserClaim;
 import cn.renlm.micro.core.model.rbac.UserInfo;
 import cn.renlm.micro.core.sdk.rbac.UserClient;
 import cn.renlm.micro.core.util.SessionUtil;
 import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * 会话
@@ -53,6 +64,9 @@ public class SessionController {
 
 	@Resource
 	private UserClient userClient;
+
+	@Resource
+	private SecurityContextRepository securityContextRepository;
 
 	/**
 	 * 获取当前登录用户信息
@@ -110,6 +124,26 @@ public class SessionController {
 		{
 			return hints;
 		}
+	}
+
+	/**
+	 * 更新会话负载均衡标记
+	 * 
+	 * @param request
+	 * @param response
+	 * @param hint
+	 * @return
+	 */
+	@ResponseBody
+	@PostMapping("/updateHint")
+	public UserClaim updateHint(HttpServletRequest request, HttpServletResponse response, String hint) {
+		SecurityContext context = SecurityContextHolder.getContext();
+		UserDetails principal = (UserDetails) context.getAuthentication();
+		Collection<? extends GrantedAuthority> authorities = principal.getAuthorities();
+		principal.setHint(hint);
+		context.setAuthentication(new UsernamePasswordAuthenticationToken(principal, EMPTY, authorities));
+		securityContextRepository.saveContext(context, request, response);
+		return principal.toClaim();
 	}
 
 }

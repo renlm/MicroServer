@@ -28,6 +28,8 @@ public class UserDetails extends UserInfo implements org.springframework.securit
 
 	private static final long serialVersionUID = 1L;
 
+	private String hint;
+
 	@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
 	private List<GrantedAuthority> authorities;
 

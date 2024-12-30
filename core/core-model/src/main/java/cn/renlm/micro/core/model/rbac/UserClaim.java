@@ -23,6 +23,11 @@ public class UserClaim implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
+	 * 负载均衡标记
+	 */
+	private String hint;
+
+	/**
 	 * 用户ID
 	 */
 	private String userId;
