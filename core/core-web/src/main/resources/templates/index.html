@@ -8,7 +8,10 @@
 <body>
 <div>
 	<div style="float: left;">
-		<textarea rows="30" cols="100" id="json"></textarea>
+		<div id="hints" style="padding-bottom: 10px;"></div>
+		<div>
+			<textarea rows="30" cols="100" id="json"></textarea>
+		</div>
 	</div>
 	<div style="float: left;margin-left: 10px;">
 		<form 
@@ -26,6 +29,15 @@
 	$(function () {
 		$.get("getCurrentUser", function(data, status){
 	        $("#json").html(JSON.stringify(data, null, 2));
+	        $.get("getAllHints", function(data, status){
+	 	       for (var i = 0; i < data.length; i++) {
+	 	    	   if (data.hint === data[i]) {
+	 	    		  $("#hints").append("<button style='background: lightgreen;'>" + data[i] + "</button>");
+	 	    	   } else {
+	 	    		  $("#hints").append("<button>" + data[i] + "</button>");
+	 	    	   }
+	 	       }
+	 	    });
 	    });
 	});
 </script>
