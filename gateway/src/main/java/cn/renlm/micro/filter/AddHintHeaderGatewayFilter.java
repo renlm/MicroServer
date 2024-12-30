@@ -6,6 +6,7 @@ import java.util.Objects;
 
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.core.Ordered;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
@@ -26,6 +27,7 @@ import reactor.core.publisher.Mono;
 @Component
 public class AddHintHeaderGatewayFilter implements GlobalFilter, Ordered {
 
+	@Lazy
 	@Resource
 	private SessionClient sessionClient;
 
@@ -48,7 +50,7 @@ public class AddHintHeaderGatewayFilter implements GlobalFilter, Ordered {
 
 	@Override
 	public int getOrder() {
-		return Ordered.HIGHEST_PRECEDENCE;
+		return Ordered.LOWEST_PRECEDENCE;
 	}
 
 }
