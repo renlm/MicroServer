@@ -13,6 +13,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -99,7 +100,10 @@ public class SessionController {
 			if (Objects.nonNull(instances)) {
 				for (InstanceInfo instance : instances) {
 					Map<String, String> metadataMap = instance.getMetadata();
-					hints.add(metadataMap.get("hint"));
+					String hint = metadataMap.get("hint");
+					if (StringUtils.hasText(hint)) {
+						hints.add(hint);
+					}
 				}
 			}
 		}
