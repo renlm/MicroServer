@@ -1,6 +1,10 @@
 package cn.renlm.micro.core.security;
 
+import java.util.Map;
+
 import org.springframework.stereotype.Service;
+
+import com.netflix.appinfo.EurekaInstanceConfig;
 
 import cn.renlm.micro.core.dto.UserDetails;
 import cn.renlm.micro.core.model.rbac.UserInfo;
@@ -19,10 +23,16 @@ public class UserDetailsService implements org.springframework.security.core.use
 	@Resource
 	private UserClient userClient;
 
+	@Resource
+	private EurekaInstanceConfig eurekaInstanceConfig;
+
 	@Override
 	public UserDetails loadUserByUsername(String username) {
 		UserInfo userInfo = userClient.loadUserByUsername(username);
-		return UserDetails.of(userInfo);
+		Map<String, String> metadataMap = eurekaInstanceConfig.getMetadataMap();
+		UserDetails userDetails = UserDetails.of(userInfo);
+		userDetails.setHint(metadataMap.get("hint"));
+		return userDetails;
 	}
 
 }

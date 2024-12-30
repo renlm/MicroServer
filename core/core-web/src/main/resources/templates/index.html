@@ -27,14 +27,15 @@
 		jqxhr.setRequestHeader("[(${_csrf.headerName})]", "[(${_csrf.token})]");
 	});
 	$(function () {
-		$.get("getCurrentUser", function(data, status){
-	        $("#json").html(JSON.stringify(data, null, 2));
-	        $.get("getAllHints", function(data, status){
-	 	       for (var i = 0; i < data.length; i++) {
-	 	    	   if (data.hint === data[i]) {
-	 	    		  $("#hints").append("<button style='background: lightgreen;'>" + data[i] + "</button>");
+		$.get("getCurrentUser", function(userDetails, status){
+	        $("#json").html(JSON.stringify(userDetails, null, 2));
+	        $.get("getAllHints", function(hints, status){
+	 	       for (var i = 0; i < hints.length; i++) {
+	 	    	   var hint = hints[i];
+	 	    	   if (userDetails.hint === hint) {
+	 	    		  $("#hints").append("<button style='background: lightgreen;'>" + hint + "</button>");
 	 	    	   } else {
-	 	    		  $("#hints").append("<button>" + data[i] + "</button>");
+	 	    		  $("#hints").append("<button>" + hint + "</button>");
 	 	    	   }
 	 	       }
 	 	    });
