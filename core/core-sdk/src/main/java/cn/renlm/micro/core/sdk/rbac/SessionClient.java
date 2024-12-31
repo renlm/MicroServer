@@ -3,6 +3,7 @@ package cn.renlm.micro.core.sdk.rbac;
 import static cn.renlm.micro.constant.ServiceNameConstants.CORE_WEB;
 
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import cn.renlm.micro.common.Resp;
@@ -22,7 +23,7 @@ public interface SessionClient {
 	 * 
 	 * @return
 	 */
-	@GetMapping(value = "/getCurrentUser")
+	@GetMapping(value = "/getCurrentUser", produces = MediaType.APPLICATION_JSON_VALUE)
 	Resp<UserClaim> getCurrentUser();
 
 }

@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -17,7 +15,6 @@ import lombok.experimental.Accessors;
  */
 @Data
 @Accessors(chain = true)
-@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
 public class UserClaim implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -70,7 +67,6 @@ public class UserClaim implements Serializable {
 	/**
 	 * 权限列表
 	 */
-	@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
 	private List<?> authorities;
 
 }

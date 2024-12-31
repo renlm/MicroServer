@@ -44,8 +44,10 @@ public class AddHintHeaderGatewayFilter implements GlobalFilter, Ordered {
 		String hint = httpHeaders.getFirst(HINT_HEADER_NAME);
 		if (!StringUtils.hasText(hint)) {
 			if (Objects.nonNull(httpHeaders)) {
-				OpenFeignHeadersHolder.set(httpHeaders, true);
-				Resp<UserClaim> resp = supplyAsync(() -> sessionClient.getCurrentUser()).get();
+				Resp<UserClaim> resp = supplyAsync(() -> {
+					OpenFeignHeadersHolder.set(httpHeaders);
+					return sessionClient.getCurrentUser();
+				}).get();
 				UserClaim userClaim = resp.getData();
 				if (Objects.nonNull(userClaim)) {
 					// @formatter:off
