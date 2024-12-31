@@ -5,6 +5,7 @@ import static cn.renlm.micro.constant.ServiceNameConstants.CORE_WEB;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import cn.renlm.micro.common.Resp;
 import cn.renlm.micro.core.model.rbac.UserClaim;
 
 /**
@@ -22,6 +23,6 @@ public interface SessionClient {
 	 * @return
 	 */
 	@GetMapping(value = "/getCurrentUser")
-	UserClaim getCurrentUser();
+	Resp<UserClaim> getCurrentUser();
 
 }

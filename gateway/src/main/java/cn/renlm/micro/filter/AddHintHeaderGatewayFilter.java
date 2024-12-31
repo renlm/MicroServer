@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.server.ServerWebExchange;
 
+import cn.renlm.micro.common.Resp;
 import cn.renlm.micro.core.model.rbac.UserClaim;
 import cn.renlm.micro.core.sdk.rbac.SessionClient;
 import cn.renlm.micro.util.OpenFeignHeadersHolder;
@@ -44,7 +45,8 @@ public class AddHintHeaderGatewayFilter implements GlobalFilter, Ordered {
 			HttpHeaders httpHeaders = request.getHeaders();
 			if (Objects.nonNull(httpHeaders)) {
 				OpenFeignHeadersHolder.set(httpHeaders, true);
-				UserClaim userClaim = supplyAsync(() -> sessionClient.getCurrentUser()).get();
+				Resp<UserClaim> resp = supplyAsync(() -> sessionClient.getCurrentUser()).get();
+				UserClaim userClaim = resp.getData();
 				if (Objects.nonNull(userClaim)) {
 					// @formatter:off
 					exchange = exchange.mutate().request(req -> req.headers(headers -> headers.set(HINT_HEADER_NAME, userClaim.getHint())).build()).build();

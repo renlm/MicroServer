@@ -32,6 +32,7 @@ import com.netflix.discovery.EurekaClient;
 import com.netflix.discovery.shared.Application;
 import com.netflix.discovery.shared.Applications;
 
+import cn.renlm.micro.common.Resp;
 import cn.renlm.micro.core.dto.UserDetails;
 import cn.renlm.micro.core.model.rbac.UserClaim;
 import cn.renlm.micro.core.model.rbac.UserInfo;
@@ -85,8 +86,9 @@ public class SessionController {
 			String instanceId = eurekaInstanceConfig.getInstanceId();
 			String hint = metadataMap.get("hint");
 			logger.info("=== {} - username: {}, instanceId: {}, hint: {}", serviceName, username, instanceId, hint);
-			UserInfo userInfo = userClient.loadUserByUsername(username);
+			Resp<UserInfo> resp = userClient.loadUserByUsername(username);
 			{ // 备注信息
+				UserInfo userInfo = resp.getData();
 				List<GrantedAuthority> list = new ArrayList<>();
 				list.add(new SimpleGrantedAuthority(userInfo.getRemark()));
 				list.add(new SimpleGrantedAuthority(serviceName + "/" + instanceId + "/" + hint));

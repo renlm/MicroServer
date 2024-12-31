@@ -6,6 +6,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import cn.renlm.micro.common.Resp;
 import cn.renlm.micro.core.model.rbac.UserInfo;
 
 /**
@@ -24,6 +25,6 @@ public interface UserClient {
 	 * @return
 	 */
 	@GetMapping(value = "/loadUserByUsername")
-	UserInfo loadUserByUsername(@RequestParam("username") String username);
+	Resp<UserInfo> loadUserByUsername(@RequestParam("username") String username);
 
 }
