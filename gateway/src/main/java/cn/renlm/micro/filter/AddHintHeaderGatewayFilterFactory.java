@@ -95,9 +95,9 @@ public class AddHintHeaderGatewayFilterFactory extends AbstractNameValueGatewayF
 
 	private Mono<Void> addHeader(ServerWebExchange exchange, GatewayFilterChain chain, String name, String value) {
 		// @formatter:off
-		exchange = exchange.mutate().request(req -> req.headers(headers -> headers.set(name, value)).build()).build();
+		ServerHttpRequest request = exchange.getRequest().mutate().headers(httpHeaders -> httpHeaders.add(name, value)).build();
+		return chain.filter(exchange.mutate().request(request).build());
 		// @formatter:on
-		return chain.filter(exchange);
 	}
 
 }
