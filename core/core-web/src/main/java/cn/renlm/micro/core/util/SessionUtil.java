@@ -1,7 +1,10 @@
 package cn.renlm.micro.core.util;
 
+import static org.apache.commons.lang.BooleanUtils.isFalse;
+
 import java.util.Objects;
 
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -55,8 +58,13 @@ public class SessionUtil {
 			return null;
 		} else {
 			Authentication authentication = context.getAuthentication();
-			UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-			return userDetails;
+			if (isFalse(authentication instanceof UsernamePasswordAuthenticationToken)) {
+				return null;
+			}
+			{
+				UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+				return userDetails;
+			}
 		}
 	}
 
