@@ -104,7 +104,10 @@ public class AddHintHeaderGatewayFilterFactory
 			@Override
 			public String toString() {
 				// @formatter:off
-				return filterToStringCreator(AddHintHeaderGatewayFilterFactory.this).append(NAME_KEY, config.name).append(HINT_KEY, config.hint).toString();
+				return filterToStringCreator(AddHintHeaderGatewayFilterFactory.this)
+						.append(NAME_KEY, config.name)
+						.append(HINT_KEY, config.hint)
+						.toString();
 				// @formatter:on
 			}
 		};
