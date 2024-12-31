@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 
 /**
- * 服务网关
+ * OpenFeign 配置
  * 
  * @author RenLiMing(任黎明)
  *
