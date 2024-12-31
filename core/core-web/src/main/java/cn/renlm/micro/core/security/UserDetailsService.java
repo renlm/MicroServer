@@ -61,7 +61,7 @@ public class UserDetailsService implements org.springframework.security.core.use
 			return userDetails;
 		}
 	}
-	
+
 	/**
 	 * 更新当前登录用户信息
 	 * 
@@ -70,7 +70,8 @@ public class UserDetailsService implements org.springframework.security.core.use
 	 * @param principal
 	 * @return
 	 */
-	public UserDetails updateCurrentUser(HttpServletRequest request, HttpServletResponse response, Consumer<UserDetails> principal) {
+	public UserDetails updateCurrentUser(HttpServletRequest request, HttpServletResponse response,
+			Consumer<UserDetails> principal) {
 		SecurityContext context = SecurityContextHolder.getContext();
 		Authentication authentication = context.getAuthentication();
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
