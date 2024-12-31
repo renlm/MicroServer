@@ -8,6 +8,7 @@
 安装插件：
 	Docker Pipeline
 	Pipeline: Stage View
+	Shell: SSH Pipeline Steps
 */
 pipeline {
 	agent any
