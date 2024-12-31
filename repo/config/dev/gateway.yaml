@@ -8,7 +8,6 @@ spring:
     gateway:
       defaultFilters:
       - AddHintHeader=x-lb-hint, mylb
-      - PrefixPath=/**
       routes:
       - id: config
         uri: http://localhost:7001
