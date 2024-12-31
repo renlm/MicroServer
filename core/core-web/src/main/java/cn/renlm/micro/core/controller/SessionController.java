@@ -1,5 +1,6 @@
 package cn.renlm.micro.core.controller;
 
+import static cn.renlm.micro.constant.Constants.HINT_METADATA_NAME;
 import static org.apache.commons.lang.StringUtils.EMPTY;
 
 import java.util.ArrayList;
@@ -83,7 +84,7 @@ public class SessionController {
 			Map<String, String> metadataMap = eurekaInstanceConfig.getMetadataMap();
 			String serviceName = applicationContext.getId();
 			String instanceId = eurekaInstanceConfig.getInstanceId();
-			String hint = metadataMap.get("hint");
+			String hint = metadataMap.get(HINT_METADATA_NAME);
 			logger.info("=== {} - username: {}, instanceId: {}, hint: {}", serviceName, username, instanceId, hint);
 			Resp<UserInfo> resp = userClient.loadUserByUsername(username);
 			{ // 备注信息
@@ -115,7 +116,7 @@ public class SessionController {
 			if (Objects.nonNull(instances)) {
 				for (InstanceInfo instance : instances) {
 					Map<String, String> metadataMap = instance.getMetadata();
-					String hint = metadataMap.get("hint");
+					String hint = metadataMap.get(HINT_METADATA_NAME);
 					if (StringUtils.hasText(hint)) {
 						hints.add(hint);
 					}

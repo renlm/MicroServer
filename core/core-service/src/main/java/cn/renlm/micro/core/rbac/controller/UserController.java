@@ -1,5 +1,7 @@
 package cn.renlm.micro.core.rbac.controller;
 
+import static cn.renlm.micro.constant.Constants.HINT_METADATA_NAME;
+
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -52,7 +54,7 @@ public class UserController {
 		Map<String, String> metadataMap = eurekaInstanceConfig.getMetadataMap();
 		String serviceName = applicationContext.getId();
 		String instanceId = eurekaInstanceConfig.getInstanceId();
-		String hint = metadataMap.get("hint");
+		String hint = metadataMap.get(HINT_METADATA_NAME);
 		logger.info("=== {} - username: {}, instanceId: {}, hint: {}", serviceName, username, instanceId, hint);
 		UserInfo userInfo = userService.loadUserByUsername(username);
 		userInfo.setRemark(serviceName + "/" + instanceId + "/" + hint);

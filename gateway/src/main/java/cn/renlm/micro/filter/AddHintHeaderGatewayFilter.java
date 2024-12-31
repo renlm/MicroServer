@@ -1,6 +1,7 @@
 package cn.renlm.micro.filter;
 
 import static cn.renlm.micro.constant.Constants.HINT_HEADER_NAME;
+import static cn.renlm.micro.constant.Constants.HINT_METADATA_NAME;
 import static java.util.concurrent.CompletableFuture.supplyAsync;
 
 import java.util.Map;
@@ -61,7 +62,7 @@ public class AddHintHeaderGatewayFilter implements GlobalFilter, Ordered {
 			}
 			if (!StringUtils.hasText(hint)) {
 				Map<String, String> metadataMap = eurekaInstanceConfig.getMetadataMap();
-				hint = metadataMap.get("hint");
+				hint = metadataMap.get(HINT_METADATA_NAME);
 			}
 		}
 		final String hintHeader = hint;
