@@ -1,5 +1,6 @@
 package cn.renlm.micro.loadbalancer;
 
+import java.util.Enumeration;
 import java.util.Objects;
 
 import org.slf4j.Logger;
@@ -34,16 +35,24 @@ public class MyHintsLoadBalancerFeignConfig {
 					.getRequestAttributes();
 			if (Objects.nonNull(attributes)) {
 				HttpServletRequest request = attributes.getRequest();
-				String hintHeaderName = properties.getHintHeaderName();
-				String hintHeaderValue = request.getHeader(hintHeaderName);
-				log.debug("openfeign hint header 透传 - {} : {}", hintHeaderName, hintHeaderValue);
-				if (StringUtils.hasText(hintHeaderValue)) {
-					template.header(hintHeaderName, hintHeaderValue);
+				Enumeration<String> headers = request.getHeaderNames();
+				if (Objects.nonNull(headers)) {
+					while (headers.hasMoreElements()) {
+						String headerName = headers.nextElement();
+						String headerValue = request.getHeader(headerName);
+						if (StringUtils.hasText(headerValue)) {
+							log.debug("openfeign attributes header 透传 - {} : {}", headerName, headerValue);
+							template.header(headerName, headerValue);
+						}
+					}
 				}
 			} else {
 				HttpHeaders httpHeaders = OpenFeignHeadersHolder.get();
 				if (Objects.nonNull(httpHeaders)) {
-					httpHeaders.forEach(template::header);
+					httpHeaders.forEach((name, values) -> {
+						log.debug("openfeign headersHolder header 透传 - {} : {}", name, values);
+						template.header(name, values);
+					});
 				}
 			}
 		};
