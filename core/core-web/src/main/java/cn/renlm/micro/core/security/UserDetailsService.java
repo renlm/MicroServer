@@ -76,7 +76,7 @@ public class UserDetailsService implements org.springframework.security.core.use
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 		principal.accept(userDetails);
 		Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
-		context.setAuthentication(new UsernamePasswordAuthenticationToken(principal, EMPTY, authorities));
+		context.setAuthentication(new UsernamePasswordAuthenticationToken(userDetails, EMPTY, authorities));
 		securityContextRepository.saveContext(context, request, response);
 		return userDetails;
 	}
