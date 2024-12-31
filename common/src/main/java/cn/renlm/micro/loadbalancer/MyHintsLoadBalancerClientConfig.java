@@ -1,8 +1,8 @@
 package cn.renlm.micro.loadbalancer;
 
+import static cn.renlm.micro.constant.Constants.HINT_METADATA_NAME;
 import static org.springframework.cloud.loadbalancer.core.ServiceInstanceListSupplier.builder;
 import static org.springframework.cloud.loadbalancer.support.LoadBalancerEnvironmentPropertyUtils.equalToForClientOrDefault;
-import static cn.renlm.micro.constant.Constants.HINT_METADATA_NAME;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,10 +66,12 @@ class MyHintsLoadBalancerStrategy {
 
 	private static final Logger log = LoggerFactory.getLogger(MyHintsLoadBalancerStrategy.class);
 
-	private final static String DEFAULT_HINT = "DEFAULT";
+	private static final String WEB_CLIENT_CLASS = "org.springframework.web.reactive.function.client.WebClient";
+
+	private static final String DEFAULT_HINT = "DEFAULT";
 
 	@Bean
-	@ConditionalOnMissingClass("org.springframework.web.reactive.function.client.WebClient")
+	@ConditionalOnMissingClass(WEB_CLIENT_CLASS)
 	public ReactorLoadBalancer<ServiceInstance> reactorServiceInstanceBlockingLoadBalancer(Environment environment,
 			LoadBalancerProperties properties, ConfigurableApplicationContext context) {
 		String name = environment.getProperty(LoadBalancerClientFactory.PROPERTY_NAME);
@@ -79,7 +81,7 @@ class MyHintsLoadBalancerStrategy {
 	}
 
 	@Bean
-	@ConditionalOnClass(name = "org.springframework.web.reactive.function.client.WebClient")
+	@ConditionalOnClass(name = WEB_CLIENT_CLASS)
 	public ReactorLoadBalancer<ServiceInstance> reactorServiceInstanceLoadBalancer(Environment environment,
 			LoadBalancerProperties properties, ConfigurableApplicationContext context) {
 		String name = environment.getProperty(LoadBalancerClientFactory.PROPERTY_NAME);
