@@ -85,8 +85,8 @@ public class AddHintHeaderGatewayFilterFactory extends AbstractGatewayFilterFact
 				Map<String, String> metadataMap = eurekaInstanceConfig.getMetadataMap();
 				String defaults = metadataMap.get(HINT_METADATA_NAME);
 				if (Objects.nonNull(httpHeaders)) {
+					HttpHeaders mutateHttpHeaders = new HttpHeaders(httpHeaders);
 					Resp<UserClaim> resp = supplyAsync(() -> {
-						HttpHeaders mutateHttpHeaders = new HttpHeaders(httpHeaders);
 						mutateHttpHeaders.add(name, defaults);
 						OpenFeignHeadersHolder.set(mutateHttpHeaders);
 						return sessionClient.getCurrentUser();
@@ -95,6 +95,7 @@ public class AddHintHeaderGatewayFilterFactory extends AbstractGatewayFilterFact
 					if (resp.isOk() && Objects.nonNull(userClaim)) {
 						hint = userClaim.getHint();
 						if (hasText(hint)) {
+							mutateHttpHeaders.set(name, hint);
 							return addHeader(exchange, chain, name, hint);
 						}
 					}
