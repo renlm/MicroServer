@@ -26,6 +26,7 @@ import com.netflix.appinfo.EurekaInstanceConfig;
 import cn.renlm.micro.common.Resp;
 import cn.renlm.micro.core.model.rbac.UserClaim;
 import cn.renlm.micro.core.sdk.rbac.SessionClient;
+import cn.renlm.micro.filter.AddHintHeaderGatewayFilterFactory.Config;
 import cn.renlm.micro.util.OpenFeignHeadersHolder;
 import jakarta.annotation.Resource;
 import lombok.Data;
@@ -39,8 +40,7 @@ import reactor.core.publisher.Mono;
  *
  */
 @Component
-public class AddHintHeaderGatewayFilterFactory
-		extends AbstractGatewayFilterFactory<AddHintHeaderGatewayFilterFactory.Config> {
+public class AddHintHeaderGatewayFilterFactory extends AbstractGatewayFilterFactory<Config> {
 
 	private static final String NAME_KEY = "name";
 
@@ -69,7 +69,7 @@ public class AddHintHeaderGatewayFilterFactory
 			@SneakyThrows
 			public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
 				String name = hasText(config.name) ? config.name : HINT_HEADER_NAME;
-				String hint = ServerWebExchangeUtils.expand(exchange, config.hint);
+				String hint = hasText(config.hint) ? ServerWebExchangeUtils.expand(exchange, config.hint) : config.hint;
 				if (hasText(hint)) {
 					return addHeader(exchange, chain, name, hint);
 				}
