@@ -7,7 +7,7 @@ spring:
   cloud:
     gateway:
       defaultFilters:
-      - AddHintHeader=x-lb-hint, mylb
+      - AddHintHeader
       routes:
       - id: config
         uri: http://localhost:7001
