@@ -1,10 +1,8 @@
 package cn.renlm.micro.core.controller;
 
 import static cn.renlm.micro.constant.Constants.HINT_METADATA_NAME;
-import static org.apache.commons.lang.StringUtils.EMPTY;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -14,12 +12,8 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,6 +32,7 @@ import cn.renlm.micro.core.dto.UserDetails;
 import cn.renlm.micro.core.model.rbac.UserClaim;
 import cn.renlm.micro.core.model.rbac.UserInfo;
 import cn.renlm.micro.core.sdk.rbac.UserClient;
+import cn.renlm.micro.core.security.UserDetailsService;
 import cn.renlm.micro.core.util.SessionUtil;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
@@ -68,7 +63,7 @@ public class SessionController {
 	private UserClient userClient;
 
 	@Resource
-	private SecurityContextRepository securityContextRepository;
+	private UserDetailsService userDetailsService;
 
 	/**
 	 * 获取当前登录用户信息
@@ -78,7 +73,7 @@ public class SessionController {
 	@ResponseBody
 	@GetMapping("/getCurrentUser")
 	public Resp<UserClaim> getCurrentUser() {
-		UserClaim userClaim = SessionUtil.getCurrentUser();
+		UserClaim userClaim = SessionUtil.getCurrentClaim();
 		String username = userClaim.getUsername();
 		{
 			Map<String, String> metadataMap = eurekaInstanceConfig.getMetadataMap();
@@ -139,13 +134,8 @@ public class SessionController {
 	@ResponseBody
 	@PostMapping("/updateHint")
 	public Resp<UserClaim> updateHint(HttpServletRequest request, HttpServletResponse response, String hint) {
-		SecurityContext context = SecurityContextHolder.getContext();
-		UserDetails principal = (UserDetails) context.getAuthentication();
-		Collection<? extends GrantedAuthority> authorities = principal.getAuthorities();
-		principal.setHint(hint);
-		context.setAuthentication(new UsernamePasswordAuthenticationToken(principal, EMPTY, authorities));
-		securityContextRepository.saveContext(context, request, response);
-		return Resp.success(principal.toClaim());
+		UserDetails info = userDetailsService.updateCurrentUser(request, response, user -> user.setHint(hint));
+		return Resp.success(info.toClaim());
 	}
 
 }

@@ -1,6 +1,7 @@
 package cn.renlm.micro.core.util;
 
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StringUtils;
 
@@ -24,7 +25,7 @@ public class SessionUtil {
 	public static final String AES_KEY = "aesKey";
 
 	/**
-	 * 获取AES加密串
+	 * 获取AES秘钥
 	 * 
 	 * @param request
 	 * @return
@@ -40,15 +41,26 @@ public class SessionUtil {
 			return aesKey;
 		}
 	}
-	
+
 	/**
 	 * 获取当前登录用户信息
 	 * 
 	 * @return
 	 */
-	public static final UserClaim getCurrentUser() {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	public static final UserDetails getCurrentUser() {
+		SecurityContext context = SecurityContextHolder.getContext();
+		Authentication authentication = context.getAuthentication();
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		return userDetails;
+	}
+
+	/**
+	 * 获取当前登录用户信息
+	 * 
+	 * @return
+	 */
+	public static final UserClaim getCurrentClaim() {
+		UserDetails userDetails = getCurrentUser();
 		return userDetails.toClaim();
 	}
 

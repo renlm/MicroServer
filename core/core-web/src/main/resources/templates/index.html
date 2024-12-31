@@ -24,16 +24,23 @@
 	$(document).ajaxSend(function(event, jqxhr, settings) { 
 		jqxhr.setRequestHeader("[(${_csrf.headerName})]", "[(${_csrf.token})]");
 	});
+	
+	function updateHint (hint) {
+		$.post("updateHint", { hint: hint }, function(resp, status) {
+			location.reload(true);
+		});
+	}
+	
 	$(function () {
-		$.get("getCurrentUser", function(userDetails, status){
-	        $("#json").html(JSON.stringify(userDetails, null, 2));
-	        $.get("getAllHints", function(hints, status){
-	 	       for (var i = 0; i < hints.length; i++) {
-	 	    	   var hint = hints[i];
-	 	    	   if (userDetails.hint === hint) {
-	 	    		  $("#hints").append("<button style='background: lightgreen;'>" + hint + "</button>");
+		$.get("getCurrentUser", function(resp, status) {
+	        $("#json").html(JSON.stringify(resp.data, null, 2));
+	        $.get("getAllHints", function(result, status) {
+	 	       for (var i = 0; i < result.data.length; i++) {
+	 	    	   var hint = result.data[i];
+	 	    	   if (resp.data.hint === hint) {
+	 	    		  $("#hints").append("<button style='background: lightgreen;' disabled='disabled'>" + hint + "</button>");
 	 	    	   } else {
-	 	    		  $("#hints").append("<button>" + hint + "</button>");
+	 	    		  $("#hints").append("<button onclick='updateHint(\"" + hint + "\");'>" + hint + "</button>");
 	 	    	   }
 	 	       }
 	 	    });
