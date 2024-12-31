@@ -68,20 +68,27 @@ public class AddHintHeaderGatewayFilterFactory extends AbstractGatewayFilterFact
 			@Override
 			@SneakyThrows
 			public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+				// 优先取配置指定[路由标记]
 				String name = hasText(config.name) ? config.name : HINT_HEADER_NAME;
 				String hint = hasText(config.hint) ? ServerWebExchangeUtils.expand(exchange, config.hint) : config.hint;
 				if (hasText(hint)) {
 					return addHeader(exchange, chain, name, hint);
 				}
+				// 其次从请求头获取[路由标记]
 				ServerHttpRequest request = exchange.getRequest();
 				HttpHeaders httpHeaders = request.getHeaders();
 				hint = httpHeaders.getFirst(HINT_HEADER_NAME);
 				if (hasText(hint)) {
 					return addHeader(exchange, chain, name, hint);
 				}
+				// 然后根据当前登录用户查询[路由标记]
+				Map<String, String> metadataMap = eurekaInstanceConfig.getMetadataMap();
+				String defaults = metadataMap.get(HINT_METADATA_NAME);
 				if (Objects.nonNull(httpHeaders)) {
 					Resp<UserClaim> resp = supplyAsync(() -> {
-						OpenFeignHeadersHolder.set(httpHeaders);
+						HttpHeaders mutateHttpHeaders = new HttpHeaders(httpHeaders);
+						mutateHttpHeaders.add(name, defaults);
+						OpenFeignHeadersHolder.set(mutateHttpHeaders);
 						return sessionClient.getCurrentUser();
 					}).get();
 					UserClaim userClaim = resp.getData();
@@ -92,10 +99,9 @@ public class AddHintHeaderGatewayFilterFactory extends AbstractGatewayFilterFact
 						}
 					}
 				}
-				Map<String, String> metadataMap = eurekaInstanceConfig.getMetadataMap();
-				hint = metadataMap.get(HINT_METADATA_NAME);
-				if (hasText(hint)) {
-					return addHeader(exchange, chain, name, hint);
+				// 最后匹配当前节点的[路由标记]
+				if (hasText(defaults)) {
+					return addHeader(exchange, chain, name, defaults);
 				} else {
 					return chain.filter(exchange);
 				}
