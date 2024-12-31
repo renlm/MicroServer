@@ -26,6 +26,15 @@ public class Resp<T> implements Serializable {
 	private T data;
 
 	/**
+	 * 响应是否成功
+	 * 
+	 * @return
+	 */
+	public boolean isOk() {
+		return code == HttpStatus.OK;
+	}
+
+	/**
 	 * 构建响应数据
 	 * 
 	 * @param <V>

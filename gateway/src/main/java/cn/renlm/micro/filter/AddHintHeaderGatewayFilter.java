@@ -3,6 +3,7 @@ package cn.renlm.micro.filter;
 import static cn.renlm.micro.constant.Constants.HINT_HEADER_NAME;
 import static java.util.concurrent.CompletableFuture.supplyAsync;
 
+import java.util.Map;
 import java.util.Objects;
 
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
@@ -14,6 +15,8 @@ import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.server.ServerWebExchange;
+
+import com.netflix.appinfo.EurekaInstanceConfig;
 
 import cn.renlm.micro.common.Resp;
 import cn.renlm.micro.core.model.rbac.UserClaim;
@@ -32,6 +35,9 @@ import reactor.core.publisher.Mono;
 @Component
 public class AddHintHeaderGatewayFilter implements GlobalFilter, Ordered {
 
+	@Resource
+	private EurekaInstanceConfig eurekaInstanceConfig;
+
 	@Lazy
 	@Resource
 	private SessionClient sessionClient;
@@ -49,12 +55,20 @@ public class AddHintHeaderGatewayFilter implements GlobalFilter, Ordered {
 					return sessionClient.getCurrentUser();
 				}).get();
 				UserClaim userClaim = resp.getData();
-				if (Objects.nonNull(userClaim)) {
-					// @formatter:off
-					exchange = exchange.mutate().request(req -> req.headers(headers -> headers.set(HINT_HEADER_NAME, userClaim.getHint())).build()).build();
-					// @formatter:on
+				if (resp.isOk() && Objects.nonNull(userClaim)) {
+					hint = userClaim.getHint();
 				}
 			}
+			if (!StringUtils.hasText(hint)) {
+				Map<String, String> metadataMap = eurekaInstanceConfig.getMetadataMap();
+				hint = metadataMap.get("hint");
+			}
+		}
+		final String hintHeader = hint;
+		if (StringUtils.hasText(hint)) {
+			// @formatter:off
+			exchange = exchange.mutate().request(req -> req.headers(headers -> headers.set(HINT_HEADER_NAME, hintHeader)).build()).build();
+			// @formatter:on
 		}
 		{
 			return chain.filter(exchange);
