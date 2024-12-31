@@ -6,12 +6,14 @@ import static java.util.concurrent.CompletableFuture.supplyAsync;
 import static org.springframework.cloud.gateway.support.GatewayToStringStyler.filterToStringCreator;
 import static org.springframework.util.StringUtils.hasText;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
-import org.springframework.cloud.gateway.filter.factory.AbstractNameValueGatewayFilterFactory;
+import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.cloud.gateway.support.ServerWebExchangeUtils;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpHeaders;
@@ -26,6 +28,7 @@ import cn.renlm.micro.core.model.rbac.UserClaim;
 import cn.renlm.micro.core.sdk.rbac.SessionClient;
 import cn.renlm.micro.util.OpenFeignHeadersHolder;
 import jakarta.annotation.Resource;
+import lombok.Data;
 import lombok.SneakyThrows;
 import reactor.core.publisher.Mono;
 
@@ -36,7 +39,12 @@ import reactor.core.publisher.Mono;
  *
  */
 @Component
-public class AddHintHeaderGatewayFilterFactory extends AbstractNameValueGatewayFilterFactory {
+public class AddHintHeaderGatewayFilterFactory
+		extends AbstractGatewayFilterFactory<AddHintHeaderGatewayFilterFactory.Config> {
+
+	private static final String NAME_KEY = "name";
+
+	private static final String HINT_KEY = "hint";
 
 	@Resource
 	private EurekaInstanceConfig eurekaInstanceConfig;
@@ -45,14 +53,23 @@ public class AddHintHeaderGatewayFilterFactory extends AbstractNameValueGatewayF
 	@Resource
 	private SessionClient sessionClient;
 
+	public AddHintHeaderGatewayFilterFactory() {
+		super(Config.class);
+	}
+
 	@Override
-	public GatewayFilter apply(NameValueConfig config) {
+	public List<String> shortcutFieldOrder() {
+		return Arrays.asList(NAME_KEY, HINT_KEY);
+	}
+
+	@Override
+	public GatewayFilter apply(Config config) {
 		return new GatewayFilter() {
 			@Override
 			@SneakyThrows
 			public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-				String name = hasText(config.getName()) ? config.getName() : HINT_HEADER_NAME;
-				String hint = ServerWebExchangeUtils.expand(exchange, config.getValue());
+				String name = hasText(config.name) ? config.name : HINT_HEADER_NAME;
+				String hint = ServerWebExchangeUtils.expand(exchange, config.hint);
 				if (hasText(hint)) {
 					return addHeader(exchange, chain, name, hint);
 				}
@@ -87,7 +104,7 @@ public class AddHintHeaderGatewayFilterFactory extends AbstractNameValueGatewayF
 			@Override
 			public String toString() {
 				// @formatter:off
-				return filterToStringCreator(AddHintHeaderGatewayFilterFactory.this).append(config.getName(), config.getValue()).toString();
+				return filterToStringCreator(AddHintHeaderGatewayFilterFactory.this).append(NAME_KEY, config.name).append(HINT_KEY, config.hint).toString();
 				// @formatter:on
 			}
 		};
@@ -98,6 +115,15 @@ public class AddHintHeaderGatewayFilterFactory extends AbstractNameValueGatewayF
 		ServerHttpRequest request = exchange.getRequest().mutate().headers(httpHeaders -> httpHeaders.add(name, value)).build();
 		return chain.filter(exchange.mutate().request(request).build());
 		// @formatter:on
+	}
+
+	@Data
+	public static class Config {
+
+		private String name = HINT_HEADER_NAME;
+
+		private String hint;
+
 	}
 
 }
