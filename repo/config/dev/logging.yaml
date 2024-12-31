@@ -1,7 +1,7 @@
 logging:
   level:
     root: INFO
-    cn.renlm: INFO
+    cn.renlm: DEBUG
   file:
     name: /opt/log/${spring.application.name}.log
   logback:
