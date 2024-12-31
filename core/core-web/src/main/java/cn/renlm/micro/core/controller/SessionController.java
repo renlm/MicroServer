@@ -12,6 +12,7 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Controller;
@@ -45,7 +46,7 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  */
 @Controller
-@RequestMapping
+@RequestMapping("/session")
 public class SessionController {
 
 	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
@@ -74,6 +75,9 @@ public class SessionController {
 	@GetMapping("/getCurrentUser")
 	public Resp<UserClaim> getCurrentUser() {
 		UserClaim userClaim = SessionUtil.getCurrentClaim();
+		if (Objects.isNull(userClaim)) {
+			return Resp.error(HttpStatus.UNAUTHORIZED, "用户未登录");
+		}
 		String username = userClaim.getUsername();
 		{
 			Map<String, String> metadataMap = eurekaInstanceConfig.getMetadataMap();

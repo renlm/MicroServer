@@ -15,7 +15,7 @@ import cn.renlm.micro.core.model.rbac.UserClaim;
  * @author RenLiMing(任黎明)
  *
  */
-@FeignClient(contextId = "sessionClient", name = CORE_WEB)
+@FeignClient(contextId = "sessionClient", path = "/session", name = CORE_WEB)
 public interface SessionClient {
 
 	/**

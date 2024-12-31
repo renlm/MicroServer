@@ -1,5 +1,7 @@
 package cn.renlm.micro.core.util;
 
+import java.util.Objects;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -49,9 +51,13 @@ public class SessionUtil {
 	 */
 	public static final UserDetails getCurrentUser() {
 		SecurityContext context = SecurityContextHolder.getContext();
-		Authentication authentication = context.getAuthentication();
-		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-		return userDetails;
+		if (Objects.isNull(context)) {
+			return null;
+		} else {
+			Authentication authentication = context.getAuthentication();
+			UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+			return userDetails;
+		}
 	}
 
 	/**
@@ -61,7 +67,11 @@ public class SessionUtil {
 	 */
 	public static final UserClaim getCurrentClaim() {
 		UserDetails userDetails = getCurrentUser();
-		return userDetails.toClaim();
+		if (Objects.isNull(userDetails)) {
+			return null;
+		} else {
+			return userDetails.toClaim();
+		}
 	}
 
 }

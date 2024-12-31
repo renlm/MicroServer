@@ -72,6 +72,7 @@ public class WebSecurityConfig {
 			logoutUrl, 
 			LoginProcessingUrl, 
 			CaptchaAntMatcher,
+			"/session/getCurrentUser",
 			"/actuator/**" 
 		};
 	// @formatter:on
