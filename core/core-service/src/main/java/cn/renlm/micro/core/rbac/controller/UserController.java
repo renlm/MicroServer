@@ -58,7 +58,7 @@ public class UserController {
 		logger.info("=== {} - username: {}, instanceId: {}, hint: {}", serviceName, username, instanceId, hint);
 		UserInfo userInfo = userService.loadUserByUsername(username);
 		userInfo.setRemark(serviceName + "/" + instanceId + "/" + hint);
-		return Resp.success(userInfo);
+		return Resp.ok(userInfo);
 	}
 
 }

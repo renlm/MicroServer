@@ -2,8 +2,6 @@ package cn.renlm.micro.common;
 
 import java.io.Serializable;
 
-import org.springframework.http.HttpStatus;
-
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -19,7 +17,7 @@ public class Resp<T> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private HttpStatus code;
+	private final RespCode code;
 
 	private String msg;
 
@@ -31,7 +29,7 @@ public class Resp<T> implements Serializable {
 	 * @return
 	 */
 	public boolean isOk() {
-		return code == HttpStatus.OK;
+		return code == RespCode.OK;
 	}
 
 	/**
@@ -43,12 +41,11 @@ public class Resp<T> implements Serializable {
 	 * @param data
 	 * @return
 	 */
-	public static final <V> Resp<V> of(HttpStatus code, String msg, V data) {
-		Resp<V> responseModel = new Resp<>();
-		responseModel.setCode(code);
-		responseModel.setMsg(msg);
-		responseModel.setData(data);
-		return responseModel;
+	public static final <V> Resp<V> of(RespCode code, String msg, V data) {
+		Resp<V> resp = new Resp<>(code);
+		resp.setMsg(msg);
+		resp.setData(data);
+		return resp;
 	}
 
 	/**
@@ -58,11 +55,10 @@ public class Resp<T> implements Serializable {
 	 * @param data
 	 * @return
 	 */
-	public static final <V> Resp<V> success(V data) {
-		Resp<V> responseModel = new Resp<>();
-		responseModel.setCode(HttpStatus.OK);
-		responseModel.setData(data);
-		return responseModel;
+	public static final <V> Resp<V> ok(V data) {
+		Resp<V> resp = new Resp<>(RespCode.OK);
+		resp.setData(data);
+		return resp;
 	}
 
 	/**
@@ -73,10 +69,22 @@ public class Resp<T> implements Serializable {
 	 * @param msg
 	 * @return
 	 */
-	public static final <V> Resp<V> success(V data, String msg) {
-		Resp<V> responseModel = success(data);
-		responseModel.setMsg(msg);
-		return responseModel;
+	public static final <V> Resp<V> ok(V data, String msg) {
+		Resp<V> resp = ok(data);
+		resp.setMsg(msg);
+		return resp;
+	}
+
+	/**
+	 * 错误
+	 * 
+	 * @param <V>
+	 * @param code
+	 * @return
+	 */
+	public static final <V> Resp<V> err(RespCode code) {
+		Resp<V> resp = new Resp<>(code);
+		return resp;
 	}
 
 	/**
@@ -87,11 +95,10 @@ public class Resp<T> implements Serializable {
 	 * @param msg
 	 * @return
 	 */
-	public static final <V> Resp<V> error(HttpStatus code, String msg) {
-		Resp<V> responseModel = new Resp<>();
-		responseModel.setCode(code);
-		responseModel.setMsg(msg);
-		return responseModel;
+	public static final <V> Resp<V> err(RespCode code, String msg) {
+		Resp<V> resp = err(code);
+		resp.setMsg(msg);
+		return resp;
 	}
 
 }

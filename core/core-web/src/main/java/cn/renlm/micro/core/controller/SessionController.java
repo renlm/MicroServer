@@ -12,7 +12,6 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Controller;
@@ -29,6 +28,7 @@ import com.netflix.discovery.shared.Application;
 import com.netflix.discovery.shared.Applications;
 
 import cn.renlm.micro.common.Resp;
+import cn.renlm.micro.common.RespCode;
 import cn.renlm.micro.core.dto.UserDetails;
 import cn.renlm.micro.core.model.rbac.UserClaim;
 import cn.renlm.micro.core.model.rbac.UserInfo;
@@ -76,7 +76,7 @@ public class SessionController {
 	public Resp<UserClaim> getCurrentUser() {
 		UserClaim userClaim = SessionUtil.getCurrentClaim();
 		if (Objects.isNull(userClaim)) {
-			return Resp.error(HttpStatus.UNAUTHORIZED, "用户未登录");
+			return Resp.err(RespCode.UNAUTHORIZED);
 		}
 		String username = userClaim.getUsername();
 		{
@@ -95,7 +95,7 @@ public class SessionController {
 			}
 		}
 		{
-			return Resp.success(userClaim);
+			return Resp.ok(userClaim);
 		}
 	}
 
@@ -123,7 +123,7 @@ public class SessionController {
 			}
 		}
 		{
-			return Resp.success(hints);
+			return Resp.ok(hints);
 		}
 	}
 
@@ -139,7 +139,7 @@ public class SessionController {
 	@PostMapping("/updateHint")
 	public Resp<UserClaim> updateHint(HttpServletRequest request, HttpServletResponse response, String hint) {
 		UserDetails info = userDetailsService.updateCurrentUser(request, response, user -> user.setHint(hint));
-		return Resp.success(info.toClaim());
+		return Resp.ok(info.toClaim());
 	}
 
 }
