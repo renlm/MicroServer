@@ -40,9 +40,9 @@ public class AddHintHeaderGatewayFilter implements GlobalFilter, Ordered {
 	@SneakyThrows
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
 		ServerHttpRequest request = exchange.getRequest();
-		String hint = request.getHeaders().getFirst(HINT_HEADER_NAME);
+		HttpHeaders httpHeaders = request.getHeaders();
+		String hint = httpHeaders.getFirst(HINT_HEADER_NAME);
 		if (!StringUtils.hasText(hint)) {
-			HttpHeaders httpHeaders = request.getHeaders();
 			if (Objects.nonNull(httpHeaders)) {
 				OpenFeignHeadersHolder.set(httpHeaders, true);
 				Resp<UserClaim> resp = supplyAsync(() -> sessionClient.getCurrentUser()).get();
