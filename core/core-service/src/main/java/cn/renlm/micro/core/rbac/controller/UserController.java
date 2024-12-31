@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.netflix.appinfo.EurekaInstanceConfig;
 
+import cn.renlm.micro.common.Resp;
 import cn.renlm.micro.core.model.rbac.UserInfo;
 import cn.renlm.micro.core.rbac.service.UserService;
 import jakarta.annotation.Resource;
@@ -47,7 +48,7 @@ public class UserController {
 	 */
 	@ResponseBody
 	@GetMapping("/loadUserByUsername")
-	public UserInfo loadUserByUsername(String username) {
+	public Resp<UserInfo> loadUserByUsername(String username) {
 		Map<String, String> metadataMap = eurekaInstanceConfig.getMetadataMap();
 		String serviceName = applicationContext.getId();
 		String instanceId = eurekaInstanceConfig.getInstanceId();
@@ -55,7 +56,7 @@ public class UserController {
 		logger.info("=== {} - username: {}, instanceId: {}, hint: {}", serviceName, username, instanceId, hint);
 		UserInfo userInfo = userService.loadUserByUsername(username);
 		userInfo.setRemark(serviceName + "/" + instanceId + "/" + hint);
-		return userInfo;
+		return Resp.success(userInfo);
 	}
 
 }

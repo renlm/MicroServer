@@ -72,12 +72,11 @@ public class SessionController {
 	/**
 	 * 获取当前登录用户信息
 	 * 
-	 * @param authentication
 	 * @return
 	 */
 	@ResponseBody
 	@GetMapping("/getCurrentUser")
-	public UserClaim getCurrentUser() {
+	public Resp<UserClaim> getCurrentUser() {
 		UserClaim userClaim = SessionUtil.getCurrentUser();
 		String username = userClaim.getUsername();
 		{
@@ -96,7 +95,7 @@ public class SessionController {
 			}
 		}
 		{
-			return userClaim;
+			return Resp.success(userClaim);
 		}
 	}
 
@@ -107,7 +106,7 @@ public class SessionController {
 	 */
 	@ResponseBody
 	@GetMapping("/getAllHints")
-	public Set<String> getAllHints() {
+	public Resp<Set<String>> getAllHints() {
 		Set<String> hints = new HashSet<>();
 		Applications applications = eurekaClient.getApplications();
 		List<Application> list = applications.getRegisteredApplications();
@@ -124,7 +123,7 @@ public class SessionController {
 			}
 		}
 		{
-			return hints;
+			return Resp.success(hints);
 		}
 	}
 
@@ -138,14 +137,14 @@ public class SessionController {
 	 */
 	@ResponseBody
 	@PostMapping("/updateHint")
-	public UserClaim updateHint(HttpServletRequest request, HttpServletResponse response, String hint) {
+	public Resp<UserClaim> updateHint(HttpServletRequest request, HttpServletResponse response, String hint) {
 		SecurityContext context = SecurityContextHolder.getContext();
 		UserDetails principal = (UserDetails) context.getAuthentication();
 		Collection<? extends GrantedAuthority> authorities = principal.getAuthorities();
 		principal.setHint(hint);
 		context.setAuthentication(new UsernamePasswordAuthenticationToken(principal, EMPTY, authorities));
 		securityContextRepository.saveContext(context, request, response);
-		return principal.toClaim();
+		return Resp.success(principal.toClaim());
 	}
 
 }
