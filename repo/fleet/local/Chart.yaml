@@ -29,6 +29,9 @@ dependencies:
 - name: rabbitmq
   repository: file://./charts/rabbitmq
   condition: rabbitmq.enabled
+- name: jenkins
+  repository: file://./charts/jenkins
+  condition: jenkins.enabled
 - name: config
   repository: file://./charts/config
   condition: config.enabled
