@@ -6,7 +6,15 @@ jaeger:
   enabled: false
 redis:
   enabled: false
+mysql:
+  enabled: false
 postgres:
   enabled: false
 rabbitmq:
+  enabled: false
+config:
+  enabled: false
+eureka:
+  enabled: false
+gateway:
   enabled: false

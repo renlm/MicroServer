@@ -17,6 +17,8 @@ targetCustomizations:
         enabled: true
       gateway:
         enabled: true
+      mysql:
+        enabled: true
       postgres:
         enabled: true
       nginx:
