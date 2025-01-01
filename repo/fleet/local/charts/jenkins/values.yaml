@@ -1,55 +1,56 @@
 fullnameOverride: jenkins
-replicaCount: 1
-image:
-  repository: jenkins/jenkins
-  pullPolicy: IfNotPresent
-  tag: lts-jdk17
-serviceAccount:
-  name: jenkins-sa
-securityContext:
-  runAsUser: 0
-service:
-  type: ClusterIP
-  port: 8080
-livenessProbe:
-  httpGet:
-    path: /
-    port: http
-readinessProbe:
-  httpGet:
-    path: /
-    port: http
-volumes:
-- name: root-m2
-  hostPath:
-    path: /root/.m2
-- name: docker-bin
-  hostPath:
-    path: /usr/bin/docker
-- name: docker-daemon
-  hostPath:
-    path: /etc/docker
-- name: docker-sock
-  hostPath:
-    path: /var/run/docker.sock
-- name: jenkins-home
-  hostPath:
-    path: /var/jenkins_home
-- name: localtime
-  hostPath:
-    path: /etc/localtime
-volumeMounts:
-- name: root-m2
-  mountPath: /root/.m2
-- name: docker-bin
-  mountPath: /usr/bin/docker
-- name: docker-daemon
-  mountPath: /etc/docker/daemon.json
-  subPath: daemon.json
-- name: docker-sock
-  mountPath: /var/run/docker.sock
-- name: jenkins-home
-  mountPath: /var/jenkins_home
-- name: localtime
-  mountPath: /etc/localtime
-  readOnly: true
+templates:
+  replicaCount: 1
+  image:
+    repository: jenkins/jenkins
+    pullPolicy: IfNotPresent
+    tag: lts-jdk17
+  serviceAccount:
+    name: jenkins-sa
+  securityContext:
+    runAsUser: 0
+  service:
+    type: ClusterIP
+    port: 8080
+  livenessProbe:
+    httpGet:
+      path: /
+      port: http
+  readinessProbe:
+    httpGet:
+      path: /
+      port: http
+  volumes:
+  - name: root-m2
+    hostPath:
+      path: /root/.m2
+  - name: docker-bin
+    hostPath:
+      path: /usr/bin/docker
+  - name: docker-daemon
+    hostPath:
+      path: /etc/docker
+  - name: docker-sock
+    hostPath:
+      path: /var/run/docker.sock
+  - name: jenkins-home
+    hostPath:
+      path: /var/jenkins_home
+  - name: localtime
+    hostPath:
+      path: /etc/localtime
+  volumeMounts:
+  - name: root-m2
+    mountPath: /root/.m2
+  - name: docker-bin
+    mountPath: /usr/bin/docker
+  - name: docker-daemon
+    mountPath: /etc/docker/daemon.json
+    subPath: daemon.json
+  - name: docker-sock
+    mountPath: /var/run/docker.sock
+  - name: jenkins-home
+    mountPath: /var/jenkins_home
+  - name: localtime
+    mountPath: /etc/localtime
+    readOnly: true
