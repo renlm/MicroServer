@@ -7,4 +7,4 @@ appVersion: 1.0.1
 dependencies:
 - name: templates
   version: 0.0.1
-  repository: file://../../../templates
+  repository: file://../../templates
