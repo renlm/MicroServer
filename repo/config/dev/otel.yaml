@@ -8,9 +8,14 @@ otel:
   exporter.otlp.headers: Authorization=Basic ZGVmYXVsdDpNMWg2MkdqM1V5NTRy
   exporter.otlp.endpoint: https://otel.renlm.cn
   exporter.otlp.protocol: http/protobuf
-  metrics.exporter: otlp
-  traces.exporter: otlp
-  logs.exporter: otlp
+  metrics:
+    exporter: otlp
+  traces:
+    exporter: otlp
+    sampler: traceidratio
+    traceidratio: 1
+  logs:
+    exporter: otlp
   propagators:
   - tracecontext
   - baggage
