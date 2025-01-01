@@ -4,16 +4,16 @@ metadata:
   name: postgres-configmap
 data:
   pgpass: |-
-    localhost:5432:{{ .Values.env.POSTGRES_DB }}:{{ .Values.env.POSTGRES_USER }}:{{ .Values.env.POSTGRES_PASSWORD }}
+    localhost:5432:{{ .Values.global.env.POSTGRES_DB }}:{{ .Values.global.env.POSTGRES_USER }}:{{ .Values.global.env.POSTGRES_PASSWORD }}
   init-user-db.sh: |-
     #!/bin/bash
     set -e
     export PGPASSFILE=/docker-entrypoint-initdb.d/.pgpass
     psql -v ON_ERROR_STOP=1 <<-EOSQL
-    	CREATE USER dev WITH PASSWORD '{{ .Values.env.POSTGRES_PASSWORD }}';
+    	CREATE USER dev WITH PASSWORD '{{ .Values.global.env.POSTGRES_PASSWORD }}';
     	CREATE DATABASE dev OWNER dev;
     	GRANT ALL PRIVILEGES ON DATABASE dev TO dev;
-    	CREATE USER grafana WITH PASSWORD '{{ .Values.env.POSTGRES_PASSWORD }}';
+    	CREATE USER grafana WITH PASSWORD '{{ .Values.global.env.POSTGRES_PASSWORD }}';
     	CREATE DATABASE grafana OWNER grafana;
     	GRANT ALL PRIVILEGES ON DATABASE grafana TO grafana;
     EOSQL
