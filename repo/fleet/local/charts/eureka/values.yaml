@@ -13,7 +13,7 @@ templates:
     SECURITY_USER_NAME: default
     SECURITY_USER_PASSWORD: M1h62Gj3Uy54r
     CONFIGSERVER: http://config/config
-    EUREKA_SERVER: http://eureka-0.eureka.{{ .Release.Namespace }}/registrar/eureka,http://eureka-1.eureka.{{ .Release.Namespace }}/registrar/eureka,http://eureka-2.eureka.{{ .Release.Namespace }}/registrar/eureka
+    EUREKA_SERVER: http://eureka-0.eureka.io/registrar/eureka,http://eureka-1.eureka.io/registrar/eureka,http://eureka-2.eureka.io/registrar/eureka
     EUREKA_AUTH_SECRETKEY: KK_fyw4bnmdf4Ksp7IMYuPWD@20stdt^tn50jlsfy
     HOSTNAME: ${POD_NAME}.eureka
     PROFILES_ACTIVE: kubernetes
