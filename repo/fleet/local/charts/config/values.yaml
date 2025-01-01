@@ -17,7 +17,7 @@ templates:
     RABBITMQ_USERNAME: micro
     RABBITMQ_PASSWORD: UPsfyIREQt^Md0jlYuPWtREf4Ksp7Ibn5tKK
   service:
-    type: ClusterIP
+    clusterIP: None
     spec:
     - port: 80
       protocol: TCP
