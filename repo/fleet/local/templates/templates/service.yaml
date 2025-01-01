@@ -5,10 +5,10 @@ metadata:
   labels:
     {{- include "templates.labels" . | nindent 4 }}
 spec:
-  {{- if .Values.service.type }}
-  type: {{ .Values.service.type }}
-  {{- else if .Values.service.clusterIP }}
+  {{- if .Values.service.clusterIP }}
   clusterIP: {{ .Values.service.clusterIP }}
+  {{- else if .Values.service.type }}
+  type: {{ .Values.service.type }}
   {{- end }}
   ports:
     {{- range .Values.service.spec }}
