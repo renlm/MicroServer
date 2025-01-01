@@ -1,0 +1,27 @@
+spring:
+  cloud:
+    loadbalancer:
+      configurations: hints
+      hintHeaderName: x-lb-hint
+      hint:
+        default: ${HINT:mylb}
+eureka:
+  auth.secretKey: ${EUREKA_AUTH_SECRETKEY:123654}
+  instance:
+    preferIpAddress: true
+    hostname: ${HOSTNAME:${spring.cloud.client.ip-address}}
+    nonSecurePort: ${server.port}
+    instanceId: ${eureka.instance.hostname}:${eureka.instance.nonSecurePort}
+    leaseRenewalIntervalInSeconds: 3
+    leaseExpirationDurationInSeconds: 9
+    metadataMap:
+      hint: ${HINT:mylb}
+  client:
+    jersey.enabled: ${eureka.client.jerseyEnabled:false}
+    restclient.enabled: ${eureka.client.restclientEnabled:true}
+    webclient.enabled: ${eureka.client.webclientEnabled:false}
+    registerWithEureka: ${REGISTER_WITH_EUREKA:true}
+    fetchRegistry: ${FETCH_REGISTRY:true}
+    registryFetchIntervalSeconds: 3
+    serviceUrl:
+      defaultZone: ${EUREKA_SERVER}

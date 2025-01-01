@@ -1,0 +1,21 @@
+# https://opentelemetry.io/docs/languages/java/configuration/#zero-code-sdk-autoconfigure
+# https://opentelemetry.io/docs/zero-code/java/spring-boot-starter/getting-started/
+# https://opentelemetry.io/docs/languages/java/sdk/#textmappropagator
+# https://opentelemetry.io/docs/languages/java/configuration/#environment-variables-and-system-properties
+# https://opentelemetry.io/docs/specs/otel/configuration/sdk-environment-variables/
+otel:
+  service.name: ${spring.application.name}
+  exporter.otlp.endpoint: http://otel-collector:4317
+  exporter.otlp.protocol: grpc
+  metrics.exporter: otlp
+  traces.exporter: otlp
+  logs.exporter: otlp
+  propagators:
+  - tracecontext
+  - baggage
+  - b3
+  resource:
+    attributes:
+      environment: prod
+      service:
+        namespace: docker

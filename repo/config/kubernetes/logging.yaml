@@ -1,0 +1,10 @@
+logging:
+  level:
+    root: INFO
+    cn.renlm: DEBUG
+  file:
+    name: /opt/log/${spring.application.name}.log
+  logback:
+    rollingpolicy:
+      maxFileSize: 512MB
+      maxHistory: 30

@@ -1,0 +1,18 @@
+spring:
+  jackson:
+    serialization:
+      WRITE_DATES_AS_TIMESTAMPS: true
+  jpa:
+    openInView: false
+    showSql: false
+    hibernate:
+      ddlAuto: none
+  sql:
+    init:
+      mode: ${DB_INIT_MODE:ALWAYS}
+      schemaLocations:
+      - classpath:database/schema/rbac.sql
+      dataLocations:
+      - classpath:database/data/rbac.sql
+      continueOnError: false
+      separator: ;
