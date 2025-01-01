@@ -3,8 +3,8 @@ templates:
   image:
     repository: jenkins/jenkins
     pullPolicy: IfNotPresent
-    tag: lts-jdk17
-  securityContext:
+    tag: latest
+  podSecurityContext:
     runAsUser: 0
   service:
     type: ClusterIP
