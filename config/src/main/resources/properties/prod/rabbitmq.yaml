@@ -1,7 +1,7 @@
 spring:
   rabbitmq:
-    virtual-host: /micro
-    host: rabbitmq
-    port: 5672
-    username: micro
-    password: UPsfyIREQt^Md0jlYuPWtREf4Ksp7Ibn5tKK
+    virtual-host: ${RABBITMQ_VIRTUAL_HOST:/micro}
+    host: ${RABBITMQ_HOST:rabbitmq}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_USERNAME:micro}
+    password: ${RABBITMQ_PASSWORD:123654}
