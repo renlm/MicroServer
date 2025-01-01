@@ -26,7 +26,7 @@ templates:
     configMap:
       name: postgres-configmap
       items:
-      - key: .pgpass
+      - key: pgpass
         path: .pgpass
       - key: init-user-db.sh
         path: init-user-db.sh
