@@ -1,25 +1,14 @@
 templates:
   fullnameOverride: jenkins
-  replicaCount: 1
   image:
     repository: jenkins/jenkins
     pullPolicy: IfNotPresent
     tag: lts-jdk17
-  serviceAccount:
-    name: jenkins-sa
   securityContext:
     runAsUser: 0
   service:
     type: ClusterIP
     port: 8080
-  livenessProbe:
-    httpGet:
-      path: /
-      port: http
-  readinessProbe:
-    httpGet:
-      path: /
-      port: http
   volumes:
   - name: root-m2
     hostPath:
