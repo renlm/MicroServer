@@ -1,3 +1,10 @@
+global:
+  env:
+    TZ: Asia/Shanghai
+    MYSQL_DATABASE: dev
+    MYSQL_USER: dev
+    MYSQL_PASSWORD: KK_fyw4bnmdf4Ksp7IMYuPWD@20stdt^tn50jlsfy
+    MYSQL_ROOT_PASSWORD: KK_fyw4bnmdf4Ksp7IMYuPWD@20stdt^tn50jlsfy
 templates:
   nameOverride: mysql
   fullnameOverride: mysql
@@ -10,12 +17,6 @@ templates:
     - --character-set-server=utf8mb4
     - --collation-server=utf8mb4_unicode_ci
     - --skip-log-bin
-  env:
-    TZ: Asia/Shanghai
-    MYSQL_DATABASE: dev
-    MYSQL_USER: dev
-    MYSQL_PASSWORD: KK_fyw4bnmdf4Ksp7IMYuPWD@20stdt^tn50jlsfy
-    MYSQL_ROOT_PASSWORD: KK_fyw4bnmdf4Ksp7IMYuPWD@20stdt^tn50jlsfy
   service:
     type: ClusterIP
     spec:
