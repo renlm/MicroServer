@@ -20,4 +20,12 @@ public interface UserService {
 	 */
 	UserInfo loadUserByUsername(String username);
 
+	/**
+	 * 根据用户ID获取用户信息
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	UserInfo findByUserId(String userId);
+
 }

@@ -27,14 +27,24 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserInfo loadUserByUsername(String username) {
-		UserInfo dto = new UserInfo();
 		User user = userRepository.findByUsername(username);
 		if (Objects.isNull(user)) {
-			dto.setUsername(username);
+			return null;
 		} else {
+			UserInfo dto = new UserInfo();
 			BeanUtils.copyProperties(user, dto);
+			return dto;
 		}
-		{
+	}
+
+	@Override
+	public UserInfo findByUserId(String userId) {
+		User user = userRepository.findByUserId(userId);
+		if (Objects.isNull(user)) {
+			return null;
+		} else {
+			UserInfo dto = new UserInfo();
+			BeanUtils.copyProperties(user, dto);
 			return dto;
 		}
 	}

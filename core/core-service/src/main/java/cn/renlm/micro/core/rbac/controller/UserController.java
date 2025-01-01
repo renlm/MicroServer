@@ -51,14 +51,28 @@ public class UserController {
 	@ResponseBody
 	@GetMapping("/loadUserByUsername")
 	public Resp<UserInfo> loadUserByUsername(String username) {
+		UserInfo userInfo = userService.loadUserByUsername(username);
+		return Resp.ok(userInfo);
+	}
+
+	/**
+	 * 根据用户ID获取用户信息
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	@ResponseBody
+	@GetMapping("/getByUserId")
+	public Resp<UserInfo> getByUserId(String userId) {
 		Map<String, String> metadataMap = eurekaInstanceConfig.getMetadataMap();
 		String serviceName = applicationContext.getId();
 		String instanceId = eurekaInstanceConfig.getInstanceId();
 		String hint = metadataMap.get(HINT_METADATA_NAME);
-		logger.info("=== {} - username: {}, instanceId: {}, hint: {}", serviceName, username, instanceId, hint);
-		UserInfo userInfo = userService.loadUserByUsername(username);
-		userInfo.setRemark(serviceName + "/" + instanceId + "/" + hint);
-		return Resp.ok(userInfo);
+		UserInfo userInfo = userService.findByUserId(userId);
+		String username = userInfo.getUsername();
+		String msg = serviceName + "/" + instanceId + "/" + hint;
+		logger.info("=== username/serviceName/instanceId/hint: {}/{}", username, msg);
+		return Resp.ok(userInfo, msg);
 	}
 
 }

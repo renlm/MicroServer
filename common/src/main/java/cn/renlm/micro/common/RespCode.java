@@ -14,7 +14,8 @@ public enum RespCode {
 	// @formatter:off
 	OK(200, "成功"), 
 	ERR(500, "失败"),
-	UNAUTHORIZED(401, "用户未登录")
+	UNAUTHORIZED(401, "未登录"),
+	NOT_FOUND(404, "未找到数据")
 	;
 	// @formatter:on
 

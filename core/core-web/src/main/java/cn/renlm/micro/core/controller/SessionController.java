@@ -78,24 +78,41 @@ public class SessionController {
 		if (Objects.isNull(userClaim)) {
 			return Resp.err(RespCode.UNAUTHORIZED);
 		}
-		String username = userClaim.getUsername();
+		{
+			return Resp.ok(userClaim);
+		}
+	}
+
+	/**
+	 * 根据用户ID获取用户信息
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	@ResponseBody
+	@GetMapping("/getUserInfo")
+	public Resp<UserClaim> getUserInfo(String userId) {
+		Resp<UserInfo> resp = userClient.getByUserId(userId);
+		UserInfo userInfo = resp.getData();
+		if (Objects.isNull(userInfo)) {
+			return Resp.err(RespCode.NOT_FOUND);
+		}
 		{
 			Map<String, String> metadataMap = eurekaInstanceConfig.getMetadataMap();
 			String serviceName = applicationContext.getId();
 			String instanceId = eurekaInstanceConfig.getInstanceId();
 			String hint = metadataMap.get(HINT_METADATA_NAME);
-			logger.info("=== {} - username: {}, instanceId: {}, hint: {}", serviceName, username, instanceId, hint);
-			Resp<UserInfo> resp = userClient.loadUserByUsername(username);
+			String username = userInfo.getUsername();
+			String msg = serviceName + "/" + instanceId + "/" + hint;
+			logger.info("=== username/serviceName/instanceId/hint: {}/{}", username, msg);
 			{ // 备注信息
-				UserInfo userInfo = resp.getData();
 				List<GrantedAuthority> list = new ArrayList<>();
-				list.add(new SimpleGrantedAuthority(userInfo.getRemark()));
-				list.add(new SimpleGrantedAuthority(serviceName + "/" + instanceId + "/" + hint));
+				list.add(new SimpleGrantedAuthority(resp.getMsg()));
+				list.add(new SimpleGrantedAuthority(msg));
+				UserClaim userClaim = UserDetails.of(userInfo).toClaim();
 				userClaim.setAuthorities(list);
+				return Resp.ok(userClaim);
 			}
-		}
-		{
-			return Resp.ok(userClaim);
 		}
 	}
 

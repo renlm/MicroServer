@@ -27,4 +27,13 @@ public interface UserClient {
 	@GetMapping(value = "/loadUserByUsername")
 	Resp<UserInfo> loadUserByUsername(@RequestParam("username") String username);
 
+	/**
+	 * 根据用户ID获取用户信息
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	@GetMapping(value = "/getByUserId")
+	Resp<UserInfo> getByUserId(@RequestParam("userId") String userId);
+
 }
