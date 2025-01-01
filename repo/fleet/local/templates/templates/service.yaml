@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "templates.fullname" . }}{{ if eq .Values.service.clusterIP "None" }}-headless{{ end }}
+  name: {{ include "templates.fullname" . }}
   labels:
     {{- include "templates.labels" . | nindent 4 }}
 spec:
