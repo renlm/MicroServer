@@ -1,6 +1,6 @@
-{{- if eq .Values.kind "Deployment" -}}
+{{- if eq .Values.kind "StatefulSet" -}}
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ include "templates.fullname" . }}
   labels:

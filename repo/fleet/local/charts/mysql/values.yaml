@@ -5,6 +5,10 @@ templates:
     repository: mysql
     pullPolicy: IfNotPresent
     tag: latest
+    args:
+    - --character-set-server=utf8mb4
+    - --collation-server=utf8mb4_unicode_ci
+    - --skip-log-bin
   env:
     TZ: Asia/Shanghai
     MYSQL_DATABASE: dev
