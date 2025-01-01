@@ -1,7 +1,5 @@
 fullnameOverride: jenkins
 replicaCount: 1
-mychart:
-  enabled: true
 image:
   repository: jenkins/jenkins
   pullPolicy: IfNotPresent
