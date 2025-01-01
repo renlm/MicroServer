@@ -1,0 +1,10 @@
+apiVersion: v2
+name: gateway
+description: A Helm chart for gateway-server
+type: application
+version: 0.0.1
+appVersion: 1.0.1
+dependencies:
+- name: templates
+  version: 0.0.1
+  repository: file://../../templates

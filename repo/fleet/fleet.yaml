@@ -13,6 +13,10 @@ targetCustomizations:
     values:
       config:
         enabled: true
+      eureka:
+        enabled: true
+      gateway:
+        enabled: true
       postgres:
         enabled: true
       nginx:
