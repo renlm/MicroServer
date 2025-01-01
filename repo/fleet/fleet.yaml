@@ -13,6 +13,8 @@ targetCustomizations:
     values:
       nginx:
         enabled: true
+      jenkins:
+        enabled: true
       jaeger:
         enabled: true
       redis:
