@@ -10,3 +10,4 @@ resources:
 - virtualservice/grafana.yaml
 - virtualservice/jenkins.yaml
 - virtualservice/mysql.yaml
+- virtualservice/gateway.yaml
