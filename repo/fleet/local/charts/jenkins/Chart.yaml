@@ -3,8 +3,8 @@ name: jenkins
 description: A Helm chart for jenkins
 type: application
 version: 0.0.1
-appVersion: 0.0.1
+appVersion: 1.0.1
 dependencies:
 - name: templates
-  version: 0.1.0
+  version: 0.0.1
   repository: file://../../../templates
