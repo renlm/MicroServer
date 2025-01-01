@@ -1,0 +1,32 @@
+templates:
+  fullnameOverride: mysql
+  kind: StatefulSet
+  image:
+    repository: mysql
+    pullPolicy: IfNotPresent
+    tag: latest
+  env:
+    TZ: Asia/Shanghai
+    MYSQL_DATABASE: dev
+    MYSQL_USER: dev
+    MYSQL_PASSWORD: KK_fyw4bnmdf4Ksp7IMYuPWD@20stdt^tn50jlsfy
+    MYSQL_ROOT_PASSWORD: KK_fyw4bnmdf4Ksp7IMYuPWD@20stdt^tn50jlsfy
+  service:
+    type: ClusterIP
+    port: 3306
+  volumes:
+  - name: mysql-lib
+    hostPath:
+      path: /var/lib/mysql
+  - name: mysql-init
+    configMap:
+      name: mysql-configmap
+      items:
+      - key: init-user-db.sql
+        path: init-user-db.sql
+  volumeMounts:
+  - name: mysql-lib
+    mountPath: /var/lib/mysql
+  - name: mysql-init
+    mountPath: /docker-entrypoint-initdb.d/init-user-db.sql
+    subPath: init-user-db.sql
