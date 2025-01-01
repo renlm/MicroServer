@@ -7,3 +7,4 @@ appVersion: 0.0.1
 dependencies:
 - name: templates
   repository: file://../../../templates
+  condition: templates.enabled
