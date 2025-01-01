@@ -10,7 +10,10 @@ templates:
     runAsUser: 0
   service:
     type: ClusterIP
-    port: 8080
+    spec:
+    - port: 8080
+      protocol: TCP
+      name: http
   volumes:
   - name: root-m2
     hostPath:

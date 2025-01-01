@@ -1,4 +1,5 @@
 templates:
+  nameOverride: mysql
   fullnameOverride: mysql
   kind: StatefulSet
   image:
@@ -17,7 +18,10 @@ templates:
     MYSQL_ROOT_PASSWORD: KK_fyw4bnmdf4Ksp7IMYuPWD@20stdt^tn50jlsfy
   service:
     type: ClusterIP
-    port: 3306
+    spec:
+    - port: 3306
+      protocol: TCP
+      name: tcp-mysql
   volumes:
   - name: mysql-lib
     hostPath:
