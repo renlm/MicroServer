@@ -1,4 +1,5 @@
 templates:
+  nameOverride: jenkins
   fullnameOverride: jenkins
   kind: Deployment
   image:
