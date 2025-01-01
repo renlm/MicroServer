@@ -5,6 +5,9 @@ type: library
 version: 0.0.1
 appVersion: 0.0.1
 dependencies:
+- name: mychart
+  repository: file://./charts/mychart
+  condition: mychart.enabled
 - name: nginx
   repository: file://./charts/nginx
   condition: nginx.enabled
