@@ -22,7 +22,7 @@ spring:
             - TRACE
       routes:
       - id: config
-        uri: http://config-server:7001
+        uri: lb://CONFIG
         predicates:
         - Path=/config/**
         filters:
@@ -30,7 +30,7 @@ spring:
         - AddRequestHeader=X-Request-Router, Spring-Cloud-Gateway
         - AddResponseHeader=X-Response-Router, Spring-Cloud-Gateway
       - id: registrar
-        uri: lb://EUREKA-SERVER
+        uri: lb://EUREKA
         predicates:
         - Path=/registrar/**
         filters:
@@ -38,7 +38,7 @@ spring:
         - AddRequestHeader=X-Request-Router, Spring-Cloud-Gateway
         - AddResponseHeader=X-Response-Router, Spring-Cloud-Gateway
       - id: corew
-        uri: lb://CORE-WEB
+        uri: lb://COREWEB
         predicates:
         - Path=/**
         filters:
