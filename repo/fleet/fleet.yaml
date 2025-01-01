@@ -1,0 +1,29 @@
+# https://fleet.rancher.io/ref-fleet-yaml
+# https://github.com/rancher/fleet-examples
+helm:
+  chart: ./local
+  releaseName: micro
+targetCustomizations:
+- name: micro
+  clusterName: local
+  defaultNamespace: io
+  kustomize:
+    dir: overlays
+  helm:
+    values:
+      nginx:
+        enabled: true
+      jaeger:
+        enabled: true
+      redis:
+        enabled: true
+        env:
+          REQUIREPASS: UPsfyIREQt^Md0jlYuPWtREf4Ksp7Ibn5tKK
+      postgres:
+        enabled: true
+        env:
+          POSTGRES_PASSWORD: UPsfyIREQt^Md0jlYuPWtREf4Ksp7Ibn5tKK
+      rabbitmq:
+        enabled: true
+        env:
+          RABBITMQ_DEFAULT_PASS: UPsfyIREQt^Md0jlYuPWtREf4Ksp7Ibn5tKK

@@ -1,0 +1,10 @@
+resources:
+- peer.authentication/peer.authentication.yaml
+- opentelemetry/collector.yaml
+- opentelemetry/instrumentation.yaml
+- telemetry/telemetry.yaml
+- virtualservice/nginx.yaml
+- virtualservice/redis.yaml
+- virtualservice/postgres.yaml
+- virtualservice/rabbitmq.yaml
+- virtualservice/grafana.yaml

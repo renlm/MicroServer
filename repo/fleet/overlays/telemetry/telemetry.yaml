@@ -1,0 +1,13 @@
+# https://istio.io/latest/docs/tasks/observability/logs/telemetry-api/
+apiVersion: v1
+kind: List
+items:
+- apiVersion: telemetry.istio.io/v1
+  kind: Telemetry
+  metadata:
+    name: mesh-default
+    namespace: istio-system
+  spec:
+    accessLogging:
+    - providers:
+      - name: envoy

@@ -1,0 +1,41 @@
+fullnameOverride: postgres
+image:
+  repository: postgres
+  pullPolicy: IfNotPresent
+  tag: 16.6
+env:
+  TZ: Asia/Shanghai
+  POSTGRES_DB: postgres
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: PASSWORD
+podAnnotations:
+  prometheus.io/scrape: "true"
+  prometheus.io/scheme: "http"
+  prometheus.io/path: "/metrics"
+  prometheus.io/port: "9187"
+service:
+  type: ClusterIP
+  port: 5432
+readinessProbe:
+  exec:
+    command:
+    - pg_isready
+    - -d
+    - postgres
+    - -U
+    - postgres
+  initialDelaySeconds: 5
+  periodSeconds: 10
+livenessProbe:
+  exec:
+    command:
+    - pg_isready
+    - -d
+    - postgres
+    - -U
+    - postgres
+  initialDelaySeconds: 15
+  periodSeconds: 10
+  successThreshold: 1
+  failureThreshold: 6
+  timeoutSeconds: 5

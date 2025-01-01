@@ -1,0 +1,26 @@
+{{- $fullName := include "nginx.fullname" . -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ $fullName }}-configmap
+  labels:
+    {{- include "nginx.labels" . | nindent 4 }}
+data:
+  init.sh: |-
+    #!/bin/bash
+    set -e
+    # https://opentelemetry.io/blog/2022/instrument-nginx/
+    # https://github.com/open-telemetry/opentelemetry-cpp-contrib/tree/main/instrumentation/otel-webserver-module
+    # https://github.com/open-telemetry/opentelemetry-cpp-contrib/releases
+    mkdir -p /opt/opentelemetry-webserver
+    curl -o /opt/opentelemetry-webserver/agent.tgz https://github-io.renlm.cn/download/opentelemetry-webserver-sdk-x64-linux.tgz
+    tar -xf /opt/opentelemetry-webserver/agent.tgz -C /opt/opentelemetry-webserver/ --transform="s/opentelemetry-webserver-sdk/agent/g"
+    /opt/opentelemetry-webserver/agent/install.sh
+    # https://grafana.github.io/helm-charts
+    export NGINX_HTML=/usr/share/nginx/html
+    mkdir -p $NGINX_HTML/grafana.github.io/helm-charts
+    curl -o $NGINX_HTML/grafana.github.io/helm-charts/index.yaml https://grafana-github-io.renlm.cn/helm-charts/index.yaml
+    sed -i 's@https://github.com@https://github.renlm.cn@g' $NGINX_HTML/grafana.github.io/helm-charts/index.yaml
+    sed -i 's@https://raw.githubusercontent.com@https://raw-githubusercontent-com.renlm.cn@g' $NGINX_HTML/grafana.github.io/helm-charts/index.yaml
+    sed -i 's@https://grafana.github.io@https://grafana-github-io.renlm.cn@g' $NGINX_HTML/grafana.github.io/helm-charts/index.yaml
+    sed -i 's/txt;/txt yml yaml;/g' /etc/nginx/mime.types
