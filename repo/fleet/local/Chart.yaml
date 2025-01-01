@@ -11,9 +11,6 @@ dependencies:
 - name: nginx
   repository: file://./charts/nginx
   condition: nginx.enabled
-- name: jaeger
-  repository: file://./charts/jaeger
-  condition: jaeger.enabled
 - name: redis
   repository: file://./charts/redis
   condition: redis.enabled
@@ -32,6 +29,9 @@ dependencies:
 - name: jenkins
   repository: file://./charts/jenkins
   condition: jenkins.enabled
+- name: jaeger
+  repository: file://./charts/jaeger
+  condition: jaeger.enabled
 - name: config
   repository: file://./charts/config
   condition: config.enabled
