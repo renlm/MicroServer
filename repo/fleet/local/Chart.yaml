@@ -14,12 +14,6 @@ dependencies:
 - name: postgres
   repository: file://./charts/postgres
   condition: postgres.enabled
-- name: clickhouse
-  repository: file://./charts/clickhouse
-  condition: clickhouse.enabled
-- name: mysql
-  repository: file://./charts/mysql
-  condition: mysql.enabled
 - name: rabbitmq
   repository: file://./charts/rabbitmq
   condition: rabbitmq.enabled
@@ -29,18 +23,3 @@ dependencies:
 - name: jaeger
   repository: file://./charts/jaeger
   condition: jaeger.enabled
-- name: config
-  repository: file://./charts/config
-  condition: config.enabled
-- name: eureka
-  repository: file://./charts/eureka
-  condition: eureka.enabled
-- name: gateway
-  repository: file://./charts/gateway
-  condition: gateway.enabled
-- name: coreservice
-  repository: file://./charts/coreservice
-  condition: coreservice.enabled
-- name: coreweb
-  repository: file://./charts/coreweb
-  condition: coreweb.enabled
