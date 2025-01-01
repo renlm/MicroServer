@@ -1,5 +1,5 @@
 resources:
-- peer.authentication/peer.authentication.yaml
+# - peer.authentication/peer.authentication.yaml
 - opentelemetry/collector.yaml
 - opentelemetry/instrumentation.yaml
 - telemetry/telemetry.yaml
