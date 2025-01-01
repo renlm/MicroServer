@@ -23,3 +23,6 @@ dependencies:
 - name: jaeger
   repository: file://./charts/jaeger
   condition: jaeger.enabled
+- name: config
+  repository: file://./charts/config
+  condition: config.enabled

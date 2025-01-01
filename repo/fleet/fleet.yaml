@@ -11,6 +11,8 @@ targetCustomizations:
     dir: overlays
   helm:
     values:
+      config:
+        enabled: true
       nginx:
         enabled: true
       jenkins:
