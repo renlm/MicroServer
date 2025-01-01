@@ -4,15 +4,15 @@ WORKDIR /build
 ARG PROFILES_ACTIVE
 ENV PROFILES_ACTIVE ${PROFILES_ACTIVE}
 RUN --mount=type=cache,target=/root/.m2 \
-  # https://mirrors.tuna.tsinghua.edu.cn/help/debian/
-  sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list.d/debian.sources \
+  # https://developer.aliyun.com/mirror/ubuntu
+  sed -i 's/deb.debian.org/mirrors.aliyun.com/g' /etc/apt/sources.list.d/debian.sources \
   && apt update \
   && apt install -y maven \
   && mvn clean package -P ${PROFILES_ACTIVE}
 
 FROM openjdk:21-slim
 COPY --from=0 "/build/gateway/target/gateway.jar" app.jar
-RUN sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list.d/debian.sources \
+RUN sed -i 's/deb.debian.org/mirrors.aliyun.com/g' /etc/apt/sources.list.d/debian.sources \
   && apt update \
   && apt install -y tini curl \
   && ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
