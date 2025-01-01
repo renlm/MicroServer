@@ -1,31 +1,19 @@
-{{- $fullName := include "postgres.fullname" . -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ $fullName }}-configmap
-  labels:
-    {{- include "postgres.labels" . | nindent 4 }}
+  name: postgres-configmap
 data:
   pgpass: |-
-    localhost:{{ .Values.service.port }}:{{ .Values.env.POSTGRES_DB }}:{{ .Values.env.POSTGRES_USER }}:{{ .Values.env.POSTGRES_PASSWORD }}
+    localhost:5432:{{ .Values.env.POSTGRES_DB }}:{{ .Values.env.POSTGRES_USER }}:{{ .Values.env.POSTGRES_PASSWORD }}
   init-user-db.sh: |-
     #!/bin/bash
     set -e
     export PGPASSFILE=/docker-entrypoint-initdb.d/.pgpass
     psql -v ON_ERROR_STOP=1 <<-EOSQL
-    	CREATE USER local WITH PASSWORD '{{ .Values.env.POSTGRES_PASSWORD }}';
-    	CREATE DATABASE local OWNER local;
-    	GRANT ALL PRIVILEGES ON DATABASE local TO local;
+    	CREATE USER dev WITH PASSWORD '{{ .Values.env.POSTGRES_PASSWORD }}';
+    	CREATE DATABASE dev OWNER dev;
+    	GRANT ALL PRIVILEGES ON DATABASE dev TO dev;
     	CREATE USER grafana WITH PASSWORD '{{ .Values.env.POSTGRES_PASSWORD }}';
     	CREATE DATABASE grafana OWNER grafana;
     	GRANT ALL PRIVILEGES ON DATABASE grafana TO grafana;
     EOSQL
-  postgres_exporter.yml: |-
-    auth_modules:
-      metrics:
-        type: userpass
-        userpass:
-          username: {{ .Values.env.POSTGRES_USER }}
-          password: {{ .Values.env.POSTGRES_PASSWORD }}
-        options:
-          sslmode: disable

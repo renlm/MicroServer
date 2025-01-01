@@ -1,41 +1,36 @@
-fullnameOverride: postgres
-image:
-  repository: postgres
-  pullPolicy: IfNotPresent
-  tag: 16.6
-env:
-  TZ: Asia/Shanghai
-  POSTGRES_DB: postgres
-  POSTGRES_USER: postgres
-  POSTGRES_PASSWORD: PASSWORD
-podAnnotations:
-  prometheus.io/scrape: "true"
-  prometheus.io/scheme: "http"
-  prometheus.io/path: "/metrics"
-  prometheus.io/port: "9187"
-service:
-  type: ClusterIP
-  port: 5432
-readinessProbe:
-  exec:
-    command:
-    - pg_isready
-    - -d
-    - postgres
-    - -U
-    - postgres
-  initialDelaySeconds: 5
-  periodSeconds: 10
-livenessProbe:
-  exec:
-    command:
-    - pg_isready
-    - -d
-    - postgres
-    - -U
-    - postgres
-  initialDelaySeconds: 15
-  periodSeconds: 10
-  successThreshold: 1
-  failureThreshold: 6
-  timeoutSeconds: 5
+templates:
+  nameOverride: postgres
+  fullnameOverride: postgres
+  kind: StatefulSet
+  image:
+    repository: postgres
+    pullPolicy: IfNotPresent
+    tag: latest
+  env:
+    TZ: Asia/Shanghai
+    POSTGRES_DB: postgres
+    POSTGRES_USER: postgres
+    POSTGRES_PASSWORD: KK_fyw4bnmdf4Ksp7IMYuPWD@20stdt^tn50jlsfy
+  service:
+    type: ClusterIP
+    spec:
+    - port: 5432
+      protocol: TCP
+      name: tcp-postgres
+  volumes:
+  - name: postgres-data
+    hostPath:
+      path: /var/lib/postgresql/data
+  - name: postgres-init
+    configMap:
+      name: postgres-configmap
+      items:
+      - key: .pgpass
+        path: .pgpass
+      - key: init-user-db.sh
+        path: init-user-db.sh
+  volumeMounts:
+  - name: postgres-data
+    mountPath: /var/lib/postgresql/data
+  - name: postgres-init
+    mountPath: /docker-entrypoint-initdb.d
