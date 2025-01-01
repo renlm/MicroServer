@@ -46,8 +46,10 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 Selector labels
 */}}
 {{- define "templates.selectorLabels" -}}
+app: {{ include "templates.fullname" . }}
+version: {{ .Chart.Version | quote }}
 app.kubernetes.io/name: {{ include "templates.name" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/instance: {{ include "templates.fullname" . }}
 {{- end }}
 
 {{/*
