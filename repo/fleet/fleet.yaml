@@ -14,7 +14,7 @@ targetCustomizations:
       config:
         enabled: true
       postgres:
-        enabled: false
+        enabled: true
       nginx:
         enabled: true
       jenkins:
