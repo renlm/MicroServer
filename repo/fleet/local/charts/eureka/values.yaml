@@ -16,6 +16,7 @@ templates:
     EUREKA_SERVER: http://eureka-0/registrar/eureka,http://eureka-1/registrar/eureka,http://eureka-2/registrar/eureka
     EUREKA_AUTH_SECRETKEY: KK_fyw4bnmdf4Ksp7IMYuPWD@20stdt^tn50jlsfy
     HOSTNAME: ${POD_NAME}.eureka
+    PROFILES_ACTIVE: kubernetes
   environment:
   - name: POD_NAME
     valueFrom:
