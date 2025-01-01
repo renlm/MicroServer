@@ -21,6 +21,9 @@ templates:
   - name: docker-bin
     hostPath:
       path: /usr/bin/docker
+  - name: docker-libexec
+    hostPath:
+      path: /usr/libexec/docker
   - name: docker-daemon
     hostPath:
       path: /etc/docker
@@ -38,6 +41,8 @@ templates:
     mountPath: /root/.m2
   - name: docker-bin
     mountPath: /usr/bin/docker
+  - name: docker-libexec
+    mountPath: /usr/libexec/docker
   - name: docker-daemon
     mountPath: /etc/docker/daemon.json
     subPath: daemon.json
