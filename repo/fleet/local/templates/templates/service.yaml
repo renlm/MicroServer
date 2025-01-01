@@ -7,8 +7,7 @@ metadata:
 spec:
   {{- if .Values.service.type }}
   type: {{ .Values.service.type }}
-  {{- end }}
-  {{- if .Values.service.clusterIP }}
+  {{- else if .Values.service.clusterIP }}
   clusterIP: {{ .Values.service.clusterIP }}
   {{- end }}
   ports:
