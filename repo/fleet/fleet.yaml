@@ -13,6 +13,8 @@ targetCustomizations:
     values:
       config:
         enabled: true
+      postgres:
+        enabled: false
       nginx:
         enabled: true
       jenkins:
@@ -23,10 +25,6 @@ targetCustomizations:
         enabled: true
         env:
           REQUIREPASS: UPsfyIREQt^Md0jlYuPWtREf4Ksp7Ibn5tKK
-      postgres:
-        enabled: true
-        env:
-          POSTGRES_PASSWORD: UPsfyIREQt^Md0jlYuPWtREf4Ksp7Ibn5tKK
       rabbitmq:
         enabled: true
         env:
