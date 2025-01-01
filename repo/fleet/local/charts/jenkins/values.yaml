@@ -1,5 +1,5 @@
-fullnameOverride: jenkins
 templates:
+  fullnameOverride: jenkins
   replicaCount: 1
   image:
     repository: jenkins/jenkins
