@@ -47,11 +47,16 @@ spec:
               containerPort: {{ .port }}
               protocol: {{ .protocol }}
             {{- end }}
-          {{- if .Values.env }}
+          {{- if or .Values.env .Values.environment }}
           env:
+          {{- if .Values.env }}
           {{- range $key, $value := .Values.env }}
             - name: {{ $key }}
               value: {{ $value | quote }}
+          {{- end }}
+          {{- end }}
+          {{- with .Values.environment }}
+            {{- toYaml . | nindent 12 }}
           {{- end }}
           {{- end }}
           {{- with .Values.livenessProbe }}
