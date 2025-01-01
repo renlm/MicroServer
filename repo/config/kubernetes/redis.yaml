@@ -2,9 +2,9 @@ spring:
   data:
     redis:
       database: 2
-      host: jedis
+      host: redis
       port: 6379
-      password: KK_fyw4bnmdf4Ksp7IMYuPWD@20stdt^tn50jlsfy
+      password: UPsfyIREQt^Md0jlYuPWtREf4Ksp7Ibn5tKK
       timeout: 10s
       lettuce:
         pool:
