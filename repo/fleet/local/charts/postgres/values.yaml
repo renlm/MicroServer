@@ -12,11 +12,6 @@ templates:
     repository: postgres
     pullPolicy: IfNotPresent
     tag: latest
-  env:
-    TZ: Asia/Shanghai
-    POSTGRES_DB: postgres
-    POSTGRES_USER: postgres
-    POSTGRES_PASSWORD: KK_fyw4bnmdf4Ksp7IMYuPWD@20stdt^tn50jlsfy
   service:
     type: ClusterIP
     spec:

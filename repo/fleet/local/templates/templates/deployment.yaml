@@ -47,8 +47,14 @@ spec:
               containerPort: {{ .port }}
               protocol: {{ .protocol }}
             {{- end }}
-          {{- if or .Values.env .Values.environment }}
+          {{- if or .Values.global.env .Values.env .Values.environment }}
           env:
+          {{- if .Values.global.env }}
+          {{- range $key, $value := .Values.global.env }}
+            - name: {{ $key }}
+              value: {{ $value | quote }}
+          {{- end }}
+          {{- end }}
           {{- if .Values.env }}
           {{- range $key, $value := .Values.env }}
             - name: {{ $key }}
