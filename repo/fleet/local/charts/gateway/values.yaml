@@ -18,6 +18,10 @@ templates:
     HOSTNAME: ${POD_NAME}.gateway.${POD_NAMESPACE}.svc.cluster.local
     PROFILES_ACTIVE: kubernetes
   environment:
+  - name: POD_NAME
+    valueFrom:
+      fieldRef:
+        fieldPath: metadata.name
   - name: POD_NAMESPACE
     valueFrom:
       fieldRef:
