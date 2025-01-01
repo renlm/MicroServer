@@ -1,5 +1,6 @@
 templates:
   fullnameOverride: jenkins
+  kind: Deployment
   image:
     repository: jenkins/jenkins
     pullPolicy: IfNotPresent
