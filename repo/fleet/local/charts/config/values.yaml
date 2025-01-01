@@ -11,6 +11,8 @@ templates:
     MANAGEMENT_SERVER_PORT: 9001
     SECURITY_USER_NAME: default
     SECURITY_USER_PASSWORD: M1h62Gj3Uy54r
+    PROFILES_ACTIVE: kubernetes
+    RABBITMQ_PASSWORD: UPsfyIREQt^Md0jlYuPWtREf4Ksp7Ibn5tKK
   service:
     type: ClusterIP
     spec:
