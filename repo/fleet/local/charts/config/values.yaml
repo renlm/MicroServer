@@ -1,7 +1,7 @@
 templates:
   nameOverride: config
   fullnameOverride: config
-  kind: Deployment
+  kind: StatefulSet
   image:
     repository: registry.cn-hangzhou.aliyuncs.com/rlm/config-server
     pullPolicy: Always

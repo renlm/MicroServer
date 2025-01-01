@@ -18,7 +18,7 @@ templates:
     - --collation-server=utf8mb4_unicode_ci
     - --skip-log-bin
   service:
-    type: ClusterIP
+    clusterIP: None
     spec:
     - port: 3306
       protocol: TCP

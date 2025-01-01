@@ -13,7 +13,7 @@ templates:
     pullPolicy: IfNotPresent
     tag: latest
   service:
-    type: ClusterIP
+    clusterIP: None
     spec:
     - port: 5432
       protocol: TCP
