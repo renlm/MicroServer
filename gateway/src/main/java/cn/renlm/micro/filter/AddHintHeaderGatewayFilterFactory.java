@@ -95,7 +95,6 @@ public class AddHintHeaderGatewayFilterFactory extends AbstractGatewayFilterFact
 					if (resp.isOk() && Objects.nonNull(userClaim)) {
 						hint = userClaim.getHint();
 						if (hasText(hint)) {
-							mutateHttpHeaders.set(name, hint);
 							return addHeader(exchange, chain, name, hint);
 						}
 					}
