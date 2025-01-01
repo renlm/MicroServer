@@ -1,5 +1,7 @@
 package cn.renlm.micro.loadbalancer;
 
+import static org.springframework.web.context.request.RequestContextHolder.getRequestAttributes;
+
 import java.util.Enumeration;
 import java.util.Objects;
 
@@ -10,7 +12,6 @@ import org.springframework.cloud.client.loadbalancer.LoadBalancerProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.util.StringUtils;
-import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import cn.renlm.micro.util.OpenFeignHeadersHolder;
@@ -31,8 +32,7 @@ public class MyHintsLoadBalancerFeignConfig {
 	@Bean
 	RequestInterceptor hintsLoadBalancerHeaderRequestInterceptor(LoadBalancerProperties properties) {
 		return template -> {
-			ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder
-					.getRequestAttributes();
+			ServletRequestAttributes attributes = (ServletRequestAttributes) getRequestAttributes();
 			if (Objects.nonNull(attributes)) {
 				HttpServletRequest request = attributes.getRequest();
 				Enumeration<String> headers = request.getHeaderNames();
