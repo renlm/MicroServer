@@ -106,10 +106,12 @@ public class SessionController {
 			String msg = serviceName + "/" + instanceId + "/" + hint;
 			logger.info("=== username/serviceName/instanceId/hint: {}/{}", username, msg);
 			{ // 备注信息
+				UserClaim currentClaim = SessionUtil.getCurrentClaim();
 				List<GrantedAuthority> list = new ArrayList<>();
 				list.add(new SimpleGrantedAuthority(resp.getMsg()));
 				list.add(new SimpleGrantedAuthority(msg));
 				UserClaim userClaim = UserDetails.of(userInfo).toClaim();
+				userClaim.setHint(currentClaim.getHint());
 				userClaim.setAuthorities(list);
 				return Resp.ok(userClaim);
 			}

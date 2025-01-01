@@ -19,7 +19,7 @@
 <body>
 <div>
 	<div style="float: left;">
-		<textarea rows="30" cols="100" id="json"></textarea>
+		<textarea rows="25" cols="80" id="json"></textarea>
 		<div id="hints"></div>
 	</div>
 	<div style="float: left;margin-left: 10px;">
@@ -43,7 +43,7 @@
 	}
 	
 	$(function () {
-		$.get("session/getCurrentUser", function(resp, status) {
+		$.get("session/getUserInfo?userId=[(${#authentication.principal.userId})]", function(resp, status) {
 	        $("#json").html(JSON.stringify(resp.data, null, 2));
 	        $.get("session/getAllHints", function(result, status) {
 	 	       for (var i = 0; i < result.data.length; i++) {

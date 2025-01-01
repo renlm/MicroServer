@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -47,6 +49,7 @@ public class UserClaim implements Serializable {
 	/**
 	 * 出生日期
 	 */
+	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
 	private LocalDate birthday;
 
 	/**
