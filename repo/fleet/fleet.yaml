@@ -36,6 +36,6 @@ targetCustomizations:
       nginx:
         enabled: true
       jenkins:
-        enabled: false
+        enabled: true
       jaeger:
         enabled: true
