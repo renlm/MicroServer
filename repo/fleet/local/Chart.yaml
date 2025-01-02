@@ -23,9 +23,9 @@ dependencies:
 - name: jaeger
   repository: file://./charts/jaeger
   condition: jaeger.enabled
-- name: config
-  repository: file://./charts/config
-  condition: config.enabled
+- name: config-server
+  repository: file://./charts/config-server
+  condition: config-server.enabled
 - name: eureka
   repository: file://./charts/eureka
   condition: eureka.enabled
