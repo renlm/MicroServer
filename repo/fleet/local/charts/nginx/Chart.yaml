@@ -4,7 +4,11 @@
 # https://github.com/open-telemetry/opentelemetry-cpp-contrib/releases
 apiVersion: v2
 name: nginx
-description: A Helm chart for nginx.
+description: A Helm chart for nginx
 type: application
 version: 1.25.5
-appVersion: 0.0.1
+appVersion: 1.0.1
+dependencies:
+- name: templates
+  version: 0.0.1
+  repository: file://../../templates

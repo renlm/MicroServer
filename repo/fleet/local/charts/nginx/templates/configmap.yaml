@@ -1,10 +1,7 @@
-{{- $fullName := include "nginx.fullname" . -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ $fullName }}-configmap
-  labels:
-    {{- include "nginx.labels" . | nindent 4 }}
+  name: nginx-configmap
 data:
   init.sh: |-
     #!/bin/bash
@@ -24,3 +21,4 @@ data:
     sed -i 's@https://raw.githubusercontent.com@https://raw-githubusercontent-com.renlm.cn@g' $NGINX_HTML/grafana.github.io/helm-charts/index.yaml
     sed -i 's@https://grafana.github.io@https://grafana-github-io.renlm.cn@g' $NGINX_HTML/grafana.github.io/helm-charts/index.yaml
     sed -i 's/txt;/txt yml yaml;/g' /etc/nginx/mime.types
+
