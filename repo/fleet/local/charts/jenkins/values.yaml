@@ -1,7 +1,7 @@
 templates:
   nameOverride: jenkins
   fullnameOverride: jenkins
-  kind: Deployment
+  kind: StatefulSet
   image:
     repository: jenkins/jenkins
     pullPolicy: IfNotPresent

@@ -2,7 +2,6 @@ templates:
   nameOverride: gateway-server
   fullnameOverride: gateway-server
   kind: Deployment
-  replicaCount: 1
   image:
     repository: registry.cn-hangzhou.aliyuncs.com/rlm/gateway-server
     pullPolicy: Always
