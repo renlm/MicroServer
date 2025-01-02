@@ -28,7 +28,7 @@ targetCustomizations:
       postgres:
         enabled: true
       nginx:
-        enabled: false
+        enabled: true
       jenkins:
         enabled: true
       jaeger:
