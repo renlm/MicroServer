@@ -1,14 +1,11 @@
-{{- $fullName := include "redis.fullname" . -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ $fullName }}-configmap
-  labels:
-    {{- include "redis.labels" . | nindent 4 }}
+  name: redis-configmap
 data:
   redis.conf: |-
-    requirepass {{ .Values.env.REQUIREPASS }}
+    requirepass {{ .Values.global.env.REQUIREPASS }}
     protected-mode no
-    port {{ .Values.service.port }}
+    port 6379
     databases 16
     dir /var/lib/redis

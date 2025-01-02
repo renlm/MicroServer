@@ -1,6 +1,10 @@
 apiVersion: v2
 name: redis
-description: A Helm chart for redis.
+description: A Helm chart for redis
 type: application
-version: 7.4.1
-appVersion: 0.0.1
+version: 0.0.1
+appVersion: 1.0.1
+dependencies:
+- name: templates
+  version: 0.0.1
+  repository: file://../../templates
