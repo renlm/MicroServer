@@ -18,3 +18,5 @@ eureka-server:
   enabled: false
 gateway-server:
   enabled: false
+mygraph:
+  enabled: false

@@ -32,3 +32,6 @@ dependencies:
 - name: gateway-server
   repository: file://./charts/gateway-server
   condition: gateway-server.enabled
+- name: mygraph
+  repository: file://./charts/mygraph
+  condition: mygraph.enabled
