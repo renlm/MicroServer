@@ -24,7 +24,7 @@ targetCustomizations:
       core-web:
         enabled: true
       mygraph:
-        enabled: true
+        enabled: false
       redis:
         enabled: true
       rabbitmq:
@@ -36,6 +36,6 @@ targetCustomizations:
       nginx:
         enabled: true
       jenkins:
-        enabled: true
+        enabled: false
       jaeger:
         enabled: true
