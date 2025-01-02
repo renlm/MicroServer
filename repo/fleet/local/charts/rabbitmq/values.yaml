@@ -1,24 +1,30 @@
-fullnameOverride: rabbitmq
-image:
-  repository: rabbitmq
-  pullPolicy: IfNotPresent
-  tag: 4.0.4-management
-env:
-  TZ: Asia/Shanghai
-  RABBITMQ_DEFAULT_VHOST: /micro
-  RABBITMQ_DEFAULT_USER: micro
-  RABBITMQ_DEFAULT_PASS: PASSWORD
-podAnnotations:
-  prometheus.io/scrape: "true"
-  prometheus.io/port: "15692"
-service:
-  type: ClusterIP
-  port: 15672
-  amqpPort: 5672
-readinessProbe:
-  initialDelaySeconds: 25
-  periodSeconds: 5
-  httpGet:
-    path: /
-    port: 15672
-    scheme: HTTP
+global:
+  env:
+    TZ: Asia/Shanghai
+    RABBITMQ_DEFAULT_VHOST: /dev
+    RABBITMQ_DEFAULT_USER: dev
+    RABBITMQ_DEFAULT_PASS: KK_fyw4bnmdf4Ksp7IMYuPWD@20stdt^tn50jlsfy
+templates:
+  nameOverride: rabbitmq
+  fullnameOverride: rabbitmq
+  kind: StatefulSet
+  image:
+    repository: rabbitmq
+    pullPolicy: IfNotPresent
+    tag: management
+  service:
+    clusterIP: None
+    spec:
+    - port: 5672
+      protocol: TCP
+      name: tcp-amqp
+    - port: 15672
+      protocol: TCP
+      name: http
+  volumes:
+  - name: rabbitmq-lib
+    hostPath:
+      path: /var/lib/rabbitmq
+  volumeMounts:
+  - name: rabbitmq-lib
+    mountPath: /var/lib/rabbitmq

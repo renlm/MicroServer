@@ -29,9 +29,5 @@ targetCustomizations:
         enabled: true
       redis:
         enabled: true
-        env:
-          REQUIREPASS: UPsfyIREQt^Md0jlYuPWtREf4Ksp7Ibn5tKK
       rabbitmq:
         enabled: true
-        env:
-          RABBITMQ_DEFAULT_PASS: UPsfyIREQt^Md0jlYuPWtREf4Ksp7Ibn5tKK
