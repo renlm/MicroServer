@@ -16,7 +16,7 @@ templates:
     RABBITMQ_PORT: 5672
     RABBITMQ_USERNAME: dev
     RABBITMQ_PASSWORD: KK_fyw4bnmdf4Ksp7IMYuPWD@20stdt^tn50jlsfy
-    MY_HOSTNAME: ${POD_NAME}.config-server.${POD_NAMESPACE}.svc.cluster.local
+    HOSTNAME: ${POD_NAME}.config-server.${POD_NAMESPACE}.svc.cluster.local
   environment:
   - name: POD_NAME
     valueFrom:

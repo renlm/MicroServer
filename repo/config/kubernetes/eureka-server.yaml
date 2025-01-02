@@ -4,7 +4,7 @@ eureka:
   environment: ${spring.profiles.active}
   instance:
     preferIpAddress: false
-    hostname: ${MY_HOSTNAME}
+    hostname: ${HOSTNAME}
     nonSecurePort: ${server.port}
     instanceId: ${eureka.instance.hostname}:${eureka.instance.nonSecurePort}
     leaseRenewalIntervalInSeconds: 30
