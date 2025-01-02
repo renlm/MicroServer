@@ -12,7 +12,7 @@ postgres:
   enabled: false
 rabbitmq:
   enabled: false
-config:
+config-server:
   enabled: false
 eureka:
   enabled: false

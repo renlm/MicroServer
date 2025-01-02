@@ -11,12 +11,12 @@ targetCustomizations:
     dir: overlays
   helm:
     values:
-      config:
+      config-server:
         enabled: true
       eureka:
-        enabled: true
+        enabled: false
       gateway:
-        enabled: true
+        enabled: false
       mysql:
         enabled: true
       postgres:
