@@ -16,5 +16,5 @@ config-server:
   enabled: false
 eureka-server:
   enabled: false
-gateway:
+gateway-server:
   enabled: false

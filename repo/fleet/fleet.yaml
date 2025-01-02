@@ -15,8 +15,8 @@ targetCustomizations:
         enabled: true
       eureka-server:
         enabled: true
-      gateway:
-        enabled: false
+      gateway-server:
+        enabled: true
       mysql:
         enabled: true
       postgres:

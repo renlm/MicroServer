@@ -29,6 +29,6 @@ dependencies:
 - name: eureka-server
   repository: file://./charts/eureka-server
   condition: eureka-server.enabled
-- name: gateway
-  repository: file://./charts/gateway
-  condition: gateway.enabled
+- name: gateway-server
+  repository: file://./charts/gateway-server
+  condition: gateway-server.enabled
