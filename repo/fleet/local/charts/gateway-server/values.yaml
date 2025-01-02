@@ -22,6 +22,7 @@ templates:
         fieldPath: metadata.namespace
   podAnnotations:
     prometheus.io/scrape: "true"
+    prometheus.io/path: "/actuator/prometheus"
     prometheus.io/port: "9000"
     instrumentation.opentelemetry.io/inject-java: "observability/otlp-instrumentation"
   service:
