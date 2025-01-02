@@ -18,7 +18,7 @@ targetCustomizations:
       gateway-server:
         enabled: true
       mygraph:
-        enabled: false
+        enabled: true
       redis:
         enabled: true
       rabbitmq:
