@@ -12,8 +12,8 @@ eureka:
     hostname: ${HOSTNAME:${spring.cloud.client.ip-address}}
     nonSecurePort: ${server.port}
     instanceId: ${eureka.instance.hostname}:${eureka.instance.nonSecurePort}
-    leaseRenewalIntervalInSeconds: 3
-    leaseExpirationDurationInSeconds: 9
+    leaseRenewalIntervalInSeconds: 30
+    leaseExpirationDurationInSeconds: 90
     metadataMap:
       hint: ${HINT:mylb}
   client:
@@ -22,6 +22,6 @@ eureka:
     webclient.enabled: ${eureka.client.webclientEnabled:false}
     registerWithEureka: ${REGISTER_WITH_EUREKA:true}
     fetchRegistry: ${FETCH_REGISTRY:true}
-    registryFetchIntervalSeconds: 3
+    registryFetchIntervalSeconds: 30
     serviceUrl:
       defaultZone: ${EUREKA_SERVER}

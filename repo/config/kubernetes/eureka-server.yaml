@@ -7,13 +7,13 @@ eureka:
     hostname: ${HOSTNAME}
     nonSecurePort: ${server.port}
     instanceId: ${eureka.instance.hostname}:${eureka.instance.nonSecurePort}
-    leaseRenewalIntervalInSeconds: 3
-    leaseExpirationDurationInSeconds: 9
+    leaseRenewalIntervalInSeconds: 30
+    leaseExpirationDurationInSeconds: 90
   server:
     enableSelfPreservation: true
-    peerNodeReadTimeoutMs: 1500
-    evictionIntervalTimerInMs: 6000
-    responseCacheUpdateIntervalMs: 3000
+    peerNodeReadTimeoutMs: 5000
+    evictionIntervalTimerInMs: 60000
+    responseCacheUpdateIntervalMs: 30000
     useReadOnlyResponseCache: true
   client:
     jersey.enabled: true
