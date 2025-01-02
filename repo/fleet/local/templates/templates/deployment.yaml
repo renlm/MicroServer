@@ -1,8 +1,9 @@
 {{- if eq .Values.kind "Deployment" -}}
+{{- $fullName := include "templates.fullname" . -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "templates.fullname" . }}
+  name: {{ $fullName }}
   labels:
     {{- include "templates.labels" . | nindent 4 }}
 spec:

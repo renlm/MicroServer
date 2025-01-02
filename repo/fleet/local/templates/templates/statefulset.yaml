@@ -1,11 +1,13 @@
 {{- if eq .Values.kind "StatefulSet" -}}
+{{- $fullName := include "templates.fullname" . -}}
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: {{ include "templates.fullname" . }}
+  name: {{ $fullName }}
   labels:
     {{- include "templates.labels" . | nindent 4 }}
 spec:
+  serviceName: {{ $fullName }}
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
