@@ -15,6 +15,10 @@ templates:
     SECURITY_USER_PASSWORD: M1h62Gj3Uy54r
     CONFIGSERVER: http://config-server/config
     PROFILES_ACTIVE: kubernetes
+  podAnnotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "9000"
+    instrumentation.opentelemetry.io/inject-java: "observability/otlp-instrumentation"
   service:
     type: ClusterIP
     spec:

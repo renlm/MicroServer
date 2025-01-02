@@ -21,7 +21,9 @@ templates:
       fieldRef:
         fieldPath: metadata.namespace
   podAnnotations:
-    instrumentation.opentelemetry.io/inject-java: observability/otlp-instrumentation
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "9000"
+    instrumentation.opentelemetry.io/inject-java: "observability/otlp-instrumentation"
   service:
     type: ClusterIP
     spec:
