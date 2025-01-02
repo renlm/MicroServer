@@ -20,6 +20,8 @@ templates:
     valueFrom:
       fieldRef:
         fieldPath: metadata.namespace
+  podAnnotations:
+    instrumentation.opentelemetry.io/inject-java: observability/otlp-instrumentation
   service:
     type: ClusterIP
     spec:

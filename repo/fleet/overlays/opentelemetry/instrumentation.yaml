@@ -34,3 +34,8 @@ items:
         value: http://otel-collector.observability.svc:4317
       - name: NginxModuleTraceAsError
         value: OFF
+    java:
+      image: otel/autoinstrumentation-java:latest
+      env:
+      - name: OTEL_EXPORTER_OTLP_PROTOCOL
+        value: grpc
