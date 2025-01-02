@@ -6,7 +6,7 @@ helm:
 targetCustomizations:
 - name: micro
   clusterName: local
-  defaultNamespace: io
+  defaultNamespace: mylb
   kustomize:
     dir: overlays
   helm:
@@ -18,6 +18,8 @@ targetCustomizations:
       gateway-server:
         enabled: true
       core-service:
+        enabled: true
+      core-service-beta:
         enabled: true
       core-web:
         enabled: true
