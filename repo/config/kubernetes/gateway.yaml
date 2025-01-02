@@ -22,7 +22,7 @@ spring:
             - TRACE
       routes:
       - id: config
-        uri: lb://CONFIG-SERVER
+        uri: http://config-server
         predicates:
         - Path=/config/**
         filters:
