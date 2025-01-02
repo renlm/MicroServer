@@ -14,7 +14,7 @@ rabbitmq:
   enabled: false
 config-server:
   enabled: false
-eureka:
+eureka-server:
   enabled: false
 gateway:
   enabled: false

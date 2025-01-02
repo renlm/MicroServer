@@ -13,8 +13,8 @@ targetCustomizations:
     values:
       config-server:
         enabled: true
-      eureka:
-        enabled: false
+      eureka-server:
+        enabled: true
       gateway:
         enabled: false
       mysql:
