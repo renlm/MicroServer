@@ -18,7 +18,7 @@ targetCustomizations:
       gateway-server:
         enabled: true
       mygraph:
-        enabled: true
+        enabled: false
       redis:
         enabled: true
       rabbitmq:
@@ -28,7 +28,7 @@ targetCustomizations:
       postgres:
         enabled: true
       nginx:
-        enabled: true
+        enabled: false
       jenkins:
         enabled: true
       jaeger:
