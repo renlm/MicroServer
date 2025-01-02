@@ -1,0 +1,39 @@
+templates:
+  nameOverride: core-web
+  fullnameOverride: core-web
+  kind: Deployment
+  image:
+    repository: registry.cn-hangzhou.aliyuncs.com/rlm/core-web
+    pullPolicy: Always
+    tag: 0.0.1
+  env:
+    SERVER_PORT: 80
+    MANAGEMENT_SERVER_PORT: 9000
+    SECURITY_USER_NAME: default
+    SECURITY_USER_PASSWORD: M1h62Gj3Uy54r
+    CONFIGSERVER: http://config-server/config
+    EUREKA_SERVER: http://eureka-server-0.eureka-server.${POD_NAMESPACE}.svc.cluster.local/registrar/eureka,http://eureka-server-1.eureka-server.${POD_NAMESPACE}.svc.cluster.local/registrar/eureka,http://eureka-server-2.eureka-server.${POD_NAMESPACE}.svc.cluster.local/registrar/eureka
+    EUREKA_AUTH_SECRETKEY: KK_fyw4bnmdf4Ksp7IMYuPWD@20stdt^tn50jlsfy
+    PROFILES_ACTIVE: kubernetes
+  environment:
+  - name: POD_NAMESPACE
+    valueFrom:
+      fieldRef:
+        fieldPath: metadata.namespace
+  service:
+    type: ClusterIP
+    spec:
+    - port: 80
+      protocol: TCP
+      name: http
+    - port: 9000
+      protocol: TCP
+      name: tcp-actuator
+  livenessProbe:
+    httpGet:
+      path: /actuator/health/liveness
+      port: tcp-actuator
+  readinessProbe:
+    httpGet:
+      path: /actuator/health/readiness
+      port: tcp-actuator

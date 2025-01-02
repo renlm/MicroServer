@@ -17,6 +17,10 @@ targetCustomizations:
         enabled: true
       gateway-server:
         enabled: true
+      core-service:
+        enabled: true
+      core-web:
+        enabled: true
       mygraph:
         enabled: true
       redis:

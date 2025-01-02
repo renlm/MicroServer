@@ -32,6 +32,12 @@ dependencies:
 - name: gateway-server
   repository: file://./charts/gateway-server
   condition: gateway-server.enabled
+- name: core-service
+  repository: file://./charts/core-service
+  condition: core-service.enabled
+- name: core-web
+  repository: file://./charts/core-web
+  condition: core-web.enabled
 - name: mygraph
   repository: file://./charts/mygraph
   condition: mygraph.enabled

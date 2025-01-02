@@ -18,5 +18,9 @@ eureka-server:
   enabled: false
 gateway-server:
   enabled: false
+core-service:
+  enabled: false
+core-web:
+  enabled: false
 mygraph:
   enabled: false
