@@ -4,7 +4,6 @@ import java.lang.reflect.Field;
 import java.util.Map;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.cloud.netflix.eureka.server.ReplicationClientAdditionalFilters;
 import org.springframework.cloud.netflix.eureka.server.event.EurekaInstanceRegisteredEvent;
 import org.springframework.cloud.netflix.eureka.server.event.EurekaInstanceRenewedEvent;
 import org.springframework.context.event.EventListener;
@@ -25,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Component
-@ConditionalOnClass({ ReplicationClientAdditionalFilters.class })
+@ConditionalOnClass( name = "org.springframework.cloud.netflix.eureka.server.event.EurekaInstanceRegisteredEvent")
 public class EurekaStateChangeListener {
 
 	@EventListener
