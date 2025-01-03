@@ -16,13 +16,13 @@ targetCustomizations:
       eureka-server:
         enabled: true
       gateway-server:
-        enabled: false
+        enabled: true
       core-service:
-        enabled: false
+        enabled: true
       core-service-beta:
-        enabled: false
+        enabled: true
       core-web:
-        enabled: false
+        enabled: true
       nginx:
         enabled: true
       jaeger:
