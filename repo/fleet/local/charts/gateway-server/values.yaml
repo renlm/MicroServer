@@ -14,9 +14,10 @@ templates:
     CONFIGSERVER: http://config-server/config
     EUREKA_SERVER: http://eureka-server-0.eureka-server.${POD_NAMESPACE}.svc.cluster.local/registrar/eureka,http://eureka-server-1.eureka-server.${POD_NAMESPACE}.svc.cluster.local/registrar/eureka,http://eureka-server-2.eureka-server.${POD_NAMESPACE}.svc.cluster.local/registrar/eureka
     EUREKA_AUTH_SECRETKEY: KK_fyw4bnmdf4Ksp7IMYuPWD@20stdt^tn50jlsfy
+    HOSTNAME: ${POD_IP}.gateway-server.${POD_NAMESPACE}.svc.cluster.local
     PROFILES_ACTIVE: kubernetes
   environment:
-  - name: INSTANCE_IP
+  - name: POD_IP
     valueFrom:
       fieldRef:
         fieldPath: status.podIP
