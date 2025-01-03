@@ -20,7 +20,7 @@ templates:
   - name: SERVICE_IP
     valueFrom:
       fieldRef:
-        fieldPath: status.podIPs
+        fieldPath: status.hostIP
   service:
     clusterIP: None
     spec:
