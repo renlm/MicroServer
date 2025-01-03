@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.security.SecureRandom;
 import java.util.Collections;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -22,6 +23,7 @@ import cn.renlm.micro.properties.EurekaAuthProperties;
 import cn.renlm.micro.util.CsrfUtil;
 import jakarta.ws.rs.client.ClientRequestContext;
 import jakarta.ws.rs.client.ClientRequestFilter;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Eureka 客户端认证
@@ -29,6 +31,7 @@ import jakarta.ws.rs.client.ClientRequestFilter;
  * @author RenLiMing(任黎明)
  *
  */
+@Slf4j
 @ConditionalOnProperty(value = "eureka.client.jersey.enabled", havingValue = "true")
 @ConditionalOnClass({ Jersey3DiscoveryClientOptionalArgs.class })
 @EnableConfigurationProperties({ EurekaAuthProperties.class })
@@ -52,6 +55,15 @@ public class EurekaJersey3ClientAuthConfig {
 				requestContext.getHeaders().add(X_XSRF_TOKEN, csrfToken);
 				requestContext.getHeaders().add(SIGN_HEADER_TIMESTAMP, timestamp);
 				requestContext.getHeaders().add(SIGN_HEADER_SIGN, sign);
+				String url = requestContext.getUri().toString();
+				String podIp = env.getPodIp();
+				log.debug("EurekaWebClientAuth url: {}", url);
+				log.debug("EurekaWebClientAuth podIp: {}", podIp);
+				if (env.isHeadless() && url.contains(podIp)) {
+					String headlessUrl = StringUtils.replace(url, podIp, StringUtils.replace(podIp, ".", "-"));
+					log.debug("EurekaWebClientAuth headlessUrl: {}", url);
+					requestContext.getUri().resolve(headlessUrl);
+				}
 			}
 		}));
 		{

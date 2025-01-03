@@ -58,12 +58,12 @@ public class EurekaWebClientAuthConfig {
 			request.header(SIGN_HEADER_SIGN, sign);
 			String url = req.url().toString();
 			String podIp = env.getPodIp();
-			log.debug("EurekaWebClientAuth url: ", url);
-			log.debug("EurekaWebClientAuth podIp: ", podIp);
+			log.debug("EurekaWebClientAuth url: {}", url);
+			log.debug("EurekaWebClientAuth podIp: {}", podIp);
 			if (env.isHeadless() && url.contains(podIp)) {
 				String headlessUrl = StringUtils.replace(url, podIp, StringUtils.replace(podIp, ".", "-"));
 				request.url(URI.create(headlessUrl));
-				log.debug("EurekaWebClientAuth headlessUrl: ", url);
+				log.debug("EurekaWebClientAuth headlessUrl: {}", url);
 			}
 			{
 				return next.exchange(request.build());
