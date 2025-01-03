@@ -49,7 +49,7 @@ public class MyHintsLoadBalancerFeignConfig {
 					String[] headerNames = { hintHeaderName, X_XSRF_TOKEN_HEADER_NAME, COOKIE_HEADER_NAME };
 					for (String headerName : headerNames) {
 						List<String> headerValues = httpHeaders.getValuesAsList(headerName);
-						if (Objects.nonNull(headerValues)) {
+						if (Objects.nonNull(headerValues) && headerValues.size() > 0) {
 							log.debug("openfeign headersHolder header 透传 - {} : {}", headerName, headerValues);
 							template.header(headerName, headerValues);
 						}
