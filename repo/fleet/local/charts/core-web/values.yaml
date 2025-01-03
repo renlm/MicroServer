@@ -15,7 +15,7 @@ templates:
     EUREKA_SERVER: http://eureka-server-0.eureka-server.${POD_NAMESPACE}.svc.cluster.local/registrar/eureka,http://eureka-server-1.eureka-server.${POD_NAMESPACE}.svc.cluster.local/registrar/eureka,http://eureka-server-2.eureka-server.${POD_NAMESPACE}.svc.cluster.local/registrar/eureka
     EUREKA_AUTH_SECRETKEY: KK_fyw4bnmdf4Ksp7IMYuPWD@20stdt^tn50jlsfy
     PROFILES_ACTIVE: kubernetes
-    SERVICE_NAME: core-web
+    POD_SERVICE_NAME: core-web
   environment:
   - name: POD_IP
     valueFrom:
