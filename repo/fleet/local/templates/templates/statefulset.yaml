@@ -52,7 +52,7 @@ spec:
           {{- if or .Values.global.env .Values.env .Values.environment }}
           env:
           {{- with .Values.environment }}
-            {{- toYaml . | quote | nindent 12 }}
+            {{- toYaml . | nindent 12 }}
           {{- end }}
           {{- if .Values.global.env }}
           {{- range $key, $value := .Values.global.env }}
