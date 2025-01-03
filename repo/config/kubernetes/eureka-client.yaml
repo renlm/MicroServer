@@ -11,9 +11,9 @@ eureka:
     headless: true
     secretKey: ${EUREKA_AUTH_SECRETKEY:123654}
   instance:
-    hostname: ${HOSTNAME}
+    hostname: ${POD_IP}
     nonSecurePort: ${server.port}
-    instanceId: ${eureka.instance.hostname}:${eureka.instance.nonSecurePort}
+    instanceId: ${HOSTNAME}:${eureka.instance.nonSecurePort}
     leaseRenewalIntervalInSeconds: 30
     leaseExpirationDurationInSeconds: 90
     metadataMap:
