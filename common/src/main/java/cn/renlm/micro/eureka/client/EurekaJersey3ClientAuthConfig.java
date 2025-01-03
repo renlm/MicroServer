@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.security.SecureRandom;
 import java.util.Collections;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -55,15 +54,6 @@ public class EurekaJersey3ClientAuthConfig {
 				requestContext.getHeaders().add(X_XSRF_TOKEN, csrfToken);
 				requestContext.getHeaders().add(SIGN_HEADER_TIMESTAMP, timestamp);
 				requestContext.getHeaders().add(SIGN_HEADER_SIGN, sign);
-				String url = requestContext.getUri().toString();
-				String podIp = env.getPodIp();
-				log.debug("EurekaWebClientAuth url: {}", url);
-				log.debug("EurekaWebClientAuth podIp: {}", podIp);
-				if (env.isHeadless() && url.contains(podIp)) {
-					String headlessUrl = StringUtils.replace(url, podIp, StringUtils.replace(podIp, ".", "-"));
-					log.debug("EurekaWebClientAuth headlessUrl: {}", url);
-					requestContext.getUri().resolve(headlessUrl);
-				}
 			}
 		}));
 		{

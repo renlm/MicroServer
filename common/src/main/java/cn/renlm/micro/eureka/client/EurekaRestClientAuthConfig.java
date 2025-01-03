@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.security.SecureRandom;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -60,18 +59,7 @@ public class EurekaRestClientAuthConfig {
 						request.getHeaders().add(X_XSRF_TOKEN, csrfToken);
 						request.getHeaders().add(SIGN_HEADER_TIMESTAMP, timestamp);
 						request.getHeaders().add(SIGN_HEADER_SIGN, sign);
-						String url = request.getURI().toString();
-						String podIp = env.getPodIp();
-						log.debug("EurekaWebClientAuth url: {}", url);
-						log.debug("EurekaWebClientAuth podIp: {}", podIp);
-						if (env.isHeadless() && url.contains(podIp)) {
-							String headlessUrl = StringUtils.replace(url, podIp, StringUtils.replace(podIp, ".", "-"));
-							request.getURI().resolve(headlessUrl);
-							log.debug("EurekaWebClientAuth headlessUrl: {}", url);
-						}
-						{
-							return execution.execute(request, body);
-						}
+						return execution.execute(request, body);
 					}));
 				});
 		if (tlsProperties.isEnabled()) {

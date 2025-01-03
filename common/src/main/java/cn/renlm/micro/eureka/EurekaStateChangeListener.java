@@ -1,8 +1,8 @@
 package cn.renlm.micro.eureka;
 
 import java.lang.reflect.Field;
+import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.cloud.netflix.eureka.server.ReplicationClientAdditionalFilters;
 import org.springframework.cloud.netflix.eureka.server.event.EurekaInstanceRegisteredEvent;
@@ -10,9 +10,11 @@ import org.springframework.cloud.netflix.eureka.server.event.EurekaInstanceRenew
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ReflectionUtils;
+import org.springframework.util.StringUtils;
 
 import com.netflix.appinfo.InstanceInfo;
 
+import cn.renlm.micro.constant.Constants;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -29,6 +31,7 @@ public class EurekaStateChangeListener {
 	@EventListener
 	public void listen(EurekaInstanceRegisteredEvent event) {
 		InstanceInfo instanceInfo = event.getInstanceInfo();
+		instanceInfo.getMetadata();
 		this.update("服务注册事件", instanceInfo);
 	}
 
@@ -38,15 +41,23 @@ public class EurekaStateChangeListener {
 		this.update("服务续约事件", instanceInfo);
 	}
 
+	/**
+	 * 约定客户端优先采用 Deployment Headless
+	 * 
+	 * @param event
+	 * @param instanceInfo
+	 */
 	private void update(String event, InstanceInfo instanceInfo) {
 		String appName = instanceInfo.getAppName();
-		String podIp = instanceInfo.getHostName();
-		String podName = StringUtils.replace(podIp, ".", "-");
-		String securePort = String.valueOf(instanceInfo.getSecurePort());
-		String instanceId = instanceInfo.getInstanceId();
-		{
-			instanceId = StringUtils.replace(instanceId, podIp, podName);
-			String hostName = instanceId.substring(0, instanceId.indexOf(":" + securePort));
+		Map<String, String> metadata = instanceInfo.getMetadata();
+		String podIp = metadata.get(Constants.POD_IP_KEY);
+		String podServiceName = metadata.get(Constants.POD_SERVICE_NAME_KEY);
+		String podNamespace = metadata.get(Constants.POD_NAMESPACE_KEY);
+		String securePort = String.valueOf(instanceInfo.getPort());
+		if (StringUtils.hasText(podIp) && StringUtils.hasText(podServiceName) && StringUtils.hasText(podNamespace)) {
+			String podName = StringUtils.replace(podIp, ".", "-");
+			String hostName = podName + "." + podServiceName + "." + podNamespace + ".svc.cluster.local";
+			String instanceId = hostName + ":" + securePort;
 			log.debug("{} - appName: {}, hostName: {}, instanceId: {}", event, appName, hostName, instanceId);
 			{
 				Field field = ReflectionUtils.findField(InstanceInfo.class, "instanceId");

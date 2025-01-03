@@ -1,7 +1,7 @@
 package cn.renlm.micro.filter;
 
 import static cn.renlm.micro.constant.Constants.HINT_HEADER_NAME;
-import static cn.renlm.micro.constant.Constants.HINT_METADATA_NAME;
+import static cn.renlm.micro.constant.Constants.HINT_KEY;
 import static java.util.concurrent.CompletableFuture.supplyAsync;
 import static org.springframework.cloud.gateway.support.GatewayToStringStyler.filterToStringCreator;
 import static org.springframework.util.StringUtils.hasText;
@@ -44,8 +44,6 @@ public class AddHintHeaderGatewayFilterFactory extends AbstractGatewayFilterFact
 
 	private static final String NAME_KEY = "name";
 
-	private static final String HINT_KEY = "hint";
-
 	@Resource
 	private EurekaInstanceConfig eurekaInstanceConfig;
 
@@ -83,7 +81,7 @@ public class AddHintHeaderGatewayFilterFactory extends AbstractGatewayFilterFact
 				}
 				// 然后根据当前登录用户查询[路由标记]
 				Map<String, String> metadataMap = eurekaInstanceConfig.getMetadataMap();
-				String defaults = metadataMap.get(HINT_METADATA_NAME);
+				String defaults = metadataMap.get(HINT_KEY);
 				if (Objects.nonNull(httpHeaders)) {
 					HttpHeaders mutateHttpHeaders = new HttpHeaders(httpHeaders);
 					Resp<UserClaim> resp = supplyAsync(() -> {

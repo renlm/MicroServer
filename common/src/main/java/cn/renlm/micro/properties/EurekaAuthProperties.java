@@ -14,10 +14,6 @@ import lombok.Data;
 @ConfigurationProperties("eureka.auth")
 public class EurekaAuthProperties {
 
-	private String podIp;
-
-	private boolean headless;
-
 	private String secretKey;
 
 }
