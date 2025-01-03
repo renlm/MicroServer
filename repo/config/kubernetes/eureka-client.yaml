@@ -11,7 +11,7 @@ eureka:
     preferIpAddress: true
     hostname: ${INSTANCE_NAME:${spring.cloud.client.ip-address}}
     nonSecurePort: ${server.port}
-    instanceId: ${eureka.instance.hostname}:${eureka.instance.nonSecurePort}
+    instanceId: ${HOSTNAME}:${eureka.instance.nonSecurePort}
     leaseRenewalIntervalInSeconds: 30
     leaseExpirationDurationInSeconds: 90
     metadataMap:
