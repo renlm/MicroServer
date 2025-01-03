@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-HOSTNAME=${POD_IP//./-}.${SERVICE_NAME}.${POD_NAMESPACE}.svc.cluster.local
-export HOSTNAME=$HOSTNAME
+INSTANCE_HOSTNAME=${POD_IP//./-}.${SERVICE_NAME}.${POD_NAMESPACE}.svc.cluster.local
+export INSTANCE_HOSTNAME=$INSTANCE_HOSTNAME
 
 java -Djava.security.egd=file:/dev/./urandom -jar /app.jar
