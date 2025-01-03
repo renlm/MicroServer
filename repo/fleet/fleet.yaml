@@ -12,7 +12,7 @@ targetCustomizations:
   helm:
     values:
       config-server:
-        enabled: false
+        enabled: true
       eureka-server:
         enabled: false
       gateway-server:
