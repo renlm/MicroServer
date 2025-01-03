@@ -21,7 +21,7 @@ templates:
   - name: POD_NAME
     valueFrom:
       fieldRef:
-        fieldPath: metadata.name
+        fieldPath: metadata.uid
   - name: POD_NAMESPACE
     valueFrom:
       fieldRef:
