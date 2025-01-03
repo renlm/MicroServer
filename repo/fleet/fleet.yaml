@@ -14,7 +14,7 @@ targetCustomizations:
       config-server:
         enabled: true
       eureka-server:
-        enabled: false
+        enabled: true
       gateway-server:
         enabled: false
       core-service:
