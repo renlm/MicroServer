@@ -18,4 +18,14 @@ public interface Constants {
 	 */
 	public static final String HINT_METADATA_NAME = "hint";
 
+	/**
+	 * x-xsrf-token
+	 */
+	public static final String X_XSRF_TOKEN_HEADER_NAME = "x-xsrf-token";
+
+	/**
+	 * cookie
+	 */
+	public static final String COOKIE_HEADER_NAME = "cookie";
+
 }

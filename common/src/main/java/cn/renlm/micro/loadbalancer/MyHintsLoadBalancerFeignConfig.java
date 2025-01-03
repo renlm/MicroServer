@@ -1,8 +1,10 @@
 package cn.renlm.micro.loadbalancer;
 
+import static cn.renlm.micro.constant.Constants.COOKIE_HEADER_NAME;
+import static cn.renlm.micro.constant.Constants.X_XSRF_TOKEN_HEADER_NAME;
 import static org.springframework.web.context.request.RequestContextHolder.getRequestAttributes;
 
-import java.util.Enumeration;
+import java.util.List;
 import java.util.Objects;
 
 import org.slf4j.Logger;
@@ -31,28 +33,27 @@ public class MyHintsLoadBalancerFeignConfig {
 
 	@Bean
 	RequestInterceptor hintsLoadBalancerHeaderRequestInterceptor(LoadBalancerProperties properties) {
+		String hintHeaderName = properties.getHintHeaderName();
 		return template -> {
 			ServletRequestAttributes attributes = (ServletRequestAttributes) getRequestAttributes();
 			if (Objects.nonNull(attributes)) {
 				HttpServletRequest request = attributes.getRequest();
-				Enumeration<String> headers = request.getHeaderNames();
-				if (Objects.nonNull(headers)) {
-					while (headers.hasMoreElements()) {
-						String headerName = headers.nextElement();
-						String headerValue = request.getHeader(headerName);
-						if (StringUtils.hasText(headerValue)) {
-							log.debug("openfeign attributes header 透传 - {} : {}", headerName, headerValue);
-							template.header(headerName, headerValue);
-						}
-					}
+				String hintHeaderValue = request.getHeader(hintHeaderName);
+				if (StringUtils.hasText(hintHeaderValue)) {
+					log.debug("openfeign attributes header 透传 - {} : {}", hintHeaderName, hintHeaderValue);
+					template.header(hintHeaderName, hintHeaderValue);
 				}
 			} else {
 				HttpHeaders httpHeaders = OpenFeignHeadersHolder.get();
 				if (Objects.nonNull(httpHeaders)) {
-					httpHeaders.forEach((name, values) -> {
-						log.debug("openfeign headersHolder header 透传 - {} : {}", name, values);
-						template.header(name, values);
-					});
+					String[] headerNames = { hintHeaderName, X_XSRF_TOKEN_HEADER_NAME, COOKIE_HEADER_NAME };
+					for (String headerName : headerNames) {
+						List<String> headerValues = httpHeaders.getValuesAsList(headerName);
+						if (Objects.nonNull(headerValues)) {
+							log.debug("openfeign headersHolder header 透传 - {} : {}", headerName, headerValues);
+							template.header(headerName, headerValues);
+						}
+					}
 				}
 			}
 		};
