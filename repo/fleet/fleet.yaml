@@ -12,30 +12,48 @@ targetCustomizations:
   helm:
     values:
       config-server:
-        enabled: true
-      eureka-server:
-        enabled: true
-      gateway-server:
-        enabled: true
-      core-service:
-        enabled: true
-      core-service-beta:
-        enabled: true
-      core-web:
-        enabled: true
-      mygraph:
         enabled: false
-      redis:
-        enabled: true
-      rabbitmq:
-        enabled: true
-      mysql:
-        enabled: true
-      postgres:
-        enabled: true
+      eureka-server:
+        enabled: false
+      gateway-server:
+        enabled: false
+      core-service:
+        enabled: false
+      core-service-beta:
+        enabled: false
+      core-web:
+        enabled: false
       nginx:
-        enabled: true
-      jenkins:
         enabled: true
       jaeger:
         enabled: true
+      redis:
+        enabled: true
+        templates:
+          nodeSelector:
+            redis: redis
+      rabbitmq:
+        enabled: true
+        templates:
+          nodeSelector:
+            rabbitmq: rabbitmq
+      postgres:
+        enabled: true
+        templates:
+          nodeSelector:
+            postgres: postgres
+      mysql:
+        enabled: true
+        templates:
+          nodeSelector:
+            mysql: mysql
+      jenkins:
+        enabled: true
+        templates:
+          nodeSelector:
+            jenkins: jenkins
+      mygraph:
+        enabled: true
+        templates:
+          nodeSelector:
+            mygraph: mygraph

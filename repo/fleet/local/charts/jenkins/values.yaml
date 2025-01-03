@@ -2,8 +2,6 @@ templates:
   nameOverride: jenkins
   fullnameOverride: jenkins
   kind: StatefulSet
-  nodeSelector:
-    jenkins: jenkins
   image:
     repository: jenkins/jenkins
     pullPolicy: IfNotPresent
