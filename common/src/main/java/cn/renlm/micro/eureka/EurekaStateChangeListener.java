@@ -47,7 +47,7 @@ public class EurekaStateChangeListener {
 		{
 			instanceId = StringUtils.replace(instanceId, podIp, podName);
 			String hostName = instanceId.substring(0, instanceId.indexOf(":" + securePort));
-			log.debug("{} - appName: {}, hostName: {}, instanceId: {}", appName, hostName, instanceId);
+			log.debug("{} - appName: {}, hostName: {}, instanceId: {}", event, appName, hostName, instanceId);
 			{
 				Field field = ReflectionUtils.findField(InstanceInfo.class, "instanceId");
 				field.setAccessible(true);
