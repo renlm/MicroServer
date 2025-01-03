@@ -27,7 +27,7 @@ templates:
       fieldRef:
         fieldPath: metadata.namespace
   service:
-    type: ClusterIP
+    clusterIP: None
     spec:
     - port: 80
       protocol: TCP
