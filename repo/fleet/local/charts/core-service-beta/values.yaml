@@ -37,10 +37,17 @@ templates:
       protocol: TCP
       name: tcp-actuator
   livenessProbe:
+    initialDelaySeconds: 25
+    periodSeconds: 10
+    successThreshold: 1
+    failureThreshold: 6
+    timeoutSeconds: 5
     httpGet:
       path: /actuator/health/liveness
       port: tcp-actuator
   readinessProbe:
+    initialDelaySeconds: 15
+    periodSeconds: 10
     httpGet:
       path: /actuator/health/readiness
       port: tcp-actuator
