@@ -6,12 +6,14 @@ spring:
       hint:
         default: ${HINT:mylb}
 eureka:
-  auth.secretKey: ${EUREKA_AUTH_SECRETKEY:123654}
+  auth:
+    podIp: ${POD_IP}
+    headless: true
+    secretKey: ${EUREKA_AUTH_SECRETKEY:123654}
   instance:
-    preferIpAddress: true
-    hostname: ${HOSTNAME:${spring.cloud.client.ip-address}}
+    hostname: ${HOSTNAME}
     nonSecurePort: ${server.port}
-    instanceId: ${HOSTNAME}:${eureka.instance.nonSecurePort}
+    instanceId: ${eureka.instance.hostname}:${eureka.instance.nonSecurePort}
     leaseRenewalIntervalInSeconds: 30
     leaseExpirationDurationInSeconds: 90
     metadataMap:

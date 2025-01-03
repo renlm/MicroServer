@@ -1,9 +1,11 @@
 eureka:
-  auth.secretKey: ${EUREKA_AUTH_SECRETKEY:123654}
   datacenter: micro
   environment: ${spring.profiles.active}
+  auth:
+    podIp: ${POD_IP}
+    headless: true
+    secretKey: ${EUREKA_AUTH_SECRETKEY:123654}
   instance:
-    preferIpAddress: false
     hostname: ${HOSTNAME}
     nonSecurePort: ${server.port}
     instanceId: ${eureka.instance.hostname}:${eureka.instance.nonSecurePort}

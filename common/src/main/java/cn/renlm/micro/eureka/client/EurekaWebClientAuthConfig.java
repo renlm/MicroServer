@@ -6,9 +6,11 @@ import static cn.renlm.micro.eureka.EurekaServerAuthConfig.X_SERVER_TOKEN;
 import static cn.renlm.micro.eureka.EurekaServerAuthConfig.X_XSRF_TOKEN;
 
 import java.io.IOException;
+import java.net.URI;
 import java.security.GeneralSecurityException;
 import java.security.SecureRandom;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -25,6 +27,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import cn.renlm.micro.properties.EurekaAuthProperties;
 import cn.renlm.micro.util.CsrfUtil;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Eureka客户端认证
@@ -32,6 +35,7 @@ import cn.renlm.micro.util.CsrfUtil;
  * @author RenLiMing(任黎明)
  *
  */
+@Slf4j
 @ConditionalOnProperty(value = "eureka.client.webclient.enabled", havingValue = "true", matchIfMissing = true)
 @ConditionalOnClass({ WebClient.class })
 @ConditionalOnMissingBean({ EurekaJersey3ClientAuthConfig.class })
@@ -52,7 +56,18 @@ public class EurekaWebClientAuthConfig {
 			request.header(X_XSRF_TOKEN, csrfToken);
 			request.header(SIGN_HEADER_TIMESTAMP, timestamp);
 			request.header(SIGN_HEADER_SIGN, sign);
-			return next.exchange(request.build());
+			String url = req.url().toString();
+			String podIp = env.getPodIp();
+			log.debug("EurekaWebClientAuth url: ", url);
+			log.debug("EurekaWebClientAuth podIp: ", podIp);
+			if (env.isHeadless() && url.contains(podIp)) {
+				String headlessUrl = StringUtils.replace(url, podIp, StringUtils.replace(podIp, ".", "-"));
+				request.url(URI.create(headlessUrl));
+				log.debug("EurekaWebClientAuth headlessUrl: ", url);
+			}
+			{
+				return next.exchange(request.build());
+			}
 		});
 	}
 
