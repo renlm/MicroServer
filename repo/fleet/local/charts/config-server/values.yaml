@@ -16,6 +16,16 @@ templates:
     RABBITMQ_PORT: 5672
     RABBITMQ_USERNAME: dev
     RABBITMQ_PASSWORD: KK_fyw4bnmdf4Ksp7IMYuPWD@20stdt^tn50jlsfy
+    HOSTNAME: ${POD_NAME}.config-server.${POD_NAMESPACE}.svc.cluster.local
+  environment:
+  - name: POD_NAME
+    valueFrom:
+      fieldRef:
+        fieldPath: metadata.name
+  - name: POD_NAMESPACE
+    valueFrom:
+      fieldRef:
+        fieldPath: metadata.namespace
   service:
     type: ClusterIP
     spec:

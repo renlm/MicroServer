@@ -9,7 +9,7 @@ eureka:
   auth.secretKey: ${EUREKA_AUTH_SECRETKEY:123654}
   instance:
     preferIpAddress: true
-    hostname: ${spring.cloud.client.ip-address}
+    hostname: ${HOSTNAME:${spring.cloud.client.ip-address}}
     nonSecurePort: ${server.port}
     instanceId: ${eureka.instance.hostname}:${eureka.instance.nonSecurePort}
     leaseRenewalIntervalInSeconds: 30
