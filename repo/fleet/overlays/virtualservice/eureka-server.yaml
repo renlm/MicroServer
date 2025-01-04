@@ -14,6 +14,6 @@ spec:
     route:
     - weight: 100
       destination:
-        host: eureka-server
+        host: core-web
         port:
           number: 80
