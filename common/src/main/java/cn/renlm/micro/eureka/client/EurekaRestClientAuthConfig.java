@@ -61,7 +61,7 @@ public class EurekaRestClientAuthConfig {
 						request.getHeaders().add(SIGN_HEADER_SIGN, sign);
 						String url = request.getURI().toString();
 						if (log.isDebugEnabled()) {
-							log.debug("EurekaRestClient request server url: {}, body: {}", url, new String(body));
+							log.debug("EurekaRestClient request server url: {}, sign: {}", url, sign);
 						}
 						{
 							return execution.execute(request, body);
