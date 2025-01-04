@@ -1,63 +1,49 @@
-fullnameOverride: jaeger
 namespace: istio-system
-replicaCount: 1
-imagePullSecrets: []
-image:
-  repository: jaegertracing/all-in-one
-  pullPolicy: IfNotPresent
-  tag: 1.58
-env:
-  LOG_LEVEL: debug
-  BADGER_EPHEMERAL: false
-  SPAN_STORAGE_TYPE: badger
-  BADGER_DIRECTORY_VALUE: /badger/data
-  BADGER_DIRECTORY_KEY: /badger/key
-  COLLECTOR_ZIPKIN_HOST_PORT: :9411
-  MEMORY_MAX_TRACES: 50000
-  QUERY_BASE_PATH: /jaeger
-  METRICS_STORAGE_TYPE: prometheus
-  PROMETHEUS_SERVER_URL: http://prometheus:9090
-  PROMETHEUS_QUERY_SUPPORT_SPANMETRICS_CONNECTOR: true
-  PROMETHEUS_QUERY_NAMESPACE: monitor_spanmetrics
-  PROMETHEUS_QUERY_DURATION_UNIT: ms
-  PROMETHEUS_QUERY_NORMALIZE_CALLS: true
-  PROMETHEUS_QUERY_NORMALIZE_DURATION: true
-podLabels:
-  sidecar.istio.io/inject: "true"
-podAnnotations:
-  prometheus.io/scrape: "true"
-  prometheus.io/port: "14269"
-  instrumentation.opentelemetry.io/inject-sdk: "observability/otlp-instrumentation"
-podSecurityContext: {}
-securityContext: {}
-resources:
-  requests:
-    cpu: 10m
-livenessProbe:
-  httpGet:
-    path: /
-    port: 14269
-readinessProbe:
-  httpGet:
-    path: /
-    port: 14269
-autoscaling:
-  enabled: false
-  minReplicas: 1
-  maxReplicas: 2
-  targetCPUUtilizationPercentage: 80
-volumes:
-- name: data
-  emptyDir: {}
-- name: localtime
-  hostPath:
-    path: /etc/localtime
-volumeMounts:
-- name: data
-  mountPath: /badger
-- name: localtime
-  mountPath: /etc/localtime
-  readOnly: true
-nodeSelector: {}
-tolerations: []
-affinity: {}
+nameOverride: jaeger
+fullnameOverride: jaeger
+templates:
+  nameOverride: jaeger
+  fullnameOverride: jaeger
+  kind: Deployment
+  image:
+    repository: jaegertracing/all-in-one
+    pullPolicy: IfNotPresent
+    tag: 1.58
+  env:
+    BADGER_EPHEMERAL: false
+    SPAN_STORAGE_TYPE: badger
+    BADGER_DIRECTORY_VALUE: /badger/data
+    BADGER_DIRECTORY_KEY: /badger/key
+    COLLECTOR_ZIPKIN_HOST_PORT: :9411
+    MEMORY_MAX_TRACES: 50000
+    QUERY_BASE_PATH: /jaeger
+    METRICS_STORAGE_TYPE: prometheus
+    PROMETHEUS_SERVER_URL: http://prometheus:9090
+    PROMETHEUS_QUERY_SUPPORT_SPANMETRICS_CONNECTOR: true
+    PROMETHEUS_QUERY_NAMESPACE: monitor_spanmetrics
+    PROMETHEUS_QUERY_DURATION_UNIT: ms
+    PROMETHEUS_QUERY_NORMALIZE_CALLS: true
+    PROMETHEUS_QUERY_NORMALIZE_DURATION: true
+  podAnnotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "14269"
+  livenessProbe:
+    httpGet:
+      path: /
+      port: 14269
+  readinessProbe:
+    httpGet:
+      path: /
+      port: 14269
+  volumes:
+  - name: data
+    emptyDir: {}
+  - name: localtime
+    hostPath:
+      path: /etc/localtime
+  volumeMounts:
+  - name: data
+    mountPath: /badger
+  - name: localtime
+    mountPath: /etc/localtime
+    readOnly: true

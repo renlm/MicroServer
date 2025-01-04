@@ -1,6 +1,10 @@
 apiVersion: v2
 name: jaeger
-description: A Helm chart for jaeger.
+description: A Helm chart for jaeger
 type: application
-version: 1.58
-appVersion: 0.0.1
+version: 0.0.1
+appVersion: 1.0.1
+dependencies:
+- name: templates
+  version: 0.0.1
+  repository: file://../../templates
