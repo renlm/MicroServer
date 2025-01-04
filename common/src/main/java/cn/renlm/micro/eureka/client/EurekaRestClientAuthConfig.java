@@ -55,10 +55,10 @@ public class EurekaRestClientAuthConfig {
 						final String timestamp = String.valueOf(System.currentTimeMillis());
 						final String secretKey = env.getSecretKey();
 						final String sign = DigestUtils.md5DigestAsHex((csrfToken + timestamp + secretKey).getBytes());
-						request.getHeaders().set(X_SERVER_TOKEN, serverToken);
-						request.getHeaders().set(X_XSRF_TOKEN, csrfToken);
-						request.getHeaders().set(SIGN_HEADER_TIMESTAMP, timestamp);
-						request.getHeaders().set(SIGN_HEADER_SIGN, sign);
+						request.getHeaders().add(X_SERVER_TOKEN, serverToken);
+						request.getHeaders().add(X_XSRF_TOKEN, csrfToken);
+						request.getHeaders().add(SIGN_HEADER_TIMESTAMP, timestamp);
+						request.getHeaders().add(SIGN_HEADER_SIGN, sign);
 						String url = request.getURI().toString();
 						if (log.isDebugEnabled()) {
 							log.debug("EurekaRestClient request server url: {}, body: {}", url, new String(body));
