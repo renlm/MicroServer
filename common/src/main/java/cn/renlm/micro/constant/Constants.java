@@ -24,6 +24,11 @@ public interface Constants {
 	public static final String COOKIE_HEADER_NAME = "cookie";
 
 	/**
+	 * Session
+	 */
+	public static final String SESSION_KEY = "MICRO-SERVER";
+
+	/**
 	 * 服务元数据 [ 负载均衡标记 ]
 	 */
 	public static final String HINT_KEY = "hint";
