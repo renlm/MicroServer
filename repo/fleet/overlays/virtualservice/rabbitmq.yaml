@@ -4,7 +4,7 @@ metadata:
   name: rabbitmq
 spec:
   hosts:
-  - amqp.renlm.cn
+  - rabbitmq.renlm.cn
   gateways:
   - istio-system/istio-gateway
   tcp:
