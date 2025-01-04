@@ -9,7 +9,6 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 
 /**
  * 响应码
@@ -29,11 +28,9 @@ public enum RespCode {
 	;
 	// @formatter:on
 
-	@Getter
-	private int value;
+	public final int value;
 
-	@Getter
-	private String msg;
+	public final String msg;
 
 	@JsonValue
 	public String getJsonValue() {
