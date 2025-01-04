@@ -13,6 +13,7 @@ templates:
     pullPolicy: IfNotPresent
     tag: 1.58
   env:
+    OTEL_SDK_DISABLED: true
     BADGER_EPHEMERAL: false
     SPAN_STORAGE_TYPE: badger
     BADGER_DIRECTORY_VALUE: /badger/data
