@@ -9,9 +9,7 @@ serviceAccount:
   create: false
 autoscaling:
   enabled: false
-service:
-  type: ClusterIP
-  port: 80
+service: {}
 podAnnotations: {}
 podLabels: {}
 podSecurityContext: {}
