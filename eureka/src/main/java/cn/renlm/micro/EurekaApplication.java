@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.csrf.CsrfFilter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 
@@ -40,7 +40,7 @@ public class EurekaApplication {
 		String[] anonymousRequests = { "/actuator/**" };
 		http.authorizeHttpRequests(r -> r.requestMatchers(anonymousRequests).permitAll().anyRequest().authenticated());
 		http.csrf(csrf -> csrf.csrfTokenRepository(csrfTokenRepository()));
-		http.addFilterBefore(authFilter, CsrfFilter.class);
+		http.addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class);
 		http.formLogin(withDefaults());
 		http.httpBasic(withDefaults());
 		return http.build();
