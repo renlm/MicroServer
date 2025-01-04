@@ -23,9 +23,9 @@ public enum RespCode {
 	;
 	// @formatter:on
 
-	public final int code;
+	public final int value;
 
-	public final String desc;
+	public final String msg;
 
 	@JsonValue
 	public String getJsonValue() {
