@@ -1,7 +1,6 @@
 package cn.renlm.micro.common;
 
 import java.io.IOException;
-import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -10,6 +9,7 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 /**
  * 响应码
@@ -18,7 +18,7 @@ import lombok.AllArgsConstructor;
  *
  */
 @AllArgsConstructor
-public enum RespCode implements Serializable {
+public enum RespCode {
 
 	// @formatter:off
 	UNKNOWN(0, "未知"), 
@@ -29,9 +29,11 @@ public enum RespCode implements Serializable {
 	;
 	// @formatter:on
 
-	public final int value;
+	@Getter
+	private int value;
 
-	public final String msg;
+	@Getter
+	private String msg;
 
 	@JsonValue
 	public String getJsonValue() {

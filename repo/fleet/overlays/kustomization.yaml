@@ -10,6 +10,5 @@ resources:
 - virtualservice/rabbitmq.yaml
 - virtualservice/grafana.yaml
 - virtualservice/jenkins.yaml
-- virtualservice/eureka-server.yaml
 - virtualservice/gateway-server.yaml
 - virtualservice/mygraph.yaml
