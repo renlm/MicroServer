@@ -3,6 +3,9 @@ server:
   shutdown: graceful
   servlet:
     contextPath: /registrar
+    session:
+      cookie:
+        name: ${spring.application.name}
 management:
   server:
     port: ${MANAGEMENT_SERVER_PORT:9101}

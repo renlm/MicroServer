@@ -3,3 +3,6 @@ server:
   shutdown: graceful
   servlet:
     contextPath: /config
+    session:
+      cookie:
+        name: ${spring.application.name}
