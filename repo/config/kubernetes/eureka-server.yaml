@@ -1,8 +1,7 @@
 eureka:
+  auth.secretKey: ${EUREKA_AUTH_SECRETKEY:123654}
   datacenter: micro
   environment: ${spring.profiles.active}
-  auth:
-    secretKey: ${EUREKA_AUTH_SECRETKEY:123654}
   instance:
     hostname: ${HOSTNAME}
     nonSecurePort: ${server.port}

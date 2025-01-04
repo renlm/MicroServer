@@ -6,19 +6,19 @@ spring:
       hint:
         default: ${HINT:mylb}
 eureka:
-  auth:
-    secretKey: ${EUREKA_AUTH_SECRETKEY:123654}
+  auth.secretKey: ${EUREKA_AUTH_SECRETKEY:123654}
   instance:
-    hostname: ${POD_SERVICE_NAME}.${POD_NAMESPACE}
+    hostname: ${HOSTNAME}
     nonSecurePort: ${server.port}
     instanceId: ${eureka.instance.hostname}:${eureka.instance.nonSecurePort}
     leaseRenewalIntervalInSeconds: 30
     leaseExpirationDurationInSeconds: 90
     metadataMap:
-      hint: ${HINT:mylb}
-      POD_IP: ${POD_IP}
-      POD_SERVICE_NAME: ${POD_SERVICE_NAME}
+      hint: ${spring.cloud.loadbalancer.hint.default}
       POD_NAMESPACE: ${POD_NAMESPACE}
+      POD_SERVICE_NAME: ${POD_SERVICE_NAME}
+      POD_NAME: ${POD_NAME}
+      POD_IP: ${POD_IP}
   client:
     jersey.enabled: ${eureka.client.jerseyEnabled:false}
     restclient.enabled: ${eureka.client.restclientEnabled:true}
