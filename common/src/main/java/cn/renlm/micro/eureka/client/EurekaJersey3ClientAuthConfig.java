@@ -55,7 +55,7 @@ public class EurekaJersey3ClientAuthConfig {
 				requestContext.getHeaders().add(SIGN_HEADER_TIMESTAMP, timestamp);
 				requestContext.getHeaders().add(SIGN_HEADER_SIGN, sign);
 				String url = requestContext.getUri().toString();
-				log.debug("EurekaWebClient request server url: {}", url);
+				log.debug("EurekaJersey3Client request server url: {}", url);
 			}
 		}));
 		{
