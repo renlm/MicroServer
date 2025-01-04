@@ -1,3 +1,4 @@
+EUREKA_AUTH_SECRETKEY: KK_fyw4bnmdf4Ksp7IMYuPWD@20stdt^tn50jlsfy
 templates:
   nameOverride: eureka-server
   fullnameOverride: eureka-server
@@ -13,19 +14,7 @@ templates:
     SECURITY_USER_NAME: default
     SECURITY_USER_PASSWORD: M1h62Gj3Uy54r
     CONFIGSERVER: http://config-server/config
-    EUREKA_SERVER: http://eureka-server-0.eureka-server.${POD_NAMESPACE}.svc.cluster.local/registrar/eureka,http://eureka-server-1.eureka-server.${POD_NAMESPACE}.svc.cluster.local/registrar/eureka,http://eureka-server-2.eureka-server.${POD_NAMESPACE}.svc.cluster.local/registrar/eureka
-    EUREKA_AUTH_SECRETKEY: KK_fyw4bnmdf4Ksp7IMYuPWD@20stdt^tn50jlsfy
-    HOSTNAME: ${POD_NAME}.eureka-server.${POD_NAMESPACE}.svc.cluster.local
     PROFILES_ACTIVE: kubernetes
-  environment:
-  - name: POD_NAME
-    valueFrom:
-      fieldRef:
-        fieldPath: metadata.name
-  - name: POD_NAMESPACE
-    valueFrom:
-      fieldRef:
-        fieldPath: metadata.namespace
   service:
     clusterIP: None
     spec:
