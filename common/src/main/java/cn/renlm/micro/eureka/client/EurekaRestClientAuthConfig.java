@@ -60,8 +60,12 @@ public class EurekaRestClientAuthConfig {
 						request.getHeaders().add(SIGN_HEADER_TIMESTAMP, timestamp);
 						request.getHeaders().add(SIGN_HEADER_SIGN, sign);
 						String url = request.getURI().toString();
-						log.debug("EurekaRestClient request server url: {}", url);
-						return execution.execute(request, body);
+						if (log.isDebugEnabled()) {
+							log.debug("EurekaRestClient request server url: {}, body: {}", url, new String(body));
+						}
+						{
+							return execution.execute(request, body);
+						}
 					}));
 				});
 		if (tlsProperties.isEnabled()) {
