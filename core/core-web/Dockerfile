@@ -21,8 +21,8 @@ RUN sed -i 's/deb.debian.org/mirrors.aliyun.com/g' /etc/apt/sources.list.d/debia
   && ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
   && chmod +x /start-up.sh \
   && touch /app.jar
-EXPOSE 7001
-EXPOSE 9001
+EXPOSE 8002
+EXPOSE 8092
 ARG PROFILES_ACTIVE
 ENV PROFILES_ACTIVE ${PROFILES_ACTIVE}
 ENTRYPOINT ["/usr/bin/tini","--","/bin/bash","/start-up.sh"]

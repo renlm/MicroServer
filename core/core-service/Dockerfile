@@ -12,13 +12,15 @@ RUN --mount=type=cache,target=/root/.m2 \
 
 FROM openjdk:21-slim
 COPY --from=0 "/build/core/core-service/target/core-service.jar" app.jar
+ADD core/core-web/start-up.sh /start-up.sh
 RUN sed -i 's/deb.debian.org/mirrors.aliyun.com/g' /etc/apt/sources.list.d/debian.sources \
   && apt update \
   && apt install -y tini curl \
   && ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
+  && chmod +x /start-up.sh \
   && touch /app.jar
-EXPOSE 7001
-EXPOSE 9001
+EXPOSE 8001
+EXPOSE 8091
 ARG PROFILES_ACTIVE
 ENV PROFILES_ACTIVE ${PROFILES_ACTIVE}
-ENTRYPOINT ["/usr/bin/tini","--","java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+ENTRYPOINT ["/usr/bin/tini","--","/bin/bash","/start-up.sh"]
