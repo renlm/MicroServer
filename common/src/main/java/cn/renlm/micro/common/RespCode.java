@@ -1,6 +1,7 @@
 package cn.renlm.micro.common;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import lombok.AllArgsConstructor;
 
@@ -26,18 +27,9 @@ public enum RespCode {
 
 	public final String desc;
 
-	@JsonCreator
-	public static RespCode ofCode(int code) {
-		RespCode[] arr = RespCode.values();
-		for (int i = 0; i < arr.length; i++) {
-			RespCode rc = arr[i];
-			if (rc.code == code) {
-				return rc;
-			}
-		}
-		{
-			return UNKNOWN;
-		}
+	@JsonValue
+	public String getJsonValue() {
+		return this.name();
 	}
 
 	@JsonCreator
