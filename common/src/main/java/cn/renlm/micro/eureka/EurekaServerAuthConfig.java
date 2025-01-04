@@ -44,11 +44,11 @@ import lombok.extern.slf4j.Slf4j;
 @EnableConfigurationProperties({ EurekaAuthProperties.class })
 public class EurekaServerAuthConfig {
 
-	public static final String X_SERVER_TOKEN = "X-SERVER-TOKEN";
-	public static final String X_XSRF_TOKEN = "X-XSRF-TOKEN";
+	public static final String X_SERVER_TOKEN = "x-server-token";
+	public static final String X_XSRF_TOKEN = "x-xsrf-token";
 	public static final String _CSRF = "_csrf";
-	public static final String SIGN_HEADER_TIMESTAMP = "X-EUREKA-TIMESTAMP";
-	public static final String SIGN_HEADER_SIGN = "X-EUREKA-SIGN";
+	public static final String SIGN_HEADER_TIMESTAMP = "x-eureka-timestamp";
+	public static final String SIGN_HEADER_SIGN = "x-eureka-sign";
 	private SecureRandom secureRandom = new SecureRandom();
 
 	@Bean
