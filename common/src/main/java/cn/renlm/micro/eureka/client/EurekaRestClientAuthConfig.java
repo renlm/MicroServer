@@ -50,11 +50,11 @@ public class EurekaRestClientAuthConfig {
 		RestClientDiscoveryClientOptionalArgs args = new RestClientDiscoveryClientOptionalArgs(
 				eurekaClientHttpRequestFactorySupplier, () -> {
 					return RestClient.builder().requestInterceptor(((request, body, execution) -> {
-						String serverToken = CsrfUtil.createServerToken();
-						String csrfToken = CsrfUtil.createCsrfToken(secureRandom, serverToken);
-						String timestamp = String.valueOf(System.currentTimeMillis());
-						String secretKey = env.getSecretKey();
-						String sign = DigestUtils.md5DigestAsHex((csrfToken + timestamp + secretKey).getBytes());
+						final String serverToken = CsrfUtil.createServerToken();
+						final String csrfToken = CsrfUtil.createCsrfToken(secureRandom, serverToken);
+						final String timestamp = String.valueOf(System.currentTimeMillis());
+						final String secretKey = env.getSecretKey();
+						final String sign = DigestUtils.md5DigestAsHex((csrfToken + timestamp + secretKey).getBytes());
 						request.getHeaders().add(X_SERVER_TOKEN, serverToken);
 						request.getHeaders().add(X_XSRF_TOKEN, csrfToken);
 						request.getHeaders().add(SIGN_HEADER_TIMESTAMP, timestamp);

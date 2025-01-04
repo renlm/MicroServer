@@ -45,11 +45,11 @@ public class EurekaJersey3ClientAuthConfig {
 		args.setAdditionalFilters(Collections.singletonList(new ClientRequestFilter() {
 			@Override
 			public void filter(ClientRequestContext requestContext) throws IOException {
-				String serverToken = CsrfUtil.createServerToken();
-				String csrfToken = CsrfUtil.createCsrfToken(secureRandom, serverToken);
-				String timestamp = String.valueOf(System.currentTimeMillis());
-				String secretKey = env.getSecretKey();
-				String sign = DigestUtils.md5DigestAsHex((csrfToken + timestamp + secretKey).getBytes());
+				final String serverToken = CsrfUtil.createServerToken();
+				final String csrfToken = CsrfUtil.createCsrfToken(secureRandom, serverToken);
+				final String timestamp = String.valueOf(System.currentTimeMillis());
+				final String secretKey = env.getSecretKey();
+				final String sign = DigestUtils.md5DigestAsHex((csrfToken + timestamp + secretKey).getBytes());
 				requestContext.getHeaders().add(X_SERVER_TOKEN, serverToken);
 				requestContext.getHeaders().add(X_XSRF_TOKEN, csrfToken);
 				requestContext.getHeaders().add(SIGN_HEADER_TIMESTAMP, timestamp);
