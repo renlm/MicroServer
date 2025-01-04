@@ -5,6 +5,7 @@ templates:
   namespace: istio-system
   nameOverride: jaeger
   fullnameOverride: jaeger
+  autoBindCommonEnv: false
   kind: Deployment
   image:
     repository: jaegertracing/all-in-one

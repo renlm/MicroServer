@@ -1,5 +1,6 @@
 kind: Deployment
 replicaCount: 1
+autoBindCommonEnv: true
 imagePullSecrets: []
 image:
   repository: nginx

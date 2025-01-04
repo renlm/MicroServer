@@ -81,11 +81,13 @@ spec:
               value: {{ $value | quote }}
           {{- end }}
           {{- end }}
+          {{- if .Values.autoBindCommonEnv }}
           envFrom:
             - configMapRef:
                 name: config-server-env
             - configMapRef:
                 name: eureka-server-env
+          {{- end }}
           {{- with .Values.livenessProbe }}
           livenessProbe:
             {{- toYaml . | nindent 12 }}
