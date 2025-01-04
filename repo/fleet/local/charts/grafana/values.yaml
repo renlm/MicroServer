@@ -1,0 +1,30 @@
+namespace: istio-system
+nameOverride: grafana
+fullnameOverride: grafana
+templates:
+  version: latest
+  namespace: istio-system
+  nameOverride: grafana
+  fullnameOverride: grafana
+  autoBindCommonEnv: false
+  kind: Deployment
+  image:
+    repository: grafana/grafana-oss
+    pullPolicy: IfNotPresent
+    tag: latest
+  env:
+    TZ: Asia/Shanghai
+    GF_INSTALL_PLUGINS: grafana-clickhouse-datasource
+    GF_AUTH_ANONYMOUS_ENABLED: 0
+    GF_DATABASE_TYPE: postgres
+    GF_DATABASE_HOST: postgres:5432
+    GF_DATABASE_NAME: grafana
+    GF_DATABASE_USER: grafana
+    GF_DATABASE_PASSWORD: KK_fyw4bnmdf4Ksp7IMYuPWD@20stdt^tn50jlsfy
+    GF_DATABASE_SSL_MODE: disable
+  service:
+    type: ClusterIP
+    spec:
+    - port: 3000
+      protocol: TCP
+      name: http

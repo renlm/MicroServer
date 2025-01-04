@@ -20,6 +20,9 @@ dependencies:
 - name: jenkins
   repository: file://./charts/jenkins
   condition: jenkins.enabled
+- name: grafana
+  repository: file://./charts/grafana
+  condition: grafana.enabled
 - name: jaeger
   repository: file://./charts/jaeger
   condition: jaeger.enabled

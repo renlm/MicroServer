@@ -1,2 +1,5 @@
 jaeger:
   enabled: true
+  templates:
+    nodeSelector:
+      jaeger: jaeger

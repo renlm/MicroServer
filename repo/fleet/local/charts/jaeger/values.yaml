@@ -7,7 +7,7 @@ templates:
   nameOverride: jaeger
   fullnameOverride: jaeger
   autoBindCommonEnv: false
-  kind: Deployment
+  kind: StatefulSet
   image:
     repository: jaegertracing/all-in-one
     pullPolicy: IfNotPresent

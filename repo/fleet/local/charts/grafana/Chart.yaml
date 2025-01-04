@@ -1,0 +1,10 @@
+apiVersion: v2
+name: grafana
+description: A Helm chart for grafana
+type: application
+version: latest
+appVersion: 1.0.1
+dependencies:
+- name: templates
+  version: 0.0.1
+  repository: file://../../templates
