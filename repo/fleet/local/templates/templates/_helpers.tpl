@@ -47,7 +47,7 @@ Selector labels
 */}}
 {{- define "templates.selectorLabels" -}}
 app: {{ include "templates.fullname" . }}
-version: {{ default templates.version .Chart.Version | quote }}
+version: {{ default .Values.version .Chart.Version | quote }}
 app.kubernetes.io/name: {{ include "templates.name" . }}
 app.kubernetes.io/instance: {{ include "templates.fullname" . }}
 {{- end }}
