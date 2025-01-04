@@ -4,6 +4,9 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: {{ $fullName }}
+  {{- if .Values.namespace }}
+  namespace: {{ .Values.namespace }}
+  {{- end }}
   labels:
     {{- include "templates.labels" . | nindent 4 }}
 spec:
