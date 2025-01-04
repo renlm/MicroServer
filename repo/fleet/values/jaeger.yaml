@@ -1,2 +1,2 @@
 jaeger:
-  enabled: false
+  enabled: true
