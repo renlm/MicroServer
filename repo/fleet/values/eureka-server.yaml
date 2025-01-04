@@ -1,2 +1,3 @@
 eureka-server:
   enabled: true
+  EUREKA_AUTH_SECRETKEY: KK_fyw4bnmdf4Ksp7IMYuPWD@20stdt^tn50jlsfy

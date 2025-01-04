@@ -1,2 +1,4 @@
 config-server:
   enabled: true
+  SECURITY_USER_NAME: default
+  SECURITY_USER_PASSWORD: M1h62Gj3Uy54r
