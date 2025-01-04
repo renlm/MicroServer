@@ -12,7 +12,7 @@ RUN --mount=type=cache,target=/root/.m2 \
 
 FROM openjdk:21-slim
 COPY --from=0 "/build/gateway/target/gateway.jar" app.jar
-ADD core/core-web/start-up.sh /start-up.sh
+ADD gateway/start-up.sh /start-up.sh
 RUN sed -i 's/deb.debian.org/mirrors.aliyun.com/g' /etc/apt/sources.list.d/debian.sources \
   && apt update \
   && apt install -y tini curl \
