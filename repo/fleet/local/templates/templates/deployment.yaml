@@ -42,7 +42,7 @@ spec:
           args:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- if not .Values.service }}
+          {{- if .Values.service }}
           ports:
             {{- range .Values.service.spec }}
             - name: {{ .name }}
