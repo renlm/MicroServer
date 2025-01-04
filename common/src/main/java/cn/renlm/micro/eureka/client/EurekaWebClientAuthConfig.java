@@ -34,7 +34,7 @@ import lombok.extern.slf4j.Slf4j;
  *
  */
 @Slf4j
-@ConditionalOnProperty(value = "eureka.client.webclient.enabled", havingValue = "true", matchIfMissing = true)
+@ConditionalOnProperty(value = "eureka.client.webclient.enabled", havingValue = "true")
 @ConditionalOnClass({ WebClient.class })
 @ConditionalOnMissingBean({ EurekaJersey3ClientAuthConfig.class })
 @EnableConfigurationProperties({ EurekaAuthProperties.class })

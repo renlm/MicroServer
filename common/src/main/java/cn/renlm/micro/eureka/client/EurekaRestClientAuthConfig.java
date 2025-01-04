@@ -10,9 +10,9 @@ import java.security.GeneralSecurityException;
 import java.security.SecureRandom;
 
 import org.springframework.beans.factory.ObjectProvider;
-import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.configuration.SSLContextFactory;
 import org.springframework.cloud.configuration.TlsProperties;
@@ -34,9 +34,9 @@ import lombok.extern.slf4j.Slf4j;
  *
  */
 @Slf4j
-@AutoConfigureAfter(EurekaWebClientAuthConfig.class)
+@ConditionalOnProperty(value = "eureka.client.restclient.enabled", havingValue = "true")
 @ConditionalOnClass({ RestClient.class })
-@ConditionalOnMissingBean({ EurekaJersey3ClientAuthConfig.class, EurekaWebClientAuthConfig.class })
+@ConditionalOnMissingBean({ EurekaJersey3ClientAuthConfig.class })
 @EnableConfigurationProperties({ EurekaAuthProperties.class })
 public class EurekaRestClientAuthConfig {
 
