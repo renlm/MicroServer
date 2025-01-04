@@ -1,7 +1,6 @@
 package cn.renlm.micro.loadbalancer;
 
 import static cn.renlm.micro.constant.Constants.COOKIE_HEADER_NAME;
-import static cn.renlm.micro.constant.Constants.X_XSRF_TOKEN_HEADER_NAME;
 import static org.springframework.web.context.request.RequestContextHolder.getRequestAttributes;
 
 import java.util.List;
@@ -46,7 +45,7 @@ public class MyHintsLoadBalancerFeignConfig {
 			} else {
 				HttpHeaders httpHeaders = OpenFeignHeadersHolder.get();
 				if (Objects.nonNull(httpHeaders)) {
-					String[] headerNames = { hintHeaderName, X_XSRF_TOKEN_HEADER_NAME, COOKIE_HEADER_NAME };
+					String[] headerNames = { hintHeaderName, COOKIE_HEADER_NAME };
 					for (String headerName : headerNames) {
 						List<String> headerValues = httpHeaders.getValuesAsList(headerName);
 						if (Objects.nonNull(headerValues) && headerValues.size() > 0) {
