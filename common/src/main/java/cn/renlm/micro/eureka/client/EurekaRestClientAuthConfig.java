@@ -10,12 +10,14 @@ import java.security.GeneralSecurityException;
 import java.security.SecureRandom;
 
 import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.configuration.SSLContextFactory;
 import org.springframework.cloud.configuration.TlsProperties;
+import org.springframework.cloud.netflix.eureka.config.DiscoveryClientOptionalArgsConfiguration;
 import org.springframework.cloud.netflix.eureka.http.EurekaClientHttpRequestFactorySupplier;
 import org.springframework.cloud.netflix.eureka.http.RestClientDiscoveryClientOptionalArgs;
 import org.springframework.context.annotation.Bean;
@@ -38,6 +40,7 @@ import lombok.extern.slf4j.Slf4j;
 @ConditionalOnClass({ RestClient.class })
 @ConditionalOnMissingBean({ EurekaJersey3ClientAuthConfig.class })
 @EnableConfigurationProperties({ EurekaAuthProperties.class })
+@AutoConfigureBefore(DiscoveryClientOptionalArgsConfiguration.class)
 public class EurekaRestClientAuthConfig {
 
 	private SecureRandom secureRandom = new SecureRandom();
