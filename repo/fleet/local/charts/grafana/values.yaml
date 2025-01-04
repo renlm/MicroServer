@@ -2,7 +2,7 @@ namespace: istio-system
 nameOverride: grafana
 fullnameOverride: grafana
 templates:
-  version: latest
+  version: 0.0.1
   namespace: istio-system
   nameOverride: grafana
   fullnameOverride: grafana
