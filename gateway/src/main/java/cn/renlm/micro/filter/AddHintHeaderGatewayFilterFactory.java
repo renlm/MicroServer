@@ -2,7 +2,6 @@ package cn.renlm.micro.filter;
 
 import static cn.renlm.micro.constant.Constants.HINT_HEADER_NAME;
 import static cn.renlm.micro.constant.Constants.HINT_KEY;
-import static cn.renlm.micro.constant.Constants.SESSION_KEY;
 import static java.util.concurrent.CompletableFuture.supplyAsync;
 import static org.springframework.cloud.gateway.support.GatewayToStringStyler.filterToStringCreator;
 import static org.springframework.util.StringUtils.hasText;
@@ -84,15 +83,12 @@ public class AddHintHeaderGatewayFilterFactory extends AbstractGatewayFilterFact
 				Map<String, String> metadataMap = eurekaInstanceConfig.getMetadataMap();
 				String defaults = metadataMap.get(HINT_KEY);
 				if (Objects.nonNull(httpHeaders)) {
-					// 提取会话
-					HttpHeaders mutateHttpHeaders = new HttpHeaders();
-					mutateHttpHeaders.addAll(SESSION_KEY, httpHeaders.get(SESSION_KEY));
-					// 获取登录用户
+					HttpHeaders mutateHttpHeaders = new HttpHeaders(httpHeaders);
 					Resp<UserClaim> resp = supplyAsync(() -> {
+						mutateHttpHeaders.add(name, defaults);
 						OpenFeignHeadersHolder.set(mutateHttpHeaders);
 						return sessionClient.getCurrentUser();
 					}).get();
-					// 设置路由标记
 					UserClaim userClaim = resp.getData();
 					if (resp.isOk() && Objects.nonNull(userClaim)) {
 						hint = userClaim.getHint();
