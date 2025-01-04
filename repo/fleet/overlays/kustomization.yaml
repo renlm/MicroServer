@@ -1,13 +1,14 @@
 resources:
-- opentelemetry/collector.yaml
-- opentelemetry/instrumentation.yaml
 - telemetry/telemetry.yaml
 - virtualservice/nginx.yaml
 - virtualservice/redis.yaml
 - virtualservice/postgres.yaml
+- virtualservice/mysql.yaml
+- opentelemetry/collector.yaml
+- opentelemetry/instrumentation.yaml
 - virtualservice/rabbitmq.yaml
 - virtualservice/grafana.yaml
 - virtualservice/jenkins.yaml
-- virtualservice/mysql.yaml
+- virtualservice/eureka-server.yaml
 - virtualservice/gateway-server.yaml
 - virtualservice/mygraph.yaml
