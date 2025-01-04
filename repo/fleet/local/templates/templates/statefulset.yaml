@@ -79,6 +79,8 @@ spec:
           {{- end }}
           envFrom:
             - configMapRef:
+                name: config-server-env
+            - configMapRef:
                 name: eureka-server-env
           {{- with .Values.livenessProbe }}
           livenessProbe:

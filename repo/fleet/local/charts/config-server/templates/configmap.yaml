@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config-server-env
+data:
+  redis.conf: |-
+    SECURITY_USER_NAME: {{ .Values.SECURITY_USER_NAME }}
+    SECURITY_USER_PASSWORD: {{ .Values.SECURITY_USER_PASSWORD }}
+    CONFIGSERVER: http://config-server/config
+    PROFILES_ACTIVE: kubernetes
