@@ -17,6 +17,7 @@ targetCustomizations:
     - values/postgres.yaml
     - values/mysql.yaml
     - values/jenkins.yaml
+    - values/grafana.yaml
     - values/jaeger.yaml
     - values/config-server.yaml
     - values/eureka-server.yaml
