@@ -17,7 +17,7 @@ public class Resp<T> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private final RespCode code;
+	private final String code;
 
 	private String msg;
 
@@ -29,7 +29,7 @@ public class Resp<T> implements Serializable {
 	 * @return
 	 */
 	public boolean isOk() {
-		return code == RespCode.OK;
+		return RespCode.OK.name().equals(code);
 	}
 
 	/**
@@ -42,7 +42,7 @@ public class Resp<T> implements Serializable {
 	 * @return
 	 */
 	public static final <V> Resp<V> of(RespCode code, String msg, V data) {
-		Resp<V> resp = new Resp<>(code);
+		Resp<V> resp = new Resp<>(code.name());
 		resp.setMsg(msg);
 		resp.setData(data);
 		return resp;
@@ -56,7 +56,7 @@ public class Resp<T> implements Serializable {
 	 * @return
 	 */
 	public static final <V> Resp<V> ok(V data) {
-		Resp<V> resp = new Resp<>(RespCode.OK);
+		Resp<V> resp = new Resp<>(RespCode.OK.name());
 		resp.setData(data);
 		return resp;
 	}
@@ -83,7 +83,7 @@ public class Resp<T> implements Serializable {
 	 * @return
 	 */
 	public static final <V> Resp<V> err(RespCode code) {
-		Resp<V> resp = new Resp<>(code);
+		Resp<V> resp = new Resp<>(code.name());
 		return resp;
 	}
 
