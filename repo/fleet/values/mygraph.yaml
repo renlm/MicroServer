@@ -1,5 +1,7 @@
 mygraph:
-  enabled: false
+  enabled: true
   templates:
     nodeSelector:
       mygraph: mygraph
+    env:
+      DB_INIT_MODE: ALWAYS
