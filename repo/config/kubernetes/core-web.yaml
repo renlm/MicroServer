@@ -2,7 +2,7 @@ server:
   servlet:
     session:
       cookie:
-        name: ${spring.application.name}
+        name: MICRO-SERVER
 aj:
   captcha:
     cacheType: redis
