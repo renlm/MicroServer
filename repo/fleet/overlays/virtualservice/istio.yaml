@@ -1,10 +1,10 @@
 apiVersion: networking.istio.io/v1
 kind: VirtualService
 metadata:
-  name: gateway-server
+  name: istio
 spec:
   hosts:
-  - gateway.renlm.cn
+  - istio.renlm.cn
   gateways:
   - istio-system/istio-gateway
   http:
