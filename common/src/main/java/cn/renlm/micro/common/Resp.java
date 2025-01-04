@@ -2,6 +2,8 @@ package cn.renlm.micro.common;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -17,7 +19,8 @@ public class Resp<T> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private final String code;
+	@JsonDeserialize(using = RespCode.Deserializer.class)
+	private final RespCode code;
 
 	private String msg;
 
@@ -29,7 +32,7 @@ public class Resp<T> implements Serializable {
 	 * @return
 	 */
 	public boolean isOk() {
-		return RespCode.OK.name().equals(code);
+		return RespCode.OK == code;
 	}
 
 	/**
@@ -42,7 +45,7 @@ public class Resp<T> implements Serializable {
 	 * @return
 	 */
 	public static final <V> Resp<V> of(RespCode code, String msg, V data) {
-		Resp<V> resp = new Resp<>(code.name());
+		Resp<V> resp = new Resp<>(code);
 		resp.setMsg(msg);
 		resp.setData(data);
 		return resp;
@@ -56,7 +59,7 @@ public class Resp<T> implements Serializable {
 	 * @return
 	 */
 	public static final <V> Resp<V> ok(V data) {
-		Resp<V> resp = new Resp<>(RespCode.OK.name());
+		Resp<V> resp = new Resp<>(RespCode.OK);
 		resp.setData(data);
 		return resp;
 	}
@@ -83,7 +86,7 @@ public class Resp<T> implements Serializable {
 	 * @return
 	 */
 	public static final <V> Resp<V> err(RespCode code) {
-		Resp<V> resp = new Resp<>(code.name());
+		Resp<V> resp = new Resp<>(code);
 		return resp;
 	}
 

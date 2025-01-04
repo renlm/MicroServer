@@ -1,7 +1,12 @@
 package cn.renlm.micro.common;
 
+import java.io.IOException;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
 
 import lombok.AllArgsConstructor;
 
@@ -44,6 +49,19 @@ public enum RespCode {
 		{
 			return UNKNOWN;
 		}
+	}
+
+	/**
+	 * 反序列化处理
+	 */
+	public static class Deserializer extends JsonDeserializer<RespCode> {
+
+		@Override
+		public RespCode deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+			String name = p.getText();
+			return ofName(name);
+		}
+
 	}
 
 }
