@@ -2,8 +2,8 @@ spring:
   data:
     redis:
       database: 0
-      host: gw.renlm.cn
-      port: 31379
+      host: renlm.cn
+      port: 6379
       password: KK_fyw4bnmdf4Ksp7IMYuPWD@20stdt^tn50jlsfy
       timeout: 10s
       lettuce:
