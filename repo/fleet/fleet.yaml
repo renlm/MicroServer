@@ -11,17 +11,17 @@ targetCustomizations:
     dir: overlays
   helm:
     valuesFiles:
-    - overlays/values/nginx.yaml
-    - overlays/values/redis.yaml
-    - overlays/values/rabbitmq.yaml
-    - overlays/values/postgres.yaml
-    - overlays/values/mysql.yaml
-    - overlays/values/jenkins.yaml
-    - overlays/values/jaeger.yaml
-    - overlays/values/config-server.yaml
-    - overlays/values/eureka-server.yaml
-    - overlays/values/gateway-server.yaml
-    - overlays/values/core-service.yaml
-    - overlays/values/core-service-beta.yaml
-    - overlays/values/core-web.yaml
-    - overlays/values/mygraph.yaml
+    - values/nginx.yaml
+    - values/redis.yaml
+    - values/rabbitmq.yaml
+    - values/postgres.yaml
+    - values/mysql.yaml
+    - values/jenkins.yaml
+    - values/jaeger.yaml
+    - values/config-server.yaml
+    - values/eureka-server.yaml
+    - values/gateway-server.yaml
+    - values/core-service.yaml
+    - values/core-service-beta.yaml
+    - values/core-web.yaml
+    - values/mygraph.yaml
