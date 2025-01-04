@@ -1,0 +1,5 @@
+mysql:
+  enabled: true
+  templates:
+    nodeSelector:
+      mysql: mysql

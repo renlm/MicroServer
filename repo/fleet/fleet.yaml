@@ -10,50 +10,18 @@ targetCustomizations:
   kustomize:
     dir: overlays
   helm:
-    values:
-      config-server:
-        enabled: true
-      eureka-server:
-        enabled: true
-      gateway-server:
-        enabled: true
-      core-service:
-        enabled: true
-      core-service-beta:
-        enabled: true
-      core-web:
-        enabled: true
-      nginx:
-        enabled: true
-      jaeger:
-        enabled: true
-      redis:
-        enabled: true
-        templates:
-          nodeSelector:
-            redis: redis
-      rabbitmq:
-        enabled: true
-        templates:
-          nodeSelector:
-            rabbitmq: rabbitmq
-      postgres:
-        enabled: true
-        templates:
-          nodeSelector:
-            postgres: postgres
-      mysql:
-        enabled: true
-        templates:
-          nodeSelector:
-            mysql: mysql
-      jenkins:
-        enabled: true
-        templates:
-          nodeSelector:
-            jenkins: jenkins
-      mygraph:
-        enabled: true
-        templates:
-          nodeSelector:
-            mygraph: mygraph
+    valuesFiles:
+    - overlays/values/nginx.yaml
+    - overlays/values/redis.yaml
+    - overlays/values/rabbitmq.yaml
+    - overlays/values/postgres.yaml
+    - overlays/values/mysql.yaml
+    - overlays/values/jenkins.yaml
+    - overlays/values/jaeger.yaml
+    - overlays/values/config-server.yaml
+    - overlays/values/eureka-server.yaml
+    - overlays/values/gateway-server.yaml
+    - overlays/values/core-service.yaml
+    - overlays/values/core-service-beta.yaml
+    - overlays/values/core-web.yaml
+    - overlays/values/mygraph.yaml

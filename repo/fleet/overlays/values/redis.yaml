@@ -1,0 +1,5 @@
+redis:
+  enabled: true
+  templates:
+    nodeSelector:
+      redis: redis

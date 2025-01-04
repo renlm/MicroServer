@@ -1,0 +1,5 @@
+rabbitmq:
+  enabled: true
+  templates:
+    nodeSelector:
+      rabbitmq: rabbitmq

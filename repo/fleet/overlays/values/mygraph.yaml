@@ -1,0 +1,5 @@
+mygraph:
+  enabled: true
+  templates:
+    nodeSelector:
+      mygraph: mygraph

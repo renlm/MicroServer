@@ -1,0 +1,5 @@
+jenkins:
+  enabled: true
+  templates:
+    nodeSelector:
+      jenkins: jenkins
