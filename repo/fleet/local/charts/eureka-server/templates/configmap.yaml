@@ -3,6 +3,5 @@ kind: ConfigMap
 metadata:
   name: eureka-server-env
 data:
-  redis.conf: |-
-    EUREKA_SERVER: http://eureka-server-0.eureka-server.{{ .Release.Namespace }}.svc.cluster.local/registrar/eureka,http://eureka-server-1.eureka-server.{{ .Release.Namespace }}.svc.cluster.local/registrar/eureka,http://eureka-server-2.eureka-server.{{ .Release.Namespace }}.svc.cluster.local/registrar/eureka
-    EUREKA_AUTH_SECRETKEY: {{ .Values.EUREKA_AUTH_SECRETKEY }}
+  EUREKA_SERVER: http://eureka-server-0.eureka-server.{{ .Release.Namespace }}.svc.cluster.local/registrar/eureka,http://eureka-server-1.eureka-server.{{ .Release.Namespace }}.svc.cluster.local/registrar/eureka,http://eureka-server-2.eureka-server.{{ .Release.Namespace }}.svc.cluster.local/registrar/eureka
+  EUREKA_AUTH_SECRETKEY: {{ .Values.EUREKA_AUTH_SECRETKEY }}
