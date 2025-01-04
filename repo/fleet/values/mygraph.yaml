@@ -1,5 +1,5 @@
 mygraph:
-  enabled: true
+  enabled: false
   templates:
     nodeSelector:
       mygraph: mygraph
