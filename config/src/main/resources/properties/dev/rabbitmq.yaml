@@ -1,6 +1,6 @@
 spring:
   rabbitmq:
-    virtual-host: /dev
+    virtualHost: /local
     host: rabbitmq.renlm.cn
     port: 5672
     username: dev
