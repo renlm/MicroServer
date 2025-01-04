@@ -31,6 +31,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.ws.rs.client.ClientRequestContext;
 import jakarta.ws.rs.client.ClientRequestFilter;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Eureka 注册中心认证
@@ -38,6 +39,7 @@ import jakarta.ws.rs.client.ClientRequestFilter;
  * @author RenLiMing(任黎明)
  *
  */
+@Slf4j
 @ConditionalOnClass({ ReplicationClientAdditionalFilters.class })
 @EnableConfigurationProperties({ EurekaAuthProperties.class })
 public class EurekaServerAuthConfig {
@@ -91,6 +93,7 @@ public class EurekaServerAuthConfig {
 			String csrfToken = request.getHeader(X_XSRF_TOKEN);
 			String timestamp = request.getHeader(SIGN_HEADER_TIMESTAMP);
 			String sign = request.getHeader(SIGN_HEADER_SIGN);
+			String requestURI = request.getRequestURI();
 			if (hasText(sign)) {
 				String secretKey = hasText(env.getSecretKey()) ? env.getSecretKey() : randomUUID().toString();
 				String md5DigestAsHex = DigestUtils.md5DigestAsHex((csrfToken + timestamp + secretKey).getBytes());
@@ -100,7 +103,11 @@ public class EurekaServerAuthConfig {
 					Collection<? extends GrantedAuthority> authorities = Collections.emptySet();
 					Authentication auth = new UsernamePasswordAuthenticationToken(SIGN_HEADER_SIGN, sign, authorities);
 					SecurityContextHolder.getContext().setAuthentication(auth);
+				} else {
+					log.debug("err sign: {}", requestURI);
 				}
+			} else {
+				log.debug("no sign: {}", requestURI);
 			}
 			{
 				filterChain.doFilter(request, response);
