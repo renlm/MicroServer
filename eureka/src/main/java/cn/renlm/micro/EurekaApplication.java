@@ -42,7 +42,7 @@ public class EurekaApplication {
 		String[] anonymousRequests = { "/actuator/**" };
 		http.authorizeHttpRequests(r -> {
 			r.requestMatchers(anonymousRequests).permitAll()
-			.requestMatchers("/eureka/apps/**").hasAuthority(CLIENT_AUTHORITY)
+			.requestMatchers("/eureka/**").hasAuthority(CLIENT_AUTHORITY)
 			.anyRequest().authenticated()
 			;
 		});
