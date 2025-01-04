@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.netflix.eureka.server.ReplicationClientAdditionalFilters;
 import org.springframework.context.annotation.Bean;
@@ -71,17 +72,22 @@ public class EurekaServerAuthConfig {
 	}
 
 	@Bean
-	EurekaServerAuthFilter eurekaServerAuthFilter(EurekaAuthProperties env, CsrfTokenRepository csrfTokenRepository) {
-		return new EurekaServerAuthFilter(env, csrfTokenRepository);
+	EurekaServerAuthFilter eurekaServerAuthFilter(SecurityProperties sp, EurekaAuthProperties env,
+			CsrfTokenRepository csrfTokenRepository) {
+		return new EurekaServerAuthFilter(sp, env, csrfTokenRepository);
 	}
 
 	public class EurekaServerAuthFilter extends OncePerRequestFilter {
+
+		private SecurityProperties sp;
 
 		private EurekaAuthProperties env;
 
 		private CsrfTokenRepository csrfTokenRepository;
 
-		public EurekaServerAuthFilter(EurekaAuthProperties env, CsrfTokenRepository csrfTokenRepository) {
+		public EurekaServerAuthFilter(SecurityProperties sp, EurekaAuthProperties env,
+				CsrfTokenRepository csrfTokenRepository) {
+			this.sp = sp;
 			this.env = env;
 			this.csrfTokenRepository = csrfTokenRepository;
 		}
@@ -101,7 +107,8 @@ public class EurekaServerAuthConfig {
 					CsrfToken token = new DefaultCsrfToken(X_XSRF_TOKEN, _CSRF, serverToken);
 					csrfTokenRepository.saveToken(token, request, response);
 					Collection<? extends GrantedAuthority> authorities = Collections.emptySet();
-					Authentication auth = new UsernamePasswordAuthenticationToken(SIGN_HEADER_SIGN, sign, authorities);
+					String userName = sp.getUser().getName();
+					Authentication auth = new UsernamePasswordAuthenticationToken(userName, sign, authorities);
 					SecurityContextHolder.getContext().setAuthentication(auth);
 				} else {
 					log.debug("err sign: {}", requestURI);
