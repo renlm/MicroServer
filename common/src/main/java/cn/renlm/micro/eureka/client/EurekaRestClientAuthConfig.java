@@ -59,6 +59,8 @@ public class EurekaRestClientAuthConfig {
 						request.getHeaders().add(X_XSRF_TOKEN, csrfToken);
 						request.getHeaders().add(SIGN_HEADER_TIMESTAMP, timestamp);
 						request.getHeaders().add(SIGN_HEADER_SIGN, sign);
+						String url = request.getURI().toString();
+						log.debug("EurekaWebClient request server url: {}", url);
 						return execution.execute(request, body);
 					}));
 				});

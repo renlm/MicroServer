@@ -54,6 +54,8 @@ public class EurekaWebClientAuthConfig {
 			request.header(X_XSRF_TOKEN, csrfToken);
 			request.header(SIGN_HEADER_TIMESTAMP, timestamp);
 			request.header(SIGN_HEADER_SIGN, sign);
+			String url = req.url().toString();
+			log.debug("EurekaWebClient request server url: {}", url);
 			return next.exchange(request.build());
 		});
 	}

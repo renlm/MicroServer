@@ -29,14 +29,19 @@ public interface Constants {
 	public static final String HINT_KEY = "hint";
 
 	/**
-	 * 服务元数据 [ podIp ]
-	 */
-	public static final String POD_IP_KEY = "POD_IP";
-
-	/**
 	 * 服务元数据 [ serviceName ]
 	 */
 	public static final String POD_SERVICE_NAME_KEY = "POD_SERVICE_NAME";
+
+	/**
+	 * 服务元数据 [ podName ]
+	 */
+	public static final String POD_NAME_KEY = "POD_NAME";
+
+	/**
+	 * 服务元数据 [ podIp ]
+	 */
+	public static final String POD_IP_KEY = "POD_IP";
 
 	/**
 	 * 服务元数据 [ namespace ]
