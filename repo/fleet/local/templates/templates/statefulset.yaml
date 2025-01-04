@@ -77,6 +77,9 @@ spec:
               value: {{ $value | quote }}
           {{- end }}
           {{- end }}
+          envFrom:
+            - configMapRef:
+                name: eureka-server-env
           {{- with .Values.livenessProbe }}
           livenessProbe:
             {{- toYaml . | nindent 12 }}
