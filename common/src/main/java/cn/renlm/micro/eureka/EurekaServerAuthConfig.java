@@ -1,5 +1,6 @@
 package cn.renlm.micro.eureka;
 
+import static java.util.Collections.singleton;
 import static java.util.UUID.randomUUID;
 import static org.springframework.util.StringUtils.hasText;
 
@@ -16,6 +17,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
@@ -49,6 +51,7 @@ public class EurekaServerAuthConfig {
 	public static final String _CSRF = "_csrf";
 	public static final String SIGN_HEADER_TIMESTAMP = "x-eureka-timestamp";
 	public static final String SIGN_HEADER_SIGN = "x-eureka-sign";
+	public static final String CLIENT_AUTHORITY = "client";
 	private SecureRandom secureRandom = new SecureRandom();
 
 	@Bean
@@ -100,7 +103,8 @@ public class EurekaServerAuthConfig {
 				if (md5DigestAsHex.equals(sign)) {
 					CsrfToken token = new DefaultCsrfToken(X_XSRF_TOKEN, _CSRF, serverToken);
 					csrfTokenRepository.saveToken(token, request, response);
-					Collection<? extends GrantedAuthority> authorities = Collections.emptySet();
+					SimpleGrantedAuthority sga = new SimpleGrantedAuthority(CLIENT_AUTHORITY);
+					Collection<? extends GrantedAuthority> authorities = singleton(sga);
 					Authentication auth = new UsernamePasswordAuthenticationToken(SIGN_HEADER_SIGN, sign, authorities);
 					SecurityContextHolder.getContext().setAuthentication(auth);
 				} else {

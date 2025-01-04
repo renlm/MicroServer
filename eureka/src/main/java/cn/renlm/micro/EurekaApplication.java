@@ -1,6 +1,7 @@
 package cn.renlm.micro;
 
 import static org.springframework.security.config.Customizer.withDefaults;
+import static cn.renlm.micro.eureka.EurekaServerAuthConfig.CLIENT_AUTHORITY;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -36,14 +37,21 @@ public class EurekaApplication {
 	}
 
 	@Bean
+	// @formatter:off
 	SecurityFilterChain securityFilterChain(HttpSecurity http, EurekaServerAuthFilter authFilter) throws Exception {
 		String[] anonymousRequests = { "/actuator/**" };
-		http.authorizeHttpRequests(r -> r.requestMatchers(anonymousRequests).permitAll().anyRequest().authenticated());
+		http.authorizeHttpRequests(r -> {
+			r.requestMatchers(anonymousRequests).permitAll()
+			.requestMatchers("/eureka/apps/**").hasAuthority(CLIENT_AUTHORITY)
+			.anyRequest().authenticated()
+			;
+		});
 		http.csrf(csrf -> csrf.csrfTokenRepository(csrfTokenRepository()));
 		http.addFilterBefore(authFilter, CsrfFilter.class);
 		http.formLogin(withDefaults());
 		http.httpBasic(withDefaults());
 		return http.build();
+		// @formatter:on
 	}
 
 }
