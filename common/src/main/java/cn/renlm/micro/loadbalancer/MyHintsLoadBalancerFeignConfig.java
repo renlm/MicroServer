@@ -1,7 +1,6 @@
 package cn.renlm.micro.loadbalancer;
 
 import static cn.renlm.micro.constant.Constants.COOKIE_HEADER_NAME;
-import static cn.renlm.micro.constant.Constants.SESSION_KEY;
 import static org.springframework.web.context.request.RequestContextHolder.getRequestAttributes;
 
 import java.util.List;
@@ -50,20 +49,8 @@ public class MyHintsLoadBalancerFeignConfig {
 					for (String headerName : headerNames) {
 						List<String> headerValues = httpHeaders.getValuesAsList(headerName);
 						if (Objects.nonNull(headerValues) && headerValues.size() > 0) {
-							if (COOKIE_HEADER_NAME.equals(headerName)) {
-								for (int i = 0; i < headerValues.size(); i++) {
-									String value = headerValues.get(i);
-									if (!StringUtils.hasText(value)) {
-										headerValues.remove(i--);
-									} else if (!value.startsWith(SESSION_KEY)) {
-										headerValues.remove(i--);
-									}
-								}
-							}
-							{
-								log.debug("openfeign headersHolder header 透传 - {} : {}", headerName, headerValues);
-								template.header(headerName, headerValues);
-							}
+							log.debug("openfeign headersHolder header 透传 - {} : {}", headerName, headerValues);
+							template.header(headerName, headerValues);
 						}
 					}
 				}
