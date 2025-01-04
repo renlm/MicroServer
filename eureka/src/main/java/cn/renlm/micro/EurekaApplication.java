@@ -1,7 +1,7 @@
 package cn.renlm.micro;
 
-import static org.springframework.security.config.Customizer.withDefaults;
 import static cn.renlm.micro.eureka.EurekaServerAuthConfig.CLIENT_AUTHORITY;
+import static org.springframework.security.config.Customizer.withDefaults;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
