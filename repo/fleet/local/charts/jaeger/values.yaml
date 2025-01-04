@@ -2,7 +2,6 @@ namespace: istio-system
 nameOverride: jaeger
 fullnameOverride: jaeger
 templates:
-  namespace: istio-system
   nameOverride: jaeger
   fullnameOverride: jaeger
   kind: Deployment
