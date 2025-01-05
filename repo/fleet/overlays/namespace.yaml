@@ -12,4 +12,6 @@ items:
   metadata:
     name: mylb
     labels:
+      app.kubernetes.io/managed-by: Helm
       istio-injection: enabled
+      kubernetes.io/metadata.name: mylb
