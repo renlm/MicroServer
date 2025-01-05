@@ -11,7 +11,7 @@ data:
     set -e
     
     # https://clickhouse.com/docs/en/engines/table-engines
-    clickhouse client -n <<-EOSQL
+    clickhouse client --user default --password '{{ .Values.templates.env.CLICKHOUSE_PASSWORD }}' -n <<-EOSQL
         CREATE DATABASE dev;
         CREATE USER dev IDENTIFIED BY '{{ .Values.templates.env.CLICKHOUSE_PASSWORD }}';
         GRANT ALL ON dev.* TO dev;
