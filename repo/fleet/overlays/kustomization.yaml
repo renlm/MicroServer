@@ -1,7 +1,6 @@
 resources:
 - telemetry/telemetry.yaml
 - peer.authentication/peer.authentication.yaml
-- serviceentry/postgres.yaml
 - virtualservice/nginx.yaml
 - virtualservice/redis.yaml
 - virtualservice/postgres.yaml
