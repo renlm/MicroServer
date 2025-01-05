@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationDetailsSource;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -27,6 +28,7 @@ import org.springframework.session.security.SpringSessionBackedSessionRegistry;
 import cn.renlm.micro.core.security.AuthenticationFailureHandler;
 import cn.renlm.micro.core.security.AuthenticationSuccessHandler;
 import cn.renlm.micro.core.security.RequestAuthorizationManager;
+import cn.renlm.micro.core.security.UserDetailsService;
 import cn.renlm.micro.core.security.WebAuthenticationDetails;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
@@ -196,6 +198,14 @@ public class WebSecurityConfig {
 	PasswordEncoder passwordEncoder() {
 		PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 		return passwordEncoder;
+	}
+
+	@Bean
+	public DaoAuthenticationProvider daoAuthenticationProvider(UserDetailsService userDetailsService) {
+		DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+		provider.setUserDetailsService(userDetailsService);
+		provider.setPasswordEncoder(passwordEncoder());
+		return provider;
 	}
 
 }
