@@ -1,12 +1,13 @@
 package cn.renlm.micro.core.security;
 
+import static cn.renlm.micro.constant.Constants.HINT_DEFAULT_CONFIG;
 import static org.apache.commons.lang.StringUtils.EMPTY;
 
 import java.util.Collection;
-import java.util.Map;
 import java.util.Objects;
 import java.util.function.Consumer;
 
+import org.springframework.cloud.client.loadbalancer.LoadBalancerProperties;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -19,7 +20,6 @@ import org.springframework.stereotype.Service;
 import com.netflix.appinfo.EurekaInstanceConfig;
 
 import cn.renlm.micro.common.Resp;
-import cn.renlm.micro.constant.Constants;
 import cn.renlm.micro.core.dto.UserDetails;
 import cn.renlm.micro.core.model.rbac.UserInfo;
 import cn.renlm.micro.core.sdk.rbac.UserClient;
@@ -37,6 +37,9 @@ import jakarta.servlet.http.HttpServletResponse;
 public class UserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService {
 
 	@Resource
+	private LoadBalancerProperties properties;
+
+	@Resource
 	private EurekaInstanceConfig eurekaInstanceConfig;
 
 	@Resource
@@ -52,10 +55,10 @@ public class UserDetailsService implements org.springframework.security.core.use
 		if (Objects.isNull(userInfo)) {
 			throw new BadCredentialsException("用户名或密码错误");
 		}
-		Map<String, String> metadataMap = eurekaInstanceConfig.getMetadataMap();
 		UserDetails userDetails = UserDetails.of(userInfo);
 		if (Objects.nonNull(userDetails)) {
-			userDetails.setHint(metadataMap.get(Constants.METADATA_HINT));
+			String defaultConfigHint = properties.getHint().get(HINT_DEFAULT_CONFIG);
+			userDetails.setHint(defaultConfigHint);
 		}
 		{
 			return userDetails;
