@@ -70,6 +70,17 @@ public class UserDetailsService implements org.springframework.security.core.use
 	}
 
 	/**
+	 * 获取默认负载标记请求头名称
+	 * 
+	 * @return
+	 */
+	public String getDefaultHintHeaderName() {
+		String defaultName = properties.getHintHeaderName();
+		String name = hasText(defaultName) ? defaultName : X_LB_HINT;
+		return name;
+	}
+
+	/**
 	 * 更新当前登录用户信息
 	 * 
 	 * @param request
@@ -87,9 +98,8 @@ public class UserDetailsService implements org.springframework.security.core.use
 		context.setAuthentication(new UsernamePasswordAuthenticationToken(userDetails, EMPTY, authorities));
 		securityContextRepository.saveContext(context, request, response);
 		if (StringUtils.hasText(userDetails.getHint())) {
-			String defaultName = properties.getHintHeaderName();
-			String name = hasText(defaultName) ? defaultName : X_LB_HINT;
-			Cookie cookie = new Cookie(name, userDetails.getHint());
+			String hintHeaderName = this.getDefaultHintHeaderName();
+			Cookie cookie = new Cookie(hintHeaderName, userDetails.getHint());
 			cookie.setPath("/");
 			response.addCookie(cookie);
 		}

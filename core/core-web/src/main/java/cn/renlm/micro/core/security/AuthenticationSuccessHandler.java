@@ -1,6 +1,7 @@
 package cn.renlm.micro.core.security;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +14,7 @@ import jakarta.annotation.Resource;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 /**
@@ -36,7 +38,14 @@ public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticatio
 			Authentication authentication) throws ServletException, IOException {
 		super.onAuthenticationSuccess(request, response, authentication);
 		userDetailsService.updateCurrentUser(request, response, principal -> {
-			log.debug("登录成功 - username: {}, hint: {}", principal.getUsername(), principal.getHint());
+			HttpSession session = request.getSession();
+			Object cookieHint = session.getAttribute(userDetailsService.getDefaultHintHeaderName());
+			if (Objects.nonNull(cookieHint)) {
+				principal.setHint(cookieHint.toString());
+			}
+			{
+				log.debug("登录成功 - username: {}, hint: {}", principal.getUsername(), principal.getHint());
+			}
 		});
 	}
 
