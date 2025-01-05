@@ -6,6 +6,7 @@ resources:
 - virtualservice/redis.yaml
 - virtualservice/postgres.yaml
 - virtualservice/mysql.yaml
+- virtualservice/clickhouse.yaml
 - opentelemetry/collector.yaml
 - opentelemetry/instrumentation.yaml
 - virtualservice/rabbitmq.yaml
