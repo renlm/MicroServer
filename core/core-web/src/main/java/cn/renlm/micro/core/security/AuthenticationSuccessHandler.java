@@ -36,7 +36,6 @@ public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticatio
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws ServletException, IOException {
-		super.onAuthenticationSuccess(request, response, authentication);
 		userDetailsService.updateCurrentUser(request, response, principal -> {
 			HttpSession session = request.getSession();
 			Object cookieHint = session.getAttribute(userDetailsService.getDefaultHintHeaderName());
@@ -47,6 +46,9 @@ public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticatio
 				log.debug("登录成功 - username: {}, hint: {}", principal.getUsername(), principal.getHint());
 			}
 		});
+		{
+			super.onAuthenticationSuccess(request, response, authentication);
+		}
 	}
 
 }
