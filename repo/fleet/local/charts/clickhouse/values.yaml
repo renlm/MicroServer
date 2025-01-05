@@ -28,6 +28,9 @@ templates:
       protocol: TCP
       name: tcp-clickhouse
   volumes:
+  - name: clickhouse-lib
+    hostPath:
+      path: /var/lib/clickhouse
   - name: clickhouse-init
     configMap:
       name: clickhouse-configmap
@@ -35,6 +38,8 @@ templates:
       - key: init-db.sh
         path: init-db.sh
   volumeMounts:
+  - name: clickhouse-lib
+    mountPath: /var/lib/clickhouse
   - name: clickhouse-init
     mountPath: /docker-entrypoint-initdb.d/init-db.sh
     subPath: init-db.sh
