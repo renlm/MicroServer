@@ -14,6 +14,9 @@ dependencies:
 - name: postgres
   repository: file://./charts/postgres
   condition: postgres.enabled
+- name: clickhouse
+  repository: file://./charts/clickhouse
+  condition: clickhouse.enabled
 - name: rabbitmq
   repository: file://./charts/rabbitmq
   condition: rabbitmq.enabled

@@ -1,0 +1,10 @@
+apiVersion: v2
+name: clickhouse
+description: A Helm chart for clickhouse
+type: application
+version: 11.4.0
+appVersion: 1.0.1
+dependencies:
+- name: templates
+  version: 0.0.1
+  repository: file://../../templates

@@ -1,0 +1,40 @@
+namespace: io
+nameOverride: clickhouse
+fullnameOverride: clickhouse
+templates:
+  version: 11.4.0
+  namespace: io
+  nameOverride: clickhouse
+  fullnameOverride: clickhouse
+  autoBindCommonEnv: false
+  kind: StatefulSet
+  image:
+    repository: clickhouse/clickhouse-server
+    pullPolicy: IfNotPresent
+    tag: latest
+  env:
+    TZ: Asia/Shanghai
+    CLICKHOUSE_DB: default
+    CLICKHOUSE_USER: default
+    CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT: 1
+    CLICKHOUSE_PASSWORD: KK_fyw4bnmdf4Ksp7IMYuPWD@20stdt^tn50jlsfy
+  service:
+    type: ClusterIP
+    spec:
+    - port: 8123
+      protocol: TCP
+      name: http
+    - port: 9000
+      protocol: TCP
+      name: tcp-clickhouse
+  volumes:
+  - name: clickhouse-init
+    configMap:
+      name: clickhouse-configmap
+      items:
+      - key: init-db.sh
+        path: init-db.sh
+  volumeMounts:
+  - name: clickhouse-init
+    mountPath: /docker-entrypoint-initdb.d/init-db.sh
+    subPath: init-db.sh

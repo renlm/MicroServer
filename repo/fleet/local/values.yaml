@@ -12,6 +12,8 @@ mysql:
   enabled: false
 postgres:
   enabled: false
+clickhouse:
+  enabled: false
 rabbitmq:
   enabled: false
 config-server:
