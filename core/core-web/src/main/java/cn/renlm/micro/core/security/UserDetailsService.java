@@ -90,6 +90,7 @@ public class UserDetailsService implements org.springframework.security.core.use
 			String defaultName = properties.getHintHeaderName();
 			String name = hasText(defaultName) ? defaultName : X_LB_HINT;
 			Cookie cookie = new Cookie(name, userDetails.getHint());
+			cookie.setPath("/");
 			response.addCookie(cookie);
 		}
 		{
