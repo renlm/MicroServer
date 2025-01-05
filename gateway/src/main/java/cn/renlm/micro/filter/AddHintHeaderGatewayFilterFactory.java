@@ -1,7 +1,6 @@
 package cn.renlm.micro.filter;
 
 import static cn.renlm.micro.constant.Constants.HINT_DEFAULT_CONFIG;
-import static cn.renlm.micro.constant.Constants.METADATA_HINT;
 import static cn.renlm.micro.constant.Constants.X_LB_HINT;
 import static org.springframework.cloud.gateway.support.GatewayToStringStyler.filterToStringCreator;
 import static org.springframework.cloud.gateway.support.ServerWebExchangeUtils.expand;
@@ -9,7 +8,6 @@ import static org.springframework.util.StringUtils.hasText;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 import org.springframework.cloud.client.loadbalancer.LoadBalancerProperties;
@@ -22,8 +20,6 @@ import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.server.ServerWebExchange;
-
-import com.netflix.appinfo.EurekaInstanceConfig;
 
 import cn.renlm.micro.filter.AddHintHeaderGatewayFilterFactory.Config;
 import jakarta.annotation.Resource;
@@ -45,9 +41,6 @@ public class AddHintHeaderGatewayFilterFactory extends AbstractGatewayFilterFact
 
 	@Resource
 	private LoadBalancerProperties properties;
-
-	@Resource
-	private EurekaInstanceConfig eurekaInstanceConfig;
 
 	public AddHintHeaderGatewayFilterFactory() {
 		super(Config.class);
@@ -88,12 +81,7 @@ public class AddHintHeaderGatewayFilterFactory extends AbstractGatewayFilterFact
 						return addHeader(exchange, chain, name, hint);
 					}
 				}
-				// 最后匹配当前节点的[负载标记]
-				Map<String, String> metadataMap = eurekaInstanceConfig.getMetadataMap();
-				hint = metadataMap.get(METADATA_HINT);
-				if (hasText(hint)) {
-					return addHeader(exchange, chain, name, hint);
-				} else {
+				{
 					return chain.filter(exchange);
 				}
 			}

@@ -1,5 +1,6 @@
 package cn.renlm.micro.loadbalancer;
 
+import static cn.renlm.micro.constant.Constants.HINT_DEFAULT_CONFIG;
 import static org.springframework.cloud.loadbalancer.core.ServiceInstanceListSupplier.builder;
 import static org.springframework.cloud.loadbalancer.support.LoadBalancerEnvironmentPropertyUtils.equalToForClientOrDefault;
 
@@ -67,8 +68,6 @@ class MyHintsLoadBalancerStrategy {
 	private static final Logger log = LoggerFactory.getLogger(MyHintsLoadBalancerStrategy.class);
 
 	private static final String WEB_CLIENT_CLASS = "org.springframework.web.reactive.function.client.WebClient";
-
-	private static final String DEFAULT_HINT = "DEFAULT";
 
 	@Bean
 	@ConditionalOnMissingClass(WEB_CLIENT_CLASS)
@@ -177,7 +176,8 @@ class MyHintsLoadBalancerStrategy {
 					defaultHint = ((HintRequestContext) clientRequest).getHint();
 				}
 			}
-			defaultHint = StringUtils.hasText(defaultHint) ? defaultHint : DEFAULT_HINT;
+			String defaultConfigHint = properties.getHint().get(HINT_DEFAULT_CONFIG);
+			defaultHint = StringUtils.hasText(defaultHint) ? defaultHint : defaultConfigHint;
 			log.debug("getHintDefault is {}", defaultHint);
 			return defaultHint;
 		}
