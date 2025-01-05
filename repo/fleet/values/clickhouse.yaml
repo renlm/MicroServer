@@ -4,4 +4,4 @@ clickhouse:
   templates:
     namespace: io
     nodeSelector:
-      statefulset: statefulset
+      deploy: master

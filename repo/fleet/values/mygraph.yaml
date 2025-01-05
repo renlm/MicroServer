@@ -2,6 +2,6 @@ mygraph:
   enabled: true
   templates:
     nodeSelector:
-      mygraph: mygraph
+      deploy: master
     env:
       DB_INIT_MODE: ALWAYS

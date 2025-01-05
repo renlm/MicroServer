@@ -4,4 +4,4 @@ jenkins:
   templates:
     namespace: io
     nodeSelector:
-      jenkins: jenkins
+      deploy: master

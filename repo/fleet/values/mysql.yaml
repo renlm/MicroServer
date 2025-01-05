@@ -4,4 +4,4 @@ mysql:
   templates:
     namespace: io
     nodeSelector:
-      mysql: mysql
+      deploy: master

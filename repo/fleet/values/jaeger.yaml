@@ -2,4 +2,4 @@ jaeger:
   enabled: true
   templates:
     nodeSelector:
-      jaeger: jaeger
+      deploy: master

@@ -4,4 +4,4 @@ redis:
   templates:
     namespace: io
     nodeSelector:
-      redis: redis
+      deploy: master

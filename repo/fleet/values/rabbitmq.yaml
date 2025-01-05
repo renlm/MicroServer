@@ -4,4 +4,4 @@ rabbitmq:
   templates:
     namespace: io
     nodeSelector:
-      rabbitmq: rabbitmq
+      deploy: master

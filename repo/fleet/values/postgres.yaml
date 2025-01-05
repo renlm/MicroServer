@@ -4,4 +4,4 @@ postgres:
   templates:
     namespace: io
     nodeSelector:
-      postgres: postgres
+      deploy: master
