@@ -94,7 +94,7 @@ public class AddHintHeaderGatewayFilterFactory extends AbstractGatewayFilterFact
 					return addHeader(exchange, chain, name, defaultHint);
 				}
 				{
-					log.debug("未设置[负载标记] - {}: {}", name, hint);
+					log.debug("未设置[负载标记] - {}", name);
 					return chain.filter(exchange);
 				}
 			}
