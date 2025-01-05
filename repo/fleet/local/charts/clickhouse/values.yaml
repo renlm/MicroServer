@@ -2,7 +2,7 @@ namespace: io
 nameOverride: clickhouse
 fullnameOverride: clickhouse
 templates:
-  version: 11.4.0
+  version: 24.12
   namespace: io
   nameOverride: clickhouse
   fullnameOverride: clickhouse

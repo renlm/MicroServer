@@ -2,7 +2,7 @@ apiVersion: v2
 name: clickhouse
 description: A Helm chart for clickhouse
 type: application
-version: 11.4.0
+version: 24.12
 appVersion: 1.0.1
 dependencies:
 - name: templates
