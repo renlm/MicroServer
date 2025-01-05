@@ -1,3 +1,6 @@
+spring:
+  lifecycle:
+    timeoutPerShutdownPhase: 60s
 management:
   metrics:
     tags:
