@@ -1,5 +1,7 @@
 package cn.renlm.micro.core.security;
 
+import static org.springframework.util.StringUtils.hasText;
+
 import java.io.IOException;
 import java.util.Objects;
 
@@ -12,9 +14,9 @@ import org.springframework.stereotype.Component;
 
 import jakarta.annotation.Resource;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 /**
@@ -37,10 +39,15 @@ public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticatio
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws ServletException, IOException {
 		userDetailsService.updateCurrentUser(request, response, principal -> {
-			HttpSession session = request.getSession();
-			Object cookieHint = session.getAttribute(userDetailsService.getDefaultHintHeaderName());
-			if (Objects.nonNull(cookieHint)) {
-				principal.setHint(cookieHint.toString());
+			String hintHeaderName = userDetailsService.getDefaultHintHeaderName();
+			Cookie[] cookies = request.getCookies();
+			if (Objects.nonNull(cookies)) {
+				for (Cookie cookie : cookies) {
+					if (hintHeaderName.equals(cookie.getName()) && hasText(cookie.getValue())) {
+						principal.setHint(cookie.getValue());
+						break;
+					}
+				}
 			}
 			{
 				log.debug("登录成功 - username: {}, hint: {}", principal.getUsername(), principal.getHint());
