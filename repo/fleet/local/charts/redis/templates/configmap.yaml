@@ -2,6 +2,9 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: redis-configmap
+  {{- if .Values.namespace }}
+  namespace: {{ .Values.namespace }}
+  {{- end }}
 data:
   redis.conf: |-
     requirepass {{ .Values.global.env.REQUIREPASS }}
