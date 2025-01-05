@@ -6,7 +6,7 @@ metadata:
   namespace: {{ .Values.namespace }}
   {{- end }}
 data:
-  init-user-db.sql: |-
+  init-db.sh: |-
     #!/bin/bash
     set -e
     
