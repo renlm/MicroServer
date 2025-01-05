@@ -11,7 +11,7 @@ data:
     set -e
     
     # https://clickhouse.com/docs/en/engines/table-engines
-    clickhouse client --user default --password '{{ .Values.templates.env.CLICKHOUSE_PASSWORD }}' -n <<-EOSQL
+    clickhouse client --user {{ .Values.templates.env.CLICKHOUSE_USER }} -n <<-EOSQL
         CREATE DATABASE dev;
         CREATE USER dev IDENTIFIED BY '{{ .Values.templates.env.CLICKHOUSE_PASSWORD }}';
         GRANT CREATE NAMED COLLECTION ON local_mysql_dev TO dev;
