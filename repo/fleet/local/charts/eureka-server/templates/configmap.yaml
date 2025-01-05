@@ -3,5 +3,5 @@ kind: ConfigMap
 metadata:
   name: eureka-server-env
 data:
-  EUREKA_SERVER: http://default:M1h62Gj3Uy54r@eureka-server-0.eureka-server.{{ .Release.Namespace }}.svc.cluster.local/registrar/eureka,http://default:M1h62Gj3Uy54r@eureka-server-1.eureka-server.{{ .Release.Namespace }}.svc.cluster.local/registrar/eureka,http://default:M1h62Gj3Uy54r@eureka-server-2.eureka-server.{{ .Release.Namespace }}.svc.cluster.local/registrar/eureka
+  EUREKA_SERVER: http://eureka-server-0.eureka-server.{{ .Release.Namespace }}.svc.cluster.local/registrar/eureka,http://eureka-server-1.eureka-server.{{ .Release.Namespace }}.svc.cluster.local/registrar/eureka,http://eureka-server-2.eureka-server.{{ .Release.Namespace }}.svc.cluster.local/registrar/eureka
   EUREKA_AUTH_SECRETKEY: {{ .Values.EUREKA_AUTH_SECRETKEY }}
