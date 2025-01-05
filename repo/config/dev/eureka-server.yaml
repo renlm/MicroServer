@@ -8,7 +8,9 @@ eureka:
     nonSecurePort: ${server.port}
     instanceId: ${eureka.instance.hostname}:${server.port}
   client:
-    jersey.enabled: true
+    jersey.enabled: false
+    restclient.enabled: false
+    webclient.enabled: true
     registerWithEureka: true
     fetchRegistry: false
     serviceUrl:
