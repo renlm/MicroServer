@@ -15,6 +15,9 @@ data:
         CREATE DATABASE dev;
         CREATE USER dev IDENTIFIED BY '{{ .Values.templates.env.CLICKHOUSE_PASSWORD }}';
         GRANT ALL ON dev.* TO dev;
+        GRANT CREATE NAMED COLLECTION ON local_mysql_dev TO dev;
+        GRANT CREATE NAMED COLLECTION ON local_postgres_dev TO dev;
+        GRANT CREATE NAMED COLLECTION ON local_redis_dev TO dev;
         use dev;
         CREATE NAMED COLLECTION local_mysql_dev AS host = 'mysql', port = 3306, database = 'dev', user = 'dev', password = '{{ .Values.templates.env.CLICKHOUSE_PASSWORD }}';
         CREATE NAMED COLLECTION local_postgres_dev AS host = 'postgres', port = 5432, database = 'dev', schema = 'public', user = 'dev', password = '{{ .Values.templates.env.CLICKHOUSE_PASSWORD }}';
