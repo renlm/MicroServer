@@ -8,6 +8,7 @@ templates:
   version: 17.2
   nameOverride: postgres
   fullnameOverride: postgres
+  autoBindCommonEnv: false
   kind: StatefulSet
   image:
     repository: postgres

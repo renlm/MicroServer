@@ -6,6 +6,7 @@ templates:
   version: 7.4.1
   nameOverride: redis
   fullnameOverride: redis
+  autoBindCommonEnv: false
   kind: StatefulSet
   image:
     repository: redis

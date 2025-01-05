@@ -9,6 +9,7 @@ templates:
   version: 9.1
   nameOverride: mysql
   fullnameOverride: mysql
+  autoBindCommonEnv: false
   kind: StatefulSet
   image:
     repository: mysql

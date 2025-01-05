@@ -5,6 +5,7 @@ templates:
   version: 1.25.5
   nameOverride: nginx
   fullnameOverride: nginx
+  autoBindCommonEnv: false
   kind: Deployment
   image:
     repository: nginx
