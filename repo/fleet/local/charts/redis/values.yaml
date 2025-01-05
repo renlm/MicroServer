@@ -9,7 +9,7 @@ templates:
   image:
     repository: redis
     pullPolicy: IfNotPresent
-    tag: latest
+    tag: 7.4.1
   service:
     clusterIP: None
     spec:
