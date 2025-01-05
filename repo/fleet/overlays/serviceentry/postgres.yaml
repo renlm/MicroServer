@@ -10,6 +10,6 @@ spec:
   - number: 5432
     name: tcp-postgres
     protocol: TCP
-  resolution: STATIC
+  resolution: DNS
   endpoints:
   - address: postgres
