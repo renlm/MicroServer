@@ -2,7 +2,7 @@ spring:
   data:
     redis:
       database: 2
-      host: redis
+      host: redis.io
       port: 6379
       password: KK_fyw4bnmdf4Ksp7IMYuPWD@20stdt^tn50jlsfy
       timeout: 10s

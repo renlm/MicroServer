@@ -69,7 +69,7 @@ spring:
   data:
     redis:
       database: 11
-      host: redis
+      host: redis.io
       port: 6379
       password: KK_fyw4bnmdf4Ksp7IMYuPWD@20stdt^tn50jlsfy
       timeout: 10s
@@ -81,7 +81,7 @@ spring:
           minIdle: 5
   rabbitmq:
     virtual-host: /dev
-    host: rabbitmq
+    host: rabbitmq.io
     port: 5672
     username: dev
     password: KK_fyw4bnmdf4Ksp7IMYuPWD@20stdt^tn50jlsfy
@@ -91,7 +91,7 @@ spring:
       strict: true
       datasource:
         master:
-          url: jdbc:mysql://mysql:3306/mygraph?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true&rewriteBatchedStatements=true
+          url: jdbc:mysql://mysql.io:3306/mygraph?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true&rewriteBatchedStatements=true
           username: mygraph
           password: KK_fyw4bnmdf4Ksp7IMYuPWD@20stdt^tn50jlsfy
           driver-class-name: com.mysql.cj.jdbc.Driver
