@@ -2,6 +2,7 @@ apiVersion: networking.istio.io/v1
 kind: VirtualService
 metadata:
   name: jenkins
+  namespace: io
 spec:
   hosts:
   - jenkins.renlm.cn

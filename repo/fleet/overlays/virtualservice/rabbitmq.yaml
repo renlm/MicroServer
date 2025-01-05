@@ -2,6 +2,7 @@ apiVersion: networking.istio.io/v1
 kind: VirtualService
 metadata:
   name: rabbitmq
+  namespace: io
 spec:
   hosts:
   - rabbitmq.renlm.cn
