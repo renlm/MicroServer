@@ -69,6 +69,11 @@ public class WebSecurityConfig {
 	public static final String CaptchaAntMatcher = "/captcha/**";
 
 	/**
+	 * 验证码路径
+	 */
+	public static final String ActuatorAntMatcher = "/actuator/**";
+
+	/**
 	 * 白名单
 	 */
 	// @formatter:off
@@ -77,8 +82,8 @@ public class WebSecurityConfig {
 			logoutUrl, 
 			LoginProcessingUrl, 
 			CaptchaAntMatcher,
-			"/session/getCurrentUser",
-			"/actuator/**" 
+			ActuatorAntMatcher,
+			"/session/getCurrentUser"
 		};
 		// @formatter:on
 
@@ -114,7 +119,7 @@ public class WebSecurityConfig {
 		// 启用Csrf
 		http.csrf(csrf -> {
 			csrf.ignoringRequestMatchers(CaptchaAntMatcher)
-				.ignoringRequestMatchers(WHITE_LIST)
+				.ignoringRequestMatchers(ActuatorAntMatcher)
 				.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
 		});
 		// 会话
