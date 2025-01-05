@@ -41,6 +41,8 @@ import reactor.core.publisher.Mono;
 @Component
 public class AddHintHeaderGatewayFilterFactory extends AbstractGatewayFilterFactory<Config> {
 
+	private static final String KEY = "XHintHeader";
+
 	@Resource
 	private LoadBalancerProperties properties;
 
@@ -50,7 +52,7 @@ public class AddHintHeaderGatewayFilterFactory extends AbstractGatewayFilterFact
 
 	@Override
 	public List<String> shortcutFieldOrder() {
-		return Arrays.asList(VALUE_KEY);
+		return Arrays.asList(KEY);
 	}
 
 	@Override
@@ -63,7 +65,7 @@ public class AddHintHeaderGatewayFilterFactory extends AbstractGatewayFilterFact
 				String defaultHint = properties.getHint().get(HINT_DEFAULT_CONFIG);
 				// 优先取配置指定[负载标记]
 				String name = hasText(defaultName) ? defaultName : X_LB_HINT;
-				String hint = hasText(config.hint) ? expand(exchange, config.hint) : defaultHint;
+				String hint = hasText(config.hint) ? expand(exchange, config.hint) : config.hint;
 				if (hasText(hint)) {
 					log.debug("优先取配置指定[负载标记] - {}: {}", name, hint);
 					return addHeader(exchange, chain, name, hint);
@@ -76,15 +78,20 @@ public class AddHintHeaderGatewayFilterFactory extends AbstractGatewayFilterFact
 					log.debug("其次从请求头获取[负载标记] - {}: {}", name, hint);
 					return addHeader(exchange, chain, name, hint);
 				}
-				// 最后从Cookie获取[负载标记]
+				// 再次从Cookie获取[负载标记]
 				MultiValueMap<String, HttpCookie> cookies = request.getCookies();
 				HttpCookie cookie = cookies.getFirst(name);
 				if (Objects.nonNull(cookie)) {
 					hint = cookie.getValue();
 					if (hasText(hint)) {
-						log.debug("最后从Cookie获取[负载标记] - {}: {}", name, hint);
+						log.debug("再次从Cookie获取[负载标记] - {}: {}", name, hint);
 						return addHeader(exchange, chain, name, hint);
 					}
+				}
+				// 最后设置默认[负载标记]
+				if (hasText(defaultHint)) {
+					log.debug("最后设置默认[负载标记] - {}: {}", name, defaultHint);
+					return addHeader(exchange, chain, name, defaultHint);
 				}
 				{
 					log.debug("未设置[负载标记] - {}: {}", name, hint);
@@ -96,7 +103,7 @@ public class AddHintHeaderGatewayFilterFactory extends AbstractGatewayFilterFact
 			public String toString() {
 				// @formatter:off
 				return filterToStringCreator(AddHintHeaderGatewayFilterFactory.this)
-						.append(VALUE_KEY, config.hint)
+						.append(KEY, config.hint)
 						.toString();
 				// @formatter:on
 			}
