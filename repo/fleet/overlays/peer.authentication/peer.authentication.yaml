@@ -9,4 +9,4 @@ items:
     name: default
   spec:
     mtls:
-      mode: PERMISSIVE‌
+      mode: PERMISSIVE
