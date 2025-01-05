@@ -1,5 +1,5 @@
 clickhouse:
-  enabled: true
+  enabled: false
   namespace: io
   templates:
     namespace: io
