@@ -39,3 +39,5 @@ items:
       env:
       - name: OTEL_EXPORTER_OTLP_PROTOCOL
         value: grpc
+      - name: OTEL_LOG_LEVEL
+        value: DEBUG
