@@ -1,7 +1,9 @@
 package cn.renlm.micro.core.security;
 
 import static cn.renlm.micro.constant.Constants.HINT_DEFAULT_CONFIG;
+import static cn.renlm.micro.constant.Constants.X_LB_HINT;
 import static org.apache.commons.lang.StringUtils.EMPTY;
+import static org.springframework.util.StringUtils.hasText;
 
 import java.util.Collection;
 import java.util.Objects;
@@ -16,6 +18,7 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.netflix.appinfo.EurekaInstanceConfig;
 
@@ -24,6 +27,7 @@ import cn.renlm.micro.core.dto.UserDetails;
 import cn.renlm.micro.core.model.rbac.UserInfo;
 import cn.renlm.micro.core.sdk.rbac.UserClient;
 import jakarta.annotation.Resource;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -82,7 +86,15 @@ public class UserDetailsService implements org.springframework.security.core.use
 		Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
 		context.setAuthentication(new UsernamePasswordAuthenticationToken(userDetails, EMPTY, authorities));
 		securityContextRepository.saveContext(context, request, response);
-		return userDetails;
+		if (StringUtils.hasText(userDetails.getHint())) {
+			String defaultName = properties.getHintHeaderName();
+			String name = hasText(defaultName) ? defaultName : X_LB_HINT;
+			Cookie cookie = new Cookie(name, userDetails.getHint());
+			response.addCookie(cookie);
+		}
+		{
+			return userDetails;
+		}
 	}
 
 }
