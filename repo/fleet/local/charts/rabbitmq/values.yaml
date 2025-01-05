@@ -5,13 +5,14 @@ global:
     RABBITMQ_DEFAULT_USER: dev
     RABBITMQ_DEFAULT_PASS: KK_fyw4bnmdf4Ksp7IMYuPWD@20stdt^tn50jlsfy
 templates:
+  version: 4.0.5
   nameOverride: rabbitmq
   fullnameOverride: rabbitmq
   kind: StatefulSet
   image:
     repository: rabbitmq
     pullPolicy: IfNotPresent
-    tag: management
+    tag: 4.0.5-management
   service:
     clusterIP: None
     spec:

@@ -2,7 +2,7 @@ namespace: istio-system
 nameOverride: grafana
 fullnameOverride: grafana
 templates:
-  version: 0.0.1
+  version: 11.4.0
   namespace: istio-system
   nameOverride: grafana
   fullnameOverride: grafana
@@ -11,7 +11,7 @@ templates:
   image:
     repository: grafana/grafana-oss
     pullPolicy: IfNotPresent
-    tag: latest
+    tag: 11.4.0
   env:
     TZ: Asia/Shanghai
     GF_INSTALL_PLUGINS: grafana-clickhouse-datasource

@@ -1,11 +1,12 @@
 templates:
+  version: 2.491
   nameOverride: jenkins
   fullnameOverride: jenkins
   kind: StatefulSet
   image:
     repository: jenkins/jenkins
     pullPolicy: IfNotPresent
-    tag: latest
+    tag: 2.491
   podSecurityContext:
     runAsUser: 0
   service:

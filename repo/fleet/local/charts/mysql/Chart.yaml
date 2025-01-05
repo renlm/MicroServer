@@ -2,7 +2,7 @@ apiVersion: v2
 name: mysql
 description: A Helm chart for mysql
 type: application
-version: 0.0.1
+version: 9.1
 appVersion: 1.0.1
 dependencies:
 - name: templates

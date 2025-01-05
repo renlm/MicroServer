@@ -1,4 +1,5 @@
 templates:
+  version: 1.0.1
   nameOverride: mygraph
   fullnameOverride: mygraph
   kind: Deployment

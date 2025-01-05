@@ -2,7 +2,7 @@ apiVersion: v2
 name: jenkins
 description: A Helm chart for jenkins
 type: application
-version: 0.0.1
+version: 2.491
 appVersion: 1.0.1
 dependencies:
 - name: templates
