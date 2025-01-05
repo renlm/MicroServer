@@ -52,6 +52,7 @@ public class WebConfig implements WebMvcConfigurer {
 			.addResolver(resolver)
 			.addResolver(new LiteWebJarsResourceResolver())
 			.addResolver(new PathResourceResolver());
+		
 		// @formatter:on
 	}
 
