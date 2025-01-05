@@ -2,7 +2,7 @@ package cn.renlm.micro.eureka;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 
-import com.netflix.discovery.DiscoveryClient;
+import com.netflix.discovery.EurekaClient;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.Resource;
@@ -15,17 +15,17 @@ import lombok.extern.slf4j.Slf4j;
  *
  */
 @Slf4j
-@ConditionalOnClass({ DiscoveryClient.class })
+@ConditionalOnClass({ EurekaClient.class })
 public class EurekaClientShutdownHook {
 
 	@Resource
-	private DiscoveryClient discoveryClient;
+	private EurekaClient eurekaClient;
 
 	@PostConstruct
 	public void init() {
 		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-			discoveryClient.shutdown();
-			log.info("停机下线.");
+			eurekaClient.shutdown();
+			log.info("EurekaClient 停机下线.");
 		}));
 	}
 
