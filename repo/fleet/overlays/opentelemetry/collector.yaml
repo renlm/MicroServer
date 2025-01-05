@@ -53,6 +53,23 @@ spec:
         endpoint: http://loki.istio-system.svc:3100/loki/api/v1/push
         tls:
           insecure: true
+      clickhouse:
+        endpoint: tcp://clickhouse.io:9000?dial_timeout=10s
+        database: default
+        username: default
+        password: KK_fyw4bnmdf4Ksp7IMYuPWD@20stdt^tn50jlsfy
+        async_insert: true
+        ttl: 72h
+        compress: lz4
+        create_schema: true
+        logs_table_name: otel_logs
+        traces_table_name: otel_traces
+        timeout: 5s
+        retry_on_failure:
+          enabled: true
+          initial_interval: 5s
+          max_interval: 30s
+          max_elapsed_time: 300s
     connectors:
       spanmetrics:
         namespace: spanmetrics
@@ -89,8 +106,8 @@ spec:
         traces:
           receivers: [otlp]
           processors: [batch]
-          exporters: [spanmetrics, zipkin]
+          exporters: [spanmetrics, zipkin, clickhouse]
         logs:
           receivers: [otlp]
           processors: [batch, resource]
-          exporters: [debug, loki]
+          exporters: [debug, loki, clickhouse]
