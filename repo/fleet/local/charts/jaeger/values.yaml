@@ -14,6 +14,7 @@ templates:
     tag: 1.58
   env:
     OTEL_SERVICE_NAME: jaeger
+    OTEL_TRACES_SAMPLER: always_off
     BADGER_EPHEMERAL: false
     SPAN_STORAGE_TYPE: badger
     BADGER_DIRECTORY_VALUE: /badger/data
