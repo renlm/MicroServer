@@ -25,6 +25,7 @@ import cn.renlm.micro.filter.AddHintHeaderGatewayFilterFactory.Config;
 import jakarta.annotation.Resource;
 import lombok.Data;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
 
 /**
@@ -36,6 +37,7 @@ import reactor.core.publisher.Mono;
  * @author RenLiMing(任黎明)
  *
  */
+@Slf4j
 @Component
 public class AddHintHeaderGatewayFilterFactory extends AbstractGatewayFilterFactory<Config> {
 
@@ -63,6 +65,7 @@ public class AddHintHeaderGatewayFilterFactory extends AbstractGatewayFilterFact
 				String name = hasText(defaultName) ? defaultName : X_LB_HINT;
 				String hint = hasText(config.hint) ? expand(exchange, config.hint) : defaultHint;
 				if (hasText(hint)) {
+					log.debug("优先取配置指定[负载标记] - {}: {}", name, hint);
 					return addHeader(exchange, chain, name, hint);
 				}
 				// 其次从请求头获取[负载标记]
@@ -70,6 +73,7 @@ public class AddHintHeaderGatewayFilterFactory extends AbstractGatewayFilterFact
 				HttpHeaders httpHeaders = request.getHeaders();
 				hint = httpHeaders.getFirst(name);
 				if (hasText(hint)) {
+					log.debug("其次从请求头获取[负载标记] - {}: {}", name, hint);
 					return addHeader(exchange, chain, name, hint);
 				}
 				// 最后从Cookie获取[负载标记]
@@ -78,10 +82,12 @@ public class AddHintHeaderGatewayFilterFactory extends AbstractGatewayFilterFact
 				if (Objects.nonNull(cookie)) {
 					hint = cookie.getValue();
 					if (hasText(hint)) {
+						log.debug("最后从Cookie获取[负载标记] - {}: {}", name, hint);
 						return addHeader(exchange, chain, name, hint);
 					}
 				}
 				{
+					log.debug("未设置[负载标记] - {}: {}", name, hint);
 					return chain.filter(exchange);
 				}
 			}
