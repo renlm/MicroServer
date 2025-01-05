@@ -1,5 +1,7 @@
 postgres:
   enabled: true
+  namespace: io
   templates:
+    namespace: io
     nodeSelector:
       postgres: postgres

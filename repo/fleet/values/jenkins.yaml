@@ -1,5 +1,7 @@
 jenkins:
   enabled: true
+  namespace: io
   templates:
+    namespace: io
     nodeSelector:
       jenkins: jenkins

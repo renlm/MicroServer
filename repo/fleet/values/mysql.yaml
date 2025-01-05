@@ -1,5 +1,7 @@
 mysql:
   enabled: true
+  namespace: io
   templates:
+    namespace: io
     nodeSelector:
       mysql: mysql

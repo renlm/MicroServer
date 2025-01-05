@@ -1,4 +1,5 @@
 resources:
+- namespace.yaml
 - telemetry/telemetry.yaml
 - peer.authentication/peer.authentication.yaml
 - virtualservice/nginx.yaml

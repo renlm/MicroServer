@@ -1,2 +1,5 @@
 nginx:
   enabled: true
+  namespace: io
+  templates:
+    namespace: io
