@@ -25,6 +25,7 @@ import org.springframework.security.web.csrf.DefaultCsrfToken;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import cn.renlm.micro.constant.Constants;
 import cn.renlm.micro.properties.EurekaAuthProperties;
 import cn.renlm.micro.util.CsrfUtil;
 import jakarta.servlet.FilterChain;
@@ -47,8 +48,6 @@ import lombok.extern.slf4j.Slf4j;
 public class EurekaServerAuthConfig {
 
 	public static final String X_SERVER_TOKEN = "x-server-token";
-	public static final String X_XSRF_TOKEN = "x-xsrf-token";
-	public static final String _CSRF = "_csrf";
 	public static final String SIGN_HEADER_TIMESTAMP = "x-eureka-timestamp";
 	public static final String SIGN_HEADER_SIGN = "x-eureka-sign";
 	public static final String CLIENT_AUTHORITY = "client";
@@ -66,7 +65,7 @@ public class EurekaServerAuthConfig {
 				final String secretKey = env.getSecretKey();
 				final String sign = DigestUtils.md5DigestAsHex((csrfToken + timestamp + secretKey).getBytes());
 				requestContext.getHeaders().add(X_SERVER_TOKEN, serverToken);
-				requestContext.getHeaders().add(X_XSRF_TOKEN, csrfToken);
+				requestContext.getHeaders().add(Constants.X_XSRF_TOKEN, csrfToken);
 				requestContext.getHeaders().add(SIGN_HEADER_TIMESTAMP, timestamp);
 				requestContext.getHeaders().add(SIGN_HEADER_SIGN, sign);
 			}
@@ -93,7 +92,7 @@ public class EurekaServerAuthConfig {
 		protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
 				FilterChain filterChain) throws ServletException, IOException {
 			String serverToken = request.getHeader(X_SERVER_TOKEN);
-			String csrfToken = request.getHeader(X_XSRF_TOKEN);
+			String csrfToken = request.getHeader(Constants.X_XSRF_TOKEN);
 			String timestamp = request.getHeader(SIGN_HEADER_TIMESTAMP);
 			String sign = request.getHeader(SIGN_HEADER_SIGN);
 			String requestURI = request.getRequestURI();
@@ -101,7 +100,7 @@ public class EurekaServerAuthConfig {
 				String secretKey = hasText(env.getSecretKey()) ? env.getSecretKey() : randomUUID().toString();
 				String md5DigestAsHex = DigestUtils.md5DigestAsHex((csrfToken + timestamp + secretKey).getBytes());
 				if (md5DigestAsHex.equals(sign)) {
-					CsrfToken token = new DefaultCsrfToken(X_XSRF_TOKEN, _CSRF, serverToken);
+					CsrfToken token = new DefaultCsrfToken(Constants.X_XSRF_TOKEN, Constants._CSRF, serverToken);
 					csrfTokenRepository.saveToken(token, request, response);
 					SimpleGrantedAuthority sga = new SimpleGrantedAuthority(CLIENT_AUTHORITY);
 					Collection<? extends GrantedAuthority> authorities = singleton(sga);

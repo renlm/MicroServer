@@ -9,24 +9,29 @@ package cn.renlm.micro.constant;
 public interface Constants {
 
 	/**
-	 * 请求头 [ 负载均衡标记 ]
-	 */
-	public static final String HINT_HEADER_NAME = "x-lb-hint";
-
-	/**
 	 * x-xsrf-token
 	 */
-	public static final String X_XSRF_TOKEN_HEADER_NAME = "x-xsrf-token";
+	public static final String X_XSRF_TOKEN = "x-xsrf-token";
+	
+	/**
+	 * _csrf
+	 */
+	public static final String _CSRF = "_csrf";
 
 	/**
 	 * cookie
 	 */
-	public static final String COOKIE_HEADER_NAME = "cookie";
+	public static final String COOKIE = "cookie";
+
+	/**
+	 * 请求头 [ 负载均衡标记 ]
+	 */
+	public static final String X_LB_HINT = "x-lb-hint";
 
 	/**
 	 * 服务元数据 [ 负载均衡标记 ]
 	 */
-	public static final String HINT_KEY = "hint";
+	public static final String METADATA_HINT = "hint";
 
 	/**
 	 * 服务元数据 [ serviceName ]

@@ -3,7 +3,6 @@ package cn.renlm.micro.eureka.client;
 import static cn.renlm.micro.eureka.EurekaServerAuthConfig.SIGN_HEADER_SIGN;
 import static cn.renlm.micro.eureka.EurekaServerAuthConfig.SIGN_HEADER_TIMESTAMP;
 import static cn.renlm.micro.eureka.EurekaServerAuthConfig.X_SERVER_TOKEN;
-import static cn.renlm.micro.eureka.EurekaServerAuthConfig.X_XSRF_TOKEN;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -25,6 +24,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.client.RestClient;
 
+import cn.renlm.micro.constant.Constants;
 import cn.renlm.micro.properties.EurekaAuthProperties;
 import cn.renlm.micro.util.CsrfUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -59,7 +59,7 @@ public class EurekaRestClientAuthConfig {
 						final String secretKey = env.getSecretKey();
 						final String sign = DigestUtils.md5DigestAsHex((csrfToken + timestamp + secretKey).getBytes());
 						request.getHeaders().add(X_SERVER_TOKEN, serverToken);
-						request.getHeaders().add(X_XSRF_TOKEN, csrfToken);
+						request.getHeaders().add(Constants.X_XSRF_TOKEN, csrfToken);
 						request.getHeaders().add(SIGN_HEADER_TIMESTAMP, timestamp);
 						request.getHeaders().add(SIGN_HEADER_SIGN, sign);
 						String url = request.getURI().toString();

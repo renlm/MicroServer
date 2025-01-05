@@ -55,7 +55,7 @@ public class UserDetailsService implements org.springframework.security.core.use
 		Map<String, String> metadataMap = eurekaInstanceConfig.getMetadataMap();
 		UserDetails userDetails = UserDetails.of(userInfo);
 		if (Objects.nonNull(userDetails)) {
-			userDetails.setHint(metadataMap.get(Constants.HINT_KEY));
+			userDetails.setHint(metadataMap.get(Constants.METADATA_HINT));
 		}
 		{
 			return userDetails;

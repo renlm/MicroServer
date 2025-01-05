@@ -1,6 +1,5 @@
 package cn.renlm.micro.loadbalancer;
 
-import static cn.renlm.micro.constant.Constants.HINT_KEY;
 import static org.springframework.cloud.loadbalancer.core.ServiceInstanceListSupplier.builder;
 import static org.springframework.cloud.loadbalancer.support.LoadBalancerEnvironmentPropertyUtils.equalToForClientOrDefault;
 
@@ -38,6 +37,7 @@ import org.springframework.core.type.AnnotatedTypeMetadata;
 import org.springframework.http.HttpHeaders;
 import org.springframework.util.StringUtils;
 
+import cn.renlm.micro.constant.Constants;
 import reactor.core.publisher.Mono;
 
 /**
@@ -190,8 +190,8 @@ class MyHintsLoadBalancerStrategy {
 			List<ServiceInstance> filteredInstances = new ArrayList<>();
 			for (ServiceInstance serviceInstance : instances) {
 				Map<String, String> metadata = serviceInstance.getMetadata();
-				String hintFromMetadata = metadata.getOrDefault(HINT_KEY, hintDefault);
-				metadata.put(HINT_KEY, hintFromMetadata);
+				String hintFromMetadata = metadata.getOrDefault(Constants.METADATA_HINT, hintDefault);
+				metadata.put(Constants.METADATA_HINT, hintFromMetadata);
 				if (hint.equals(hintFromMetadata)) {
 					filteredInstances.add(serviceInstance);
 				}

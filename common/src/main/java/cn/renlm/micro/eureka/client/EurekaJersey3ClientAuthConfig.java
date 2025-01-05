@@ -3,7 +3,6 @@ package cn.renlm.micro.eureka.client;
 import static cn.renlm.micro.eureka.EurekaServerAuthConfig.SIGN_HEADER_SIGN;
 import static cn.renlm.micro.eureka.EurekaServerAuthConfig.SIGN_HEADER_TIMESTAMP;
 import static cn.renlm.micro.eureka.EurekaServerAuthConfig.X_SERVER_TOKEN;
-import static cn.renlm.micro.eureka.EurekaServerAuthConfig.X_XSRF_TOKEN;
 
 import java.io.IOException;
 import java.security.SecureRandom;
@@ -18,6 +17,7 @@ import org.springframework.util.DigestUtils;
 
 import com.netflix.discovery.Jersey3DiscoveryClientOptionalArgs;
 
+import cn.renlm.micro.constant.Constants;
 import cn.renlm.micro.properties.EurekaAuthProperties;
 import cn.renlm.micro.util.CsrfUtil;
 import jakarta.ws.rs.client.ClientRequestContext;
@@ -51,7 +51,7 @@ public class EurekaJersey3ClientAuthConfig {
 				final String secretKey = env.getSecretKey();
 				final String sign = DigestUtils.md5DigestAsHex((csrfToken + timestamp + secretKey).getBytes());
 				requestContext.getHeaders().add(X_SERVER_TOKEN, serverToken);
-				requestContext.getHeaders().add(X_XSRF_TOKEN, csrfToken);
+				requestContext.getHeaders().add(Constants.X_XSRF_TOKEN, csrfToken);
 				requestContext.getHeaders().add(SIGN_HEADER_TIMESTAMP, timestamp);
 				requestContext.getHeaders().add(SIGN_HEADER_SIGN, sign);
 				String url = requestContext.getUri().toString();
