@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -26,6 +27,7 @@ public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticatio
 
 	private static final Logger log = LoggerFactory.getLogger(AuthenticationSuccessHandler.class);
 
+	@Lazy
 	@Resource
 	private UserDetailsService userDetailsService;
 
