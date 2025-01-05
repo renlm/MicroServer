@@ -93,4 +93,4 @@ spec:
         logs:
           receivers: [otlp]
           processors: [batch, resource]
-          exporters: [debug, zipkin, loki]
+          exporters: [debug, loki]
