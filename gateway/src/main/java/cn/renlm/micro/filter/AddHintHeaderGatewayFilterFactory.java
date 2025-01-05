@@ -72,7 +72,7 @@ public class AddHintHeaderGatewayFilterFactory extends AbstractGatewayFilterFact
 				if (hasText(hint)) {
 					return addHeader(exchange, chain, name, hint);
 				}
-				// 再次从请Cookie获取[负载标记]
+				// 最后从Cookie获取[负载标记]
 				MultiValueMap<String, HttpCookie> cookies = request.getCookies();
 				HttpCookie cookie = cookies.getFirst(name);
 				if (Objects.nonNull(cookie)) {
