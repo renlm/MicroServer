@@ -12,7 +12,7 @@ public interface Constants {
 	 * x-xsrf-token
 	 */
 	public static final String X_XSRF_TOKEN = "x-xsrf-token";
-	
+
 	/**
 	 * _csrf
 	 */
@@ -22,6 +22,11 @@ public interface Constants {
 	 * cookie
 	 */
 	public static final String COOKIE = "cookie";
+
+	/**
+	 * 负载均衡默认配置
+	 */
+	public static final String HINT_DEFAULT_CONFIG = "default";
 
 	/**
 	 * 请求头 [ 负载均衡标记 ]

@@ -1,5 +1,8 @@
 package cn.renlm.micro.filter;
 
+import static cn.renlm.micro.constant.Constants.HINT_DEFAULT_CONFIG;
+import static cn.renlm.micro.constant.Constants.METADATA_HINT;
+import static cn.renlm.micro.constant.Constants.X_LB_HINT;
 import static org.springframework.cloud.gateway.support.GatewayToStringStyler.filterToStringCreator;
 import static org.springframework.cloud.gateway.support.ServerWebExchangeUtils.expand;
 import static org.springframework.util.StringUtils.hasText;
@@ -7,18 +10,21 @@ import static org.springframework.util.StringUtils.hasText;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
+import org.springframework.cloud.client.loadbalancer.LoadBalancerProperties;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
+import org.springframework.http.HttpCookie;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.server.ServerWebExchange;
 
 import com.netflix.appinfo.EurekaInstanceConfig;
 
-import cn.renlm.micro.constant.Constants;
 import cn.renlm.micro.filter.AddHintHeaderGatewayFilterFactory.Config;
 import jakarta.annotation.Resource;
 import lombok.Data;
@@ -26,11 +32,9 @@ import lombok.SneakyThrows;
 import reactor.core.publisher.Mono;
 
 /**
- * 添加负载标记 
+ * 添加负载标记
  * <p>
- * filters: 
- * - MapRequestHeader
- * - MapRequestHeader={hintHeaderName}, {hintHeaderValue}
+ * AddHintHeader={hint}
  * </p>
  * 
  * @author RenLiMing(任黎明)
@@ -39,9 +43,8 @@ import reactor.core.publisher.Mono;
 @Component
 public class AddHintHeaderGatewayFilterFactory extends AbstractGatewayFilterFactory<Config> {
 
-	private static final String HINT_NAME_KEY = "HEADER_NAME";
-
-	private static final String HINT_VALUE_KEY = "HINT_VALUE";
+	@Resource
+	private LoadBalancerProperties properties;
 
 	@Resource
 	private EurekaInstanceConfig eurekaInstanceConfig;
@@ -52,7 +55,7 @@ public class AddHintHeaderGatewayFilterFactory extends AbstractGatewayFilterFact
 
 	@Override
 	public List<String> shortcutFieldOrder() {
-		return Arrays.asList(HINT_NAME_KEY, HINT_VALUE_KEY);
+		return Arrays.asList(VALUE_KEY);
 	}
 
 	@Override
@@ -61,22 +64,33 @@ public class AddHintHeaderGatewayFilterFactory extends AbstractGatewayFilterFact
 			@Override
 			@SneakyThrows
 			public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-				// 优先取配置指定[路由标记]
-				String name = hasText(config.headerName) ? config.headerName : Constants.X_LB_HINT;
-				String hint = hasText(config.hintValue) ? expand(exchange, config.hintValue) : config.hintValue;
+				String defaultName = properties.getHintHeaderName();
+				String defaultHint = properties.getHint().get(HINT_DEFAULT_CONFIG);
+				// 优先取配置指定[负载标记]
+				String name = hasText(defaultName) ? defaultName : X_LB_HINT;
+				String hint = hasText(config.hint) ? expand(exchange, config.hint) : defaultHint;
 				if (hasText(hint)) {
 					return addHeader(exchange, chain, name, hint);
 				}
-				// 其次从请求头获取[路由标记]
+				// 其次从请求头获取[负载标记]
 				ServerHttpRequest request = exchange.getRequest();
 				HttpHeaders httpHeaders = request.getHeaders();
-				hint = httpHeaders.getFirst(Constants.X_LB_HINT);
+				hint = httpHeaders.getFirst(name);
 				if (hasText(hint)) {
 					return addHeader(exchange, chain, name, hint);
 				}
-				// 最后匹配当前节点的[路由标记]
+				// 再次从请Cookie获取[负载标记]
+				MultiValueMap<String, HttpCookie> cookies = request.getCookies();
+				HttpCookie cookie = cookies.getFirst(name);
+				if (Objects.nonNull(cookie)) {
+					hint = cookie.getValue();
+					if (hasText(hint)) {
+						return addHeader(exchange, chain, name, hint);
+					}
+				}
+				// 最后匹配当前节点的[负载标记]
 				Map<String, String> metadataMap = eurekaInstanceConfig.getMetadataMap();
-				hint = metadataMap.get(Constants.METADATA_HINT);
+				hint = metadataMap.get(METADATA_HINT);
 				if (hasText(hint)) {
 					return addHeader(exchange, chain, name, hint);
 				} else {
@@ -88,8 +102,7 @@ public class AddHintHeaderGatewayFilterFactory extends AbstractGatewayFilterFact
 			public String toString() {
 				// @formatter:off
 				return filterToStringCreator(AddHintHeaderGatewayFilterFactory.this)
-						.append(HINT_NAME_KEY, config.headerName)
-						.append(HINT_VALUE_KEY, config.hintValue)
+						.append(VALUE_KEY, config.hint)
 						.toString();
 				// @formatter:on
 			}
@@ -106,9 +119,7 @@ public class AddHintHeaderGatewayFilterFactory extends AbstractGatewayFilterFact
 	@Data
 	public static class Config {
 
-		private String headerName;
-
-		private String hintValue;
+		private String hint;
 
 	}
 
