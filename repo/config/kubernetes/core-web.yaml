@@ -3,11 +3,6 @@ server:
     session:
       cookie:
         name: MICRO-SERVER
-eureka:
-  client:
-    jerseyEnabled: false
-    restclientEnabled: false
-    webclientEnabled: true
 aj:
   captcha:
     cacheType: redis

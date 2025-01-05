@@ -20,9 +20,9 @@ eureka:
       POD_NAME: ${POD_NAME}
       POD_IP: ${POD_IP}
   client:
-    jersey.enabled: ${eureka.client.jerseyEnabled:false}
-    restclient.enabled: ${eureka.client.restclientEnabled:true}
-    webclient.enabled: ${eureka.client.webclientEnabled:false}
+    jersey.enabled: false
+    restclient.enabled: false
+    webclient.enabled: true
     registerWithEureka: ${REGISTER_WITH_EUREKA:true}
     fetchRegistry: ${FETCH_REGISTRY:true}
     registryFetchIntervalSeconds: 30

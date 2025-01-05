@@ -1,4 +1,4 @@
-package cn.renlm.micro.eureka.client;
+package cn.renlm.micro.eureka;
 
 import static cn.renlm.micro.eureka.EurekaServerAuthConfig.SIGN_HEADER_SIGN;
 import static cn.renlm.micro.eureka.EurekaServerAuthConfig.SIGN_HEADER_TIMESTAMP;
@@ -9,7 +9,6 @@ import java.security.GeneralSecurityException;
 import java.security.SecureRandom;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.configuration.SSLContextFactory;
@@ -28,15 +27,14 @@ import cn.renlm.micro.util.CsrfUtil;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Eureka客户端认证
+ * Eureka 客户端认证
  * 
  * @author RenLiMing(任黎明)
  *
  */
 @Slf4j
-@ConditionalOnProperty(value = "eureka.client.webclient.enabled", havingValue = "true")
+@ConditionalOnProperty(value = "eureka.client.webclient.enabled", havingValue = "true", matchIfMissing = true)
 @ConditionalOnClass({ WebClient.class })
-@ConditionalOnMissingBean({ EurekaJersey3ClientAuthConfig.class })
 @EnableConfigurationProperties({ EurekaAuthProperties.class })
 public class EurekaWebClientAuthConfig {
 
