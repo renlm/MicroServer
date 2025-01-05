@@ -22,8 +22,6 @@ templates:
     GF_DATABASE_USER: grafana
     GF_DATABASE_PASSWORD: KK_fyw4bnmdf4Ksp7IMYuPWD@20stdt^tn50jlsfy
     GF_DATABASE_SSL_MODE: disable
-  podLabels:
-    sidecar.istio.io/inject: "true"
   service:
     type: ClusterIP
     spec:
