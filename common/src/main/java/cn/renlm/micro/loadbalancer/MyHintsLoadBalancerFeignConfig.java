@@ -1,5 +1,6 @@
 package cn.renlm.micro.loadbalancer;
 
+import static cn.renlm.micro.constant.Constants.X_LB_HINT;
 import static org.springframework.util.StringUtils.hasText;
 import static org.springframework.web.context.request.RequestContextHolder.getRequestAttributes;
 
@@ -31,19 +32,18 @@ public class MyHintsLoadBalancerFeignConfig {
 	RequestInterceptor hintsLoadBalancerHeaderRequestInterceptor(LoadBalancerProperties properties) {
 		return template -> {
 			String hintHeaderName = properties.getHintHeaderName();
-			if (hasText(hintHeaderName)) {
-				ServletRequestAttributes attributes = (ServletRequestAttributes) getRequestAttributes();
-				if (Objects.nonNull(attributes)) {
-					HttpServletRequest request = attributes.getRequest();
-					Enumeration<String> headerNames = request.getHeaderNames();
-					while (headerNames.hasMoreElements()) {
-						String headerName = headerNames.nextElement();
-						if (hasText(headerName) && headerName.toLowerCase().equals(hintHeaderName.toLowerCase())) {
-							String hint = request.getHeader(headerName);
-							if (hasText(hint)) {
-								log.debug("openfeign attributes header 透传 - {} : {}", hintHeaderName, hint);
-								template.header(hintHeaderName, hint);
-							}
+			hintHeaderName = (hasText(hintHeaderName) ? hintHeaderName : X_LB_HINT).toLowerCase();
+			ServletRequestAttributes attributes = (ServletRequestAttributes) getRequestAttributes();
+			if (Objects.nonNull(attributes)) {
+				HttpServletRequest request = attributes.getRequest();
+				Enumeration<String> headerNames = request.getHeaderNames();
+				while (headerNames.hasMoreElements()) {
+					String headerName = headerNames.nextElement();
+					if (hasText(headerName) && headerName.toLowerCase().equals(hintHeaderName)) {
+						String hint = request.getHeader(headerName);
+						if (hasText(hint)) {
+							log.debug("openfeign attributes header 透传 - {} : {}", hintHeaderName, hint);
+							template.header(hintHeaderName, hint);
 						}
 					}
 				}
