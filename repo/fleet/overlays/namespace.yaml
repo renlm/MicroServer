@@ -11,7 +11,9 @@ items:
   kind: Namespace
   metadata:
     name: mylb
+    annotations:
+      meta.helm.sh/release-name: micro
+      meta.helm.sh/release-namespace: mylb
     labels:
       istio-injection: enabled
       app.kubernetes.io/managed-by: Helm
-      kubernetes.io/metadata.name: mylb
