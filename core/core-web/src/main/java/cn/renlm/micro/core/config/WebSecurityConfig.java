@@ -25,10 +25,13 @@ import org.springframework.session.FindByIndexNameSessionRepository;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisIndexedHttpSession;
 import org.springframework.session.security.SpringSessionBackedSessionRegistry;
 
+import com.anji.captcha.service.CaptchaService;
+
 import cn.renlm.micro.core.security.AuthenticationFailureHandler;
 import cn.renlm.micro.core.security.AuthenticationSuccessHandler;
 import cn.renlm.micro.core.security.RequestAuthorizationManager;
 import cn.renlm.micro.core.security.UserDetailsService;
+import cn.renlm.micro.core.security.UsernamePasswordAuthenticationProvider;
 import cn.renlm.micro.core.security.WebAuthenticationDetails;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
@@ -77,7 +80,7 @@ public class WebSecurityConfig {
 			"/session/getCurrentUser",
 			"/actuator/**" 
 		};
-	// @formatter:on
+		// @formatter:on
 
 	/**
 	 * 静态资源
@@ -86,9 +89,9 @@ public class WebSecurityConfig {
 	public static final String[] STATIC_PATHS = { 
 			"/favicon.ico", 
 			"/static/**", 
-			"/webjars/**" 
+			"/webjars/**"
 		};
-	// @formatter:on
+		// @formatter:on
 
 	@Resource
 	private FindByIndexNameSessionRepository<? extends Session> sessionRepository;
@@ -111,6 +114,7 @@ public class WebSecurityConfig {
 		// 启用Csrf
 		http.csrf(csrf -> {
 			csrf.ignoringRequestMatchers(CaptchaAntMatcher)
+				.ignoringRequestMatchers(WHITE_LIST)
 				.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
 		});
 		// 会话
@@ -151,15 +155,15 @@ public class WebSecurityConfig {
 				.invalidateHttpSession(true);
 		});
 		return http.build();
+		// @formatter:on
 	}
-	// @formatter:on
 
 	@Bean
 	// @formatter:off
 	SecurityContextRepository securityContextRepository() {
 		return new DelegatingSecurityContextRepository(new RequestAttributeSecurityContextRepository(), new HttpSessionSecurityContextRepository());
+		// @formatter:on
 	}
-	// @formatter:on
 
 	/**
 	 * 会话并发
@@ -201,11 +205,12 @@ public class WebSecurityConfig {
 	}
 
 	@Bean
-	public DaoAuthenticationProvider daoAuthenticationProvider(UserDetailsService userDetailsService) {
-		DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-		provider.setUserDetailsService(userDetailsService);
+	// @formatter:off
+	public DaoAuthenticationProvider daoAuthenticationProvider(UserDetailsService userDetailsService, CaptchaService captchaService) {
+		UsernamePasswordAuthenticationProvider provider = new UsernamePasswordAuthenticationProvider(userDetailsService, captchaService);
 		provider.setPasswordEncoder(passwordEncoder());
 		return provider;
+		// @formatter:on
 	}
 
 }

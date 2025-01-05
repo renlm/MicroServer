@@ -9,7 +9,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.session.SessionAuthenticationException;
-import org.springframework.stereotype.Component;
 import org.springframework.util.ReflectionUtils;
 
 import com.anji.captcha.model.common.ResponseModel;
@@ -23,7 +22,6 @@ import com.anji.captcha.util.AESUtil;
  * @author RenLiMing(任黎明)
  *
  */
-@Component
 public class UsernamePasswordAuthenticationProvider extends DaoAuthenticationProvider {
 
 	private final CaptchaService captchaService;
