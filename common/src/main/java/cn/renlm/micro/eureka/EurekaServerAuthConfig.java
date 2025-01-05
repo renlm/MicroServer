@@ -101,15 +101,15 @@ public class EurekaServerAuthConfig {
 				String secretKey = hasText(env.getSecretKey()) ? env.getSecretKey() : randomUUID().toString();
 				String md5DigestAsHex = DigestUtils.md5DigestAsHex((csrfToken + timestamp + secretKey).getBytes());
 				if (md5DigestAsHex.equals(sign)) {
-					log.debug("sign - {} : {}", sign, requestURI);
 					CsrfToken token = new DefaultCsrfToken(X_XSRF_TOKEN, _CSRF, serverToken);
 					csrfTokenRepository.saveToken(token, request, response);
 					SimpleGrantedAuthority sga = new SimpleGrantedAuthority(CLIENT_AUTHORITY);
 					Collection<? extends GrantedAuthority> authorities = singleton(sga);
 					Authentication auth = new UsernamePasswordAuthenticationToken(SIGN_HEADER_SIGN, sign, authorities);
 					SecurityContextHolder.getContext().setAuthentication(auth);
+					log.debug("right sign - {} : {}", sign, requestURI);
 				} else {
-					log.debug("err sign: {}", requestURI);
+					log.debug("error sign: {}", requestURI);
 				}
 			} else {
 				log.debug("no sign: {}", requestURI);
