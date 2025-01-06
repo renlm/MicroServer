@@ -25,7 +25,12 @@ public class EurekaClientShutdownHook {
 	public void init() {
 		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
 			eurekaClient.shutdown();
-			log.info("EurekaClient 停机下线.");
+			try {
+				Thread.sleep(1000 * 5);
+				log.info("EurekaClient 停机下线.");
+			} catch (InterruptedException e) {
+				log.error("EurekaClient 停机超时！", e);
+			}
 		}));
 	}
 
