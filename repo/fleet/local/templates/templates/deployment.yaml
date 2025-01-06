@@ -54,6 +54,8 @@ spec:
             {{- end }}
           {{- end }}
           env:
+            - name: SERVICE_NAME
+              value: {{ .Release.Name }}
             - name: POD_IP
               valueFrom:
                 fieldRef:
