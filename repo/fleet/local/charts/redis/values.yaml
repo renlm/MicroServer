@@ -1,11 +1,10 @@
 global:
+  releaseName: redis
   env:
     TZ: Asia/Shanghai
     REQUIREPASS: KK_fyw4bnmdf4Ksp7IMYuPWD@20stdt^tn50jlsfy
 templates:
   version: 7.4.1
-  nameOverride: redis
-  fullnameOverride: redis
   autoBindCommonEnv: false
   kind: StatefulSet
   image:

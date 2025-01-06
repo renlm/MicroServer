@@ -1,11 +1,8 @@
-namespace: istio-system
-nameOverride: jaeger
-fullnameOverride: jaeger
+global:
+  namespace: istio-system
+  releaseName: jaeger
 templates:
   version: 1.58
-  namespace: istio-system
-  nameOverride: jaeger
-  fullnameOverride: jaeger
   autoBindCommonEnv: false
   kind: StatefulSet
   image:

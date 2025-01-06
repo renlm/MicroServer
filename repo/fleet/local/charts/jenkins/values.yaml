@@ -1,7 +1,7 @@
+global:
+  releaseName: jenkins
 templates:
   version: 2.491
-  nameOverride: jenkins
-  fullnameOverride: jenkins
   autoBindCommonEnv: false
   kind: StatefulSet
   image:

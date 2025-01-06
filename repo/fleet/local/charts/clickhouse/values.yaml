@@ -1,11 +1,8 @@
-namespace: io
-nameOverride: clickhouse
-fullnameOverride: clickhouse
+global:
+  namespace: io
+  releaseName: clickhouse
 templates:
   version: 24.12
-  namespace: io
-  nameOverride: clickhouse
-  fullnameOverride: clickhouse
   autoBindCommonEnv: false
   kind: StatefulSet
   image:

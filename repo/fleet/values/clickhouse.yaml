@@ -1,7 +1,7 @@
 clickhouse:
   enabled: true
-  namespace: io
-  templates:
+  global:
     namespace: io
+  templates:
     nodeSelector:
       deploy: master

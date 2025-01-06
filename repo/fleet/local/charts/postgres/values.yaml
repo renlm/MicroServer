@@ -1,4 +1,5 @@
 global:
+  releaseName: postgres
   env:
     TZ: Asia/Shanghai
     POSTGRES_DB: postgres
@@ -6,8 +7,6 @@ global:
     POSTGRES_PASSWORD: KK_fyw4bnmdf4Ksp7IMYuPWD@20stdt^tn50jlsfy
 templates:
   version: 17.2
-  nameOverride: postgres
-  fullnameOverride: postgres
   autoBindCommonEnv: false
   kind: StatefulSet
   image:

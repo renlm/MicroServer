@@ -4,8 +4,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ $fullName }}
-  {{- if .Values.namespace }}
-  namespace: {{ .Values.namespace }}
+  {{- if .Values.global.namespace }}
+  namespace: {{ .Values.global.namespace }}
   {{- end }}
   labels:
     {{- include "templates.labels" . | nindent 4 }}
@@ -68,6 +68,10 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.namespace
+          {{- if .Values.global.releaseName }}
+            - name: RELEASE_NAME
+              value: {{ .Values.global.releaseName }}
+          {{- end }}
           {{- with .Values.environment }}
             {{- toYaml . | nindent 12 }}
           {{- end }}

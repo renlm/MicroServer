@@ -1,7 +1,7 @@
+global:
+  releaseName: mygraph
 templates:
   version: 1.0.1
-  nameOverride: mygraph
-  fullnameOverride: mygraph
   kind: Deployment
   image:
     repository: registry.cn-hangzhou.aliyuncs.com/rlm/mygraph

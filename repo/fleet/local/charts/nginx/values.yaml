@@ -1,10 +1,9 @@
 global:
+  releaseName: nginx
   env:
     TZ: Asia/Shanghai
 templates:
   version: 1.25.5
-  nameOverride: nginx
-  fullnameOverride: nginx
   autoBindCommonEnv: false
   kind: Deployment
   image:

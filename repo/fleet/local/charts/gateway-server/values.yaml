@@ -1,6 +1,6 @@
+global:
+  releaseName: gateway-server
 templates:
-  nameOverride: gateway-server
-  fullnameOverride: gateway-server
   kind: Deployment
   image:
     repository: registry.cn-hangzhou.aliyuncs.com/rlm/gateway-server
@@ -9,7 +9,6 @@ templates:
   env:
     SERVER_PORT: 80
     MANAGEMENT_SERVER_PORT: 9000
-    POD_SERVICE_NAME: gateway-server
   podAnnotations:
     prometheus.io/scrape: "true"
     prometheus.io/path: "/actuator/prometheus"

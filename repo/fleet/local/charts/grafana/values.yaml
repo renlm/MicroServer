@@ -1,11 +1,8 @@
-namespace: istio-system
-nameOverride: grafana
-fullnameOverride: grafana
+global:
+  namespace: istio-system
+  releaseName: grafana
 templates:
   version: 11.4.0
-  namespace: istio-system
-  nameOverride: grafana
-  fullnameOverride: grafana
   autoBindCommonEnv: false
   kind: Deployment
   image:

@@ -1,4 +1,5 @@
 global:
+  releaseName: rabbitmq
   env:
     TZ: Asia/Shanghai
     RABBITMQ_DEFAULT_VHOST: /dev
@@ -6,8 +7,6 @@ global:
     RABBITMQ_DEFAULT_PASS: KK_fyw4bnmdf4Ksp7IMYuPWD@20stdt^tn50jlsfy
 templates:
   version: 4.0.5
-  nameOverride: rabbitmq
-  fullnameOverride: rabbitmq
   autoBindCommonEnv: false
   kind: StatefulSet
   image:

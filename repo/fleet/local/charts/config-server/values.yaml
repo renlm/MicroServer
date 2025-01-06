@@ -1,8 +1,8 @@
 SECURITY_USER_NAME: default
 SECURITY_USER_PASSWORD: M1h62Gj3Uy54r
+global:
+  releaseName: config-server
 templates:
-  nameOverride: config-server
-  fullnameOverride: config-server
   kind: Deployment
   image:
     repository: registry.cn-hangzhou.aliyuncs.com/rlm/config-server
@@ -16,7 +16,6 @@ templates:
     RABBITMQ_PORT: 5672
     RABBITMQ_USERNAME: dev
     RABBITMQ_PASSWORD: KK_fyw4bnmdf4Ksp7IMYuPWD@20stdt^tn50jlsfy
-    POD_SERVICE_NAME: config-server
   podAnnotations:
     prometheus.io/scrape: "true"
     prometheus.io/path: "/actuator/prometheus"
