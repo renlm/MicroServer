@@ -35,3 +35,6 @@
 
 ## 服务日志
 ![服务日志](repo/images/logs.png "服务日志")
+
+## 采集器
+![采集器](repo/images/otel-collector.png "采集器")
