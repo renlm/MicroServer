@@ -1,2 +1,4 @@
 core-web:
   enabled: true
+  global:
+    releaseName: core-web

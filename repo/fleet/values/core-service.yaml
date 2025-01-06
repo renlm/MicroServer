@@ -1,2 +1,4 @@
 core-service:
   enabled: true
+  global:
+    releaseName: core-service

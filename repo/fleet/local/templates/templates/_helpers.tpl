@@ -2,7 +2,12 @@
 Expand the name of the chart.
 */}}
 {{- define "templates.name" -}}
-{{- default .Chart.Name .Values.global.releaseName | trunc 63 | trimSuffix "-" }}
+{{- if .Values.global.releaseName }}
+{{- .Values.global.releaseName | trunc 63 | trimSuffix "-" }}
+{{- else }}
+{{- $name := default .Chart.Name .Release.Name }}
+{{- $name | trunc 63 | trimSuffix "-" }}
+{{- end }}
 {{- end }}
 
 {{/*
@@ -11,16 +16,7 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 If release name contains chart name it will be used as a full name.
 */}}
 {{- define "templates.fullname" -}}
-{{- if .Values.global.releaseName }}
-{{- .Values.global.releaseName | trunc 63 | trimSuffix "-" }}
-{{- else }}
-{{- $name := .Chart.Name }}
-{{- if contains $name .Release.Name }}
-{{- .Release.Name | trunc 63 | trimSuffix "-" }}
-{{- else }}
-{{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" }}
-{{- end }}
-{{- end }}
+{{ include "templates.name" . }}
 {{- end }}
 
 {{/*
