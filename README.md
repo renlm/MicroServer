@@ -45,9 +45,6 @@
 ## 服务日志
 ![服务日志](repo/images/logs.png "服务日志")
 
-## 采集器
-![采集器](repo/images/otel-collector.png "采集器")
-
 ## 灰度发布
 	登录用户可自由选择访问版本
 ![灰度发布](repo/images/rebBlue.png "灰度发布")
