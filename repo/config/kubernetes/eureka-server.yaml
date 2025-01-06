@@ -9,7 +9,7 @@ eureka:
     leaseRenewalIntervalInSeconds: 10
     leaseExpirationDurationInSeconds: 30
   server:
-    enableSelfPreservation: false
+    enableSelfPreservation: true
     peerNodeReadTimeoutMs: 5000
     evictionIntervalTimerInMs: 20000
     responseCacheUpdateIntervalMs: 10000
