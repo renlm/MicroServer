@@ -1,7 +1,8 @@
+# DB_INIT_MODE={ALWAYS|NEVER}
 mygraph:
   enabled: true
   templates:
     nodeSelector:
       deploy: master
     env:
-      DB_INIT_MODE: ALWAYS
+      DB_INIT_MODE: NEVER
