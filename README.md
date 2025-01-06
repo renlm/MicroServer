@@ -1,7 +1,7 @@
 # 微服务模板
 
-<a href="README.docker.md" target="_blank"> README.docker.md </a>  
-<a href="README.k3s.md" target="_blank"> k3s及Rancher环境配置 </a>  
+<a href="README.docker.md" target="_blank"> Docker版环境配置 </a>  
+<a href="README.k3s.md" target="_blank"> K3S版环境配置 </a>  
 
 ## 系统架构
 ![系统架构](repo/images/SystemArchitecture.png "系统架构")
