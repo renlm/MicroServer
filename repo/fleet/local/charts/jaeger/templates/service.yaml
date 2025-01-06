@@ -5,7 +5,7 @@ items:
   kind: Service
   metadata:
     name: tracing
-    namespace: {{ .Values.namespace }}
+    namespace: {{ .Values.global.namespace }}
     labels:
       app: jaeger
   spec:

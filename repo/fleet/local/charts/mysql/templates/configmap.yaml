@@ -2,8 +2,8 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: mysql-configmap
-  {{- if .Values.namespace }}
-  namespace: {{ .Values.namespace }}
+  {{- if .Values.global.namespace }}
+  namespace: {{ .Values.global.namespace }}
   {{- end }}
 data:
   init-user-db.sql: |-
