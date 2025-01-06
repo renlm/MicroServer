@@ -38,3 +38,6 @@
 
 ## 采集器
 ![采集器](repo/images/otel-collector.png "采集器")
+
+## 灰度发布
+![灰度发布](repo/images/rebBlue.png "灰度发布")
