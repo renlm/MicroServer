@@ -1,6 +1,4 @@
 templates:
-  nameOverride: core-service
-  fullnameOverride: core-service
   kind: Deployment
   image:
     repository: registry.cn-hangzhou.aliyuncs.com/rlm/core-service

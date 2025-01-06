@@ -50,7 +50,6 @@ app: {{ include "templates.fullname" . }}
 version: {{ default .Chart.Version .Values.version | quote }}
 app.kubernetes.io/name: {{ include "templates.name" . }}
 app.kubernetes.io/instance: {{ include "templates.fullname" . }}
-release.name: {{ .Release.Name }}
 {{- end }}
 
 {{/*
