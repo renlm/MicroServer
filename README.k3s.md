@@ -237,6 +237,13 @@ $ curl -sfL https://rancher-mirror.rancher.cn/k3s/k3s-install.sh | \
 	$ kubectl create namespace mylb
     $ kubectl label namespace mylb istio-injection=enabled
     
+    编辑kiali的configmap
+    找到external_services添加Grafana地址
+    保存后重启kiali
+    grafana:
+        url: http://grafana.istio-system:3000
+    
+    
 	主页链接添加代理访问地址
 	Grafana（admin：M1h62Gj3Uy54r）：https://grafana.renlm.cn
 	Prometheus：https://rancher.renlm.cn/api/v1/namespaces/istio-system/services/http:prometheus:9090/proxy
