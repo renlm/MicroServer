@@ -24,8 +24,6 @@ gateway-server:
   enabled: false
 core-service:
   enabled: false
-core-service-beta:
-  enabled: false
 core-web:
   enabled: false
 mygraph:

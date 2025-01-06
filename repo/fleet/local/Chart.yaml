@@ -1,3 +1,6 @@
+# helm dependency update {chart}
+# helm package {chart}
+# helm repo index helm --url=https://github-io.renlm.cn/helm/repo
 apiVersion: v2
 name: local
 description: A Helm chart for Kubernetes
@@ -41,9 +44,6 @@ dependencies:
 - name: core-service
   repository: file://./charts/core-service
   condition: core-service.enabled
-- name: core-service-beta
-  repository: file://./charts/core-service-beta
-  condition: core-service-beta.enabled
 - name: core-web
   repository: file://./charts/core-web
   condition: core-web.enabled
