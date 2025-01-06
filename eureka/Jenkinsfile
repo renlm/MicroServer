@@ -6,7 +6,7 @@
 	DockerRegistry：Docker仓库（https://registry.cn-hangzhou.aliyuncs.com）
 	DockerImage：Docker镜像（registry.cn-hangzhou.aliyuncs.com/rlm/eureka-server）
 	rancherCredential：Rancher认证
-	workloadUrl：部署地址（/project/{projectId}/workloads/deployment:{namespace}:eureka-server）
+	workloadUrl：部署地址（/project/{projectId}/workloads/statefulset:{namespace}:eureka-server）
 安装插件：
 	Docker Pipeline
 	Pipeline: Stage View
