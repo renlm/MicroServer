@@ -12,6 +12,7 @@
 $ cat <<EOF | tee /etc/docker/daemon.json
 {
   "registry-mirrors": [ 
+    "https://docker.1ms.run",
     "https://docker-io.renlm.cn"
   ],
   "log-driver": "json-file",
@@ -54,12 +55,10 @@ Environment="BUILDKIT_STEP_LOG_MAX_SPEED=10240000"
         && source ~/.bashrc
 	
 	开发组件
-	$ ssh-keygen -m PEM -t rsa -b 4096 -C "renlm@21cn.com"
 	$ git clone git@gitee.com:renlm/MicroServer.git
 	$ docker network create share
 	$ docker network ls
-	配置证书
-	$ docker login --username=renlm@21cn.com registry.cn-hangzhou.aliyuncs.com
+	配置证书（修改域名为自己的）
 	$ docker-compose -f /root/MicroServer/repo/docker/docker-compose.yml up -d
 	$ ln -sf /root/MicroServer/repo/nginx/conf.d/* /etc/nginx/conf.d
 	$ ln -sf /root/MicroServer/repo/nginx/modules-enabled/* /etc/nginx/modules-enabled

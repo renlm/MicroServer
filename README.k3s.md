@@ -181,6 +181,7 @@ $ curl -sfL https://rancher-mirror.rancher.cn/k3s/k3s-install.sh | \
 	
 ## 安装 rancher
 	配置网关（外部 Nginx 负载均衡）
+	修改域名为自己的
 	$ wget https://github-io.renlm.cn/helm/istio.rancher.yaml
 	$ kubectl apply -f istio.rancher.yaml
 	$ kubectl describe certificate -n istio-system
