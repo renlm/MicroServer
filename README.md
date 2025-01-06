@@ -24,7 +24,7 @@
 	实现：
 	1、使用 SpringCloud LoadBalancer 实现自定义路由策略，根据请求头[负载标记]与服务元数据进行优先匹配
 	2、服务注册时，元数据信息设置版本号，即[负载标记]
-	3、服务注册时，注册地址使用pod直连地址（StatefulSet|Deployment Headless）
+	3、服务注册时，注册地址使用pod直连地址，支持StatefulSet和Deployment Headless两种模式
 	4、前端负载均衡器给每个请求进行[负载标记]
 	5、前端负载均衡器根据[负载标记]执行自定义路由策略进行流量分发
 	6、OpenFeign进行服务间调用时，透传请求头的[负载标记]
