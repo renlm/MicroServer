@@ -32,3 +32,6 @@
 
 ## 追踪指标
 ![追踪指标](repo/images/TrackingIndicators.png "追踪指标")
+
+## 服务日志
+![服务日志](repo/images/logs.png "服务日志")
