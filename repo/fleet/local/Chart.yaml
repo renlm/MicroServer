@@ -1,6 +1,6 @@
 # helm dependency update {chart}
 # helm package {chart}
-# helm repo index helm --url=https://github-io.renlm.cn/helm/repo
+# helm repo index ./ --url=https://github-io.renlm.cn/helm/repo
 apiVersion: v2
 name: local
 description: A Helm chart for Kubernetes
