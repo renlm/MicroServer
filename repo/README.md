@@ -16,4 +16,4 @@
 	图片
 	
 ## nginx
-	nginx 配置映射
+	Nginx 配置映射
