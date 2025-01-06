@@ -69,7 +69,7 @@ spec:
                 fieldRef:
                   fieldPath: metadata.namespace
           {{- if .Values.global.releaseName }}
-            - name: RELEASE_NAME
+            - name: POD_SERVICE_NAME
               value: {{ .Values.global.releaseName }}
           {{- end }}
           {{- with .Values.environment }}
