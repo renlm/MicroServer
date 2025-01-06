@@ -5,9 +5,12 @@
 	DockerCredential：Docker认证（aliyuncs）
 	DockerRegistry：Docker仓库（https://registry.cn-hangzhou.aliyuncs.com）
 	DockerImage：Docker镜像（registry.cn-hangzhou.aliyuncs.com/rlm/eureka-server）
+	rancherCredential：Rancher认证
+	workloadUrl：部署地址（/project/{projectId}/workloads/deployment:{namespace}:eureka-server）
 安装插件：
 	Docker Pipeline
 	Pipeline: Stage View
+	Redeploy Rancher2.x Workload Plugin
 */
 pipeline {
 	agent any
@@ -35,6 +38,12 @@ pipeline {
                         docker.image("${params.DockerImage}:${TAG}").push()
                     }
                 }
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo "部署应用..."
+                rancherRedeploy alwaysPull: true, credential: "${params.rancherCredential}", images: "${params.DockerImage}:${TAG}", workload: "${params.workloadUrl}"
             }
         }
     }
