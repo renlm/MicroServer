@@ -5,11 +5,13 @@ import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import cn.renlm.micro.core.model.rbac.UserClaim;
 import cn.renlm.micro.core.model.rbac.UserInfo;
+import cn.renlm.micro.eureka.EurekaServerAuthConfig;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -47,6 +49,7 @@ public class UserDetails extends UserInfo implements org.springframework.securit
 	public static final UserDetails of(UserInfo userInfo) {
 		UserDetails userDetails = new UserDetails();
 		BeanUtils.copyProperties(userInfo, userDetails);
+		userDetails.setAuthorities(List.of(new SimpleGrantedAuthority(EurekaServerAuthConfig.CLIENT_AUTHORITY)));
 		return userDetails;
 	}
 
