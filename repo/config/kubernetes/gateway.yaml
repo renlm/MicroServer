@@ -10,7 +10,7 @@ spring:
           '[/**]':
             allowedOrigins:
             - https://renlm.cn
-            - https://gw.renlm.cn
+            - https://istio.renlm.cn
             allowedMethods:
             - GET
             - HEAD
