@@ -23,6 +23,7 @@ import org.springframework.util.StringUtils;
 import com.netflix.appinfo.EurekaInstanceConfig;
 
 import cn.renlm.micro.common.Resp;
+import cn.renlm.micro.constant.Constants;
 import cn.renlm.micro.core.dto.UserDetails;
 import cn.renlm.micro.core.model.rbac.UserInfo;
 import cn.renlm.micro.core.sdk.rbac.UserClient;
@@ -98,10 +99,17 @@ public class UserDetailsService implements org.springframework.security.core.use
 		context.setAuthentication(new UsernamePasswordAuthenticationToken(userDetails, EMPTY, authorities));
 		securityContextRepository.saveContext(context, request, response);
 		if (StringUtils.hasText(userDetails.getHint())) {
-			String hintHeaderName = this.getDefaultHintHeaderName();
-			Cookie cookie = new Cookie(hintHeaderName, userDetails.getHint());
-			cookie.setPath("/");
-			response.addCookie(cookie);
+			{
+				String hintHeaderName = this.getDefaultHintHeaderName();
+				Cookie cookie = new Cookie(hintHeaderName, userDetails.getHint());
+				cookie.setPath(Constants.COOKIE_PATH);
+				response.addCookie(cookie);
+			}
+			{
+				Cookie cookie = new Cookie(Constants.X_LB_USER, userDetails.getUsername());
+				cookie.setPath(Constants.COOKIE_PATH);
+				response.addCookie(cookie);
+			}
 		}
 		{
 			return userDetails;

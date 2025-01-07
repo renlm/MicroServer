@@ -24,14 +24,24 @@ public interface Constants {
 	public static final String COOKIE = "cookie";
 
 	/**
+	 * cookie path
+	 */
+	public static final String COOKIE_PATH = "/";
+
+	/**
 	 * 负载均衡默认配置
 	 */
 	public static final String HINT_DEFAULT_CONFIG = "default";
 
 	/**
-	 * 请求头 [ 负载均衡标记 ]
+	 * 请求头 [ 负载均衡标记 - hint ]
 	 */
 	public static final String X_LB_HINT = "x-lb-hint";
+
+	/**
+	 * 请求头 [ 负载均衡标记 - user ]
+	 */
+	public static final String X_LB_USER = "x-lb-user";
 
 	/**
 	 * 服务元数据 [ 负载均衡标记 ]
