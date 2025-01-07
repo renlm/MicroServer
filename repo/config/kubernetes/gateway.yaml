@@ -2,7 +2,7 @@ spring:
   cloud:
     gateway:
       defaultFilters:
-      - AddHintHeader=mylb
+      - AddHintHeader
       - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
       globalcors:
         addToSimpleUrlHandlerMapping: true
