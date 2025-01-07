@@ -41,7 +41,7 @@ import reactor.core.publisher.Mono;
 @Component
 public class AddHintHeaderGatewayFilterFactory extends AbstractGatewayFilterFactory<Config> {
 
-	private static final String KEY = "XHintHeader";
+	private static final String KEY = "hint";
 
 	@Resource
 	private LoadBalancerProperties properties;
