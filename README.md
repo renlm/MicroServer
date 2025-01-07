@@ -47,4 +47,6 @@
 
 ## 灰度发布
 	登录用户可自由选择访问版本
+	core-web只有一个版本mylb，core-service有mylb、beta两个版本
+	调用情况如下
 ![灰度发布](repo/images/rebBlue.png "灰度发布")
