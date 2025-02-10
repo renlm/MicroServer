@@ -19,9 +19,9 @@ data:
     # https://grafana.github.io/helm-charts
     export NGINX_HTML=/usr/share/nginx/html
     mkdir -p $NGINX_HTML/grafana.github.io/helm-charts
-    curl -o $NGINX_HTML/grafana.github.io/helm-charts/index.yaml https://grafana-github-io.renlm.cn/helm-charts/index.yaml
+    curl -o $NGINX_HTML/grafana.github.io/helm-charts/index.yaml https://grafana.github.io.renlm.site/helm-charts/index.yaml
     sed -i 's@https://github.com@https://github.renlm.cn@g' $NGINX_HTML/grafana.github.io/helm-charts/index.yaml
     sed -i 's@https://raw.githubusercontent.com@https://raw-githubusercontent-com.renlm.cn@g' $NGINX_HTML/grafana.github.io/helm-charts/index.yaml
-    sed -i 's@https://grafana.github.io@https://grafana-github-io.renlm.cn@g' $NGINX_HTML/grafana.github.io/helm-charts/index.yaml
+    sed -i 's@https://grafana.github.io@https://grafana.github.io.renlm.site@g' $NGINX_HTML/grafana.github.io/helm-charts/index.yaml
     sed -i 's/txt;/txt yml yaml;/g' /etc/nginx/mime.types
 
