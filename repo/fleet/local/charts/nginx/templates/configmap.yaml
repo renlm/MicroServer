@@ -13,7 +13,7 @@ data:
     # https://github.com/open-telemetry/opentelemetry-cpp-contrib/tree/main/instrumentation/otel-webserver-module
     # https://github.com/open-telemetry/opentelemetry-cpp-contrib/releases
     mkdir -p /opt/opentelemetry-webserver
-    curl -o /opt/opentelemetry-webserver/agent.tgz https://github-io.renlm.cn/download/opentelemetry-webserver-sdk-x64-linux.tgz
+    curl -o /opt/opentelemetry-webserver/agent.tgz https://github.renlm.cn/download/opentelemetry-webserver-sdk-x64-linux.tgz
     tar -xf /opt/opentelemetry-webserver/agent.tgz -C /opt/opentelemetry-webserver/ --transform="s/opentelemetry-webserver-sdk/agent/g"
     /opt/opentelemetry-webserver/agent/install.sh
     # https://grafana.github.io/helm-charts
